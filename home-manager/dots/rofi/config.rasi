@@ -2,7 +2,9 @@ configuration {
   display-drun: "drun";
   display-window: "win";
   drun-display-format: "{name}";
-  font: "JetBrainsMono Nerd Font 13";
+  font: "Aileron 14";
+  // font: "JetBrainsMono Nerd Font 13";
+  // font: "BerkeleyMono Nerd Font 14";
   modi: "window,run,drun";
   show-icons: true;
   terminal: "alacritty";
@@ -14,7 +16,7 @@ configuration {
 * {
   opacity: 0.5;
   border: 0;
-  padding: 0.1em 0.1em 0.1em 0.1em;
+  padding: 0.1em;
   spacing: 0;
 }
 

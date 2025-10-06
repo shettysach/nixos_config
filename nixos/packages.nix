@@ -18,14 +18,14 @@
       git
       git-lfs
       difftastic
-      neovim
-      zed-editor-fhs
-      gemini-cli
       nix-direnv
       direnv
+      neovim
+      neovide
       nushell
       obsidian
       texliveSmall
+      opencode
       # -- TUI / CLI utils --
       fastfetch
       file
@@ -34,8 +34,7 @@
       dua
       zoxide
       ripgrep
-      lsd
-      eza
+      lsr
       bat
       delta
       fzf
@@ -46,53 +45,44 @@
       imv
       zip
       unzip
-      spotify-player
       gammastep
       networkmanagerapplet
       playerctl
       pulseaudio
       pulseaudio-ctl
       pavucontrol
-      # -- windowManager --
+      # -- wayland  --
       wl-clipboard
       wlr-randr
       clipse
-      rofi-wayland
-      autotiling-rs
       waybar
-      dunst
       libnotify
       swayidle
       swaylock
       # -- GUI apps --
       brave
       librewolf
-      firefox
       newsflash
       zathura
-      fractal
+      # fractal
       ;
 
-    inherit
-      (pkgs.xfce)
-      thunar
-      thunar-volman
-      thunar-archive-plugin
-      thunar-media-tags-plugin
-      tumbler
-      ;
+    inherit (pkgs.kdePackages) okular;
+
+    # inherit (pkgs.kdePackages) dolphin dolphin-plugins;
+
+    inherit (pkgs.xfce) thunar thunar-volman thunar-archive-plugin thunar-media-tags-plugin tumbler;
 
     inherit (pkgs.nvtopPackages) nvidia;
 
-    # inherit (pkgs) ghostty;
-    ghostty = inputs.ghostty.packages.${pkgs.system}.default;
+    # ghostty = inputs.ghostty.packages.${pkgs.system}.default;
     helix = inputs.helix.packages.${pkgs.system}.default;
     cohle = inputs.cohle.packages.${pkgs.system}.default;
   };
 
   fonts.packages = lib.attrValues {
     inherit (pkgs) lora;
-
+    inherit (pkgs) aileron;
     inherit (pkgs.nerd-fonts) jetbrains-mono;
   };
 }

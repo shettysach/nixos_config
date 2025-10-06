@@ -6,29 +6,32 @@
   scripts = "${config.xdg.configHome}/scripts";
 in {
   programs.niri.enable = true;
+
   services.wpaperd.enable = true;
 
-  xdg.portal = {
+  services.mako = {
     enable = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal
-      xdg-desktop-portal-gtk
-      xdg-desktop-portal-wlr
-    ];
-
-    config.common.default = "*";
+    settings.default-timeout = 5000;
   };
 
   programs.niri.settings = {
+    overview = {
+      backdrop-color = config.lib.stylix.colors.base00;
+      workspace-shadow.enable = false;
+    };
+
     environment = {
+      # GTK_USE_PORTAL = "1";
+      # XDG_DESKTOP_PORTAL_FORCE = "1";
+
       CLUTTER_BACKEND = "wayland";
-      DISPLAY = null;
+      # DISPLAY = null;
       GDK_BACKEND = "wayland,x11";
       MOZ_ENABLE_WAYLAND = "1";
       NIXOS_OZONE_WL = "1";
-      QT_QPA_PLATFORM = "wayland;xcb";
+      # QT_QPA_PLATFORM = "wayland;xcb";
+      # QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       # QT_QPA_PLATFORMTHEME = "gtk3";
-      QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
       SDL_VIDEODRIVER = "wayland";
 
       WLR_NO_HARDWARE_CURSORS = "1";
@@ -43,44 +46,41 @@ in {
 
     spawn-at-startup = [
       {command = ["${pkgs.waybar}/bin/waybar"];}
-      {command = ["${scripts}/battery.sh"];}
-      {
-        command = [
-          "${pkgs.clipse}/bin/clipse"
-          "-listen"
-        ];
-      }
+      {command = ["${pkgs.clipse}/bin/clipse" "-listen"];}
     ];
 
     hotkey-overlay.skip-at-startup = true;
     input.focus-follows-mouse.enable = true;
 
-    layout.border.width = 3;
-    layout.gaps = 6;
+    layout.border.width = 2;
+    layout.gaps = 4;
 
     animations.enable = true;
     animations.slowdown = 0.5;
+    animations.window-resize.enable = false;
 
     input.mod-key = "Alt";
     input.mod-key-nested = "Super";
 
+    layout.preset-column-widths = [{proportion = 0.5;} {proportion = 1.0;}];
+
     binds = {
-      "Mod+Return".action.spawn = "ghostty";
+      "Mod+Return".action.spawn = ["nvidia-offload" "ghostty"];
+      "Mod+Shift+Return".action.spawn = ["nvidia-offload" "ghostty --window-inherit-working-directory=true"];
+
       "Mod+Backspace".action.close-window = {};
-      "Mod+D".action.spawn = [
-        "${pkgs.rofi-wayland}/bin/rofi"
-        "-show"
-        "drun"
-      ];
+      "Mod+D".action.spawn = ["${pkgs.rofi}/bin/rofi" "-show" "drun"];
 
       "Mod+X".action.show-hotkey-overlay = {};
+
+      "Mod+Q".action.spawn = ["killall" "-SIGUSR1" ".waybar-wrapped"];
 
       "Mod+K".action.focus-window-or-workspace-up = {};
       "Mod+J".action.focus-window-or-workspace-down = {};
       "Mod+H".action.focus-column-left = {};
       "Mod+L".action.focus-column-right = {};
       "Mod+F".action.fullscreen-window = {};
-      "Mod+Backslash".action.maximize-column = {};
+      "Mod+Backslash".action.switch-preset-column-width = {};
       "Mod+W".action.toggle-overview = {};
 
       "Mod+Shift+H".action.move-column-left = {};
@@ -94,17 +94,8 @@ in {
       "Mod+Equal".action.set-column-width = "+10%";
       "Mod+Minus".action.set-column-width = "-10%";
 
-      "Mod+M".action.spawn = [
-        "${pkgs.rofi-wayland}/bin/rofi"
-        "-show"
-        "power-menu"
-        "-modi"
-        "power-menu:${scripts}/power_menu"
-      ];
-      "Mod+Shift+B".action.spawn = [
-        "bash"
-        "${scripts}/bluetooth_menu"
-      ];
+      "Mod+M".action.spawn = ["${pkgs.rofi}/bin/rofi" "-show" "power-menu" "-modi" "power-menu:${scripts}/power_menu --no-symbols"];
+      "Mod+Shift+B".action.spawn = ["bash" "${scripts}/bluetooth_menu"];
 
       "Mod+S".action.screenshot = {};
       "Mod+Space".action.switch-focus-between-floating-and-tiling = {};
@@ -164,7 +155,8 @@ in {
     window-rules = [
       {
         draw-border-with-background = false;
-        default-column-width.proportion = 0.5;
+        default-column-width.proportion = 1.0;
+        # open-floating = false;
       }
     ];
   };
@@ -182,6 +174,7 @@ in {
         command = "${pkgs.swaylock}/bin/swaylock";
       }
     ];
+
     timeouts = [
       {
         timeout = 5 * 60;

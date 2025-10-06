@@ -1,6 +1,8 @@
-{ pkgs, config, ... }:
-
 {
+  pkgs,
+  config,
+  ...
+}: {
   programs.zsh = {
     enable = true;
     enableCompletion = true;
@@ -8,10 +10,7 @@
 
     autosuggestion = {
       enable = true;
-      strategy = [
-        "history"
-        "completion"
-      ];
+      strategy = ["history" "completion"];
     };
 
     historySubstringSearch = {
@@ -35,8 +34,13 @@
     ];
 
     shellAliases = {
+      vim = "nvim";
+      vimd = "neovide";
+
       fzfh = "fd -H . | fzf";
       fzfp = "fzf --preview 'bat --color=always {}'";
+
+      zed = "MESA_VK_DEVICE_SELECT=10de:174d zeditor";
     };
 
     localVariables = {
@@ -79,5 +83,4 @@
     history.size = 1000;
     history.saveNoDups = true;
   };
-
 }

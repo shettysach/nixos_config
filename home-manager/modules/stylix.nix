@@ -3,32 +3,30 @@
     enable = true;
     autoEnable = true;
 
-    image = ../wallpapers/aurora_ice.jpg;
+    image = ../../wallpapers/aurora_ice.jpg;
     base16Scheme = ../../tokyonight.yaml;
 
     fonts = {
       serif = {
-        name = "Cantarell";
-        package = pkgs.cantarell-fonts;
+        name = "Lora";
+        package = pkgs.lora;
       };
 
       sansSerif = {
-        name = "Cantarell";
-        package = pkgs.cantarell-fonts;
+        name = "Aileron";
+        package = pkgs.aileron;
       };
 
       monospace = {
+        # name = "BerkeleyMono Nerd Font";
         name = "JetBrainsMono Nerd Font";
         package = pkgs.nerd-fonts.jetbrains-mono;
-
-        # name = "Terminess Nerd Font";
-        # package = pkgs.nerd-fonts.terminess-ttf;
       };
 
       sizes = {
         desktop = 12;
         applications = 12;
-        terminal = 14;
+        terminal = 16;
       };
     };
 
@@ -44,9 +42,9 @@
 
     iconTheme = {
       enable = true;
-      package = pkgs.kdePackages.breeze-icons;
-      dark = "breeze-dark";
-      light = "breeze";
+      package = pkgs.nordzy-icon-theme;
+      dark = "Nordzy";
+      light = "Nordzy";
     };
   };
 }

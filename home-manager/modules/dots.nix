@@ -1,25 +1,16 @@
 {
   lib,
   config,
-  pkgs,
   ghosttyMain,
   helixMain,
+  # zedMain,
   ...
 }: {
   programs.bat.enable = true;
-  programs.rofi = {
-    enable = true;
-    package = pkgs.rofi-wayland;
-  };
+  programs.rofi.enable = true;
+  programs.spotify-player.enable = true;
 
-  stylix.targets.qt.enable = true;
-
-  programs.btop = {
-    enable = true;
-    settings.vim_keys = true;
-  };
-
-  stylix.targets.swaylock.useImage = false;
+  stylix.targets.swaylock.useWallpaper = false;
   programs.swaylock = {
     enable = true;
     settings = {
@@ -30,8 +21,52 @@
     };
   };
 
+  stylix.targets = {
+    qt.enable = true;
+    gtk.enable = true;
+    gtk.extraCss = ''
+      .window-frame, .window-frame:backdrop,
+      .titlebar, headerbar, headerbar:backdrop,
+      button, entry, progressbar, scale, scrollbar, switch, spinbutton,
+      treeview, notebook, scrollbar slider,
+      popover, .popover, menu, .menu, .background, tooltip {
+        border-radius: 0 !important;
+        -gtk-outline-radius: 0;
+      }
+
+      window, .window, .window-frame, headerbar, .titlebar, .view,
+      button, entry, switch, scale, scrollbar, progressbar, combobox, textview,
+      listview, tabbar, tab, popover, menu, tooltip, dialog, .dialog, .background, .sidebar {
+        border-radius: 0 !important;
+      }
+    '';
+  };
+
+  # dconf.enable = true;
+  # dconf.settings = {
+  #   "org/gnome/desktop/interface" = {
+  #     gtk-theme = "Redmond97 SE Ouroboros-HiDPI";
+  #     icon-theme = "Obsidian-Silver";
+  #
+  #     color-scheme = lib.mkForce "prefer-dark";
+  #     enable-animations = true;
+  #   };
+  # };
+
+  programs.zellij.enable = true;
+
+  # -- Terminals
+
+  programs.alacritty = {
+    enable = true;
+    settings = {
+      window.decorations = "None";
+      window.dynamic_padding = true;
+    };
+  };
+
   programs.ghostty = {
-    # package = ghosttyMain;
+    package = ghosttyMain;
     enable = true;
     settings = {
       resize-overlay = "never";
@@ -41,24 +76,11 @@
       cursor-invert-fg-bg = true;
       window-decoration = false;
       confirm-close-surface = false;
-
-      keybind = [
-        "super+r=reload_config"
-        "super+d=toggle_window_decorations"
-
-        "super+enter=new_split:auto"
-        "super+backspace=close_surface"
-
-        "super+h=goto_split:left"
-        "super+j=goto_split:bottom"
-        "super+k=goto_split:top"
-        "super+l=goto_split:right"
-
-        "super+n=jump_to_prompt:1"
-        "super+p=jump_to_prompt:-1 "
-      ];
+      window-inherit-working-directory = false;
     };
   };
+
+  # --
 
   # stylix.targets.nushell.enable = false;
   programs.nushell = {
@@ -66,25 +88,20 @@
     configFile.source = ../dots/nu/config.nu;
   };
 
-  stylix.targets.fzf.enable = false;
-  programs.fzf = {
+  # -- EDITORS --
+
+  programs.neovide = {
     enable = true;
-    enableZshIntegration = true;
-    defaultOptions = [
-      "--color 16"
-      "--layout reverse"
-      "--preview-window right:50%:sharp"
-      "--prompt '❯ '"
-    ];
+    settings = {
+      frame = "none";
+      title-hidden = true;
+    };
+  };
 
-    fileWidgetCommand = "fd --type f";
-    fileWidgetOptions = [
-      "--preview 'bat --color always {}'"
-    ];
-
-    changeDirWidgetOptions = [
-      "--preview 'eza -T -L 3 --git-ignore --icons always --color always {}'"
-    ];
+  stylix.targets.zed.enable = false;
+  programs.zed-editor = {
+    enable = true;
+    # package = zedMain;
   };
 
   stylix.targets.helix.enable = false;
@@ -93,20 +110,40 @@
     package = helixMain;
     settings = lib.importTOML ../dots/helix/config.toml;
     languages = lib.importTOML ../dots/helix/languages.toml;
-    themes.tokyonight_transparent = lib.importTOML ../dots/helix/tokyonight_transparent.toml;
+    themes.transparent = lib.importTOML ../dots/helix/transparent.toml;
   };
+
+  # -- CLI / TUI --
 
   programs.starship = {
     enable = true;
     settings = lib.importTOML ../dots/starship/nerd_font_symbols.toml;
   };
 
+  programs.zoxide.enable = true;
+
   programs.fastfetch = {
     enable = true;
     settings = lib.importJSON ../dots/fastfetch/config.jsonc;
   };
 
-  programs.zoxide.enable = true;
+  programs.btop = {
+    enable = true;
+    settings.vim_keys = true;
+    settings.rounded_corners = false;
+  };
+
+  stylix.targets.fzf.enable = false;
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+    defaultOptions = ["--color 16" "--layout reverse" "--preview-window right:50%:sharp" "--prompt '❯ '"];
+
+    fileWidgetCommand = "fd --type f";
+    fileWidgetOptions = ["--preview 'bat --color always {}'"];
+  };
+
+  # --
 
   programs.zathura = {
     enable = true;
@@ -123,7 +160,6 @@
   };
 
   home.file = {
-    # "${config.xdg.configHome}/i3status-rust".source = ../dots/i3status-rust;
     "${config.xdg.configHome}/waybar".source = ../dots/waybar;
     "${config.xdg.configHome}/rofi".source = ../dots/rofi;
     "${config.xdg.configHome}/scripts" = {

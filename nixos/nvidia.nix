@@ -1,17 +1,17 @@
-{ config, ... }:
-
-{
+{config, ...}: {
   # Enable OpenGL
-  hardware.graphics = {
-    enable = true;
-  };
+  hardware.graphics.enable = true;
 
   # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = ["modesetting" "nvidia"];
 
   # Optimus PRIME
   hardware.nvidia.prime = {
-    sync.enable = true;
+    # Sync and Offload are mutually exclusive
+    sync.enable = false;
+
+    offload.enable = true;
+    offload.enableOffloadCmd = true;
 
     # Make sure to use the correct Bus ID values for your system!
     # intelBusId = "0@0:2:0";

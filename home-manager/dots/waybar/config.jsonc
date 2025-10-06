@@ -34,13 +34,13 @@
     "custom/separator",
     "network",
     "custom/separator",
-    "battery",
-    "custom/separator"
+    "battery"
+    // "custom/separator"
   ],
 
   "clock": {
     "format": "{:%a %d %b %H:%M}",
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    "tooltip-format": "<tt><small>{calendar}</small></tt>"
   },
   "cpu": {
     "states": {
@@ -49,7 +49,8 @@
       "critical": 90
     },
     "interval": 1,
-    "format": " {usage:2}%"
+    // "format": " {usage:2}%"
+    "format": "CPU {usage:2}%"
   },
   "temperature": {
    "thermal-zone": 3,
@@ -67,7 +68,8 @@
       "critical": 85
     },
     "interval": 5,
-    "format": "󰢮 {}%"
+    // "format": "󰢮 {}%"
+    "format": "GPU {}%"
   },
   "memory": {
     "states": {
@@ -76,7 +78,8 @@
       "critical": 85
     },
     "interval": 5,
-    "format": " {:2}%"
+    // "format": " {:2}%"
+    "format": "MEM {:2}%"
   },
   "disk#one": {
     "states": {
@@ -85,7 +88,8 @@
       "critical": 95
     },
     "interval": 10,
-    "format": "󰉉 {percentage_used:2}%",
+    // "format": "󰉉 {percentage_used:2}%",
+    "format": "DISK {percentage_used:2}%",
     "path": "/"
   },
   //"custom/music": {
@@ -96,17 +100,6 @@
   //  "escape": true,
   //  "interval": 1
   //},
-  "sway/workspaces": {
-    "all-outputs": true,
-    "format": "{name}"
-  },
-  "sway/workspaces.focused": {
-    "all-outputs": true,
-    "format": "{name}"
-  },
-  "sway/window": {
-    "format": ""
-  },
   "tray": {
     "icon-size": 16,
     "spacing": 8
@@ -119,33 +112,36 @@
     }
   },
   "backlight": {
-    "format": "{icon} {percent}%",
-    "format-icons": ["󰃜", "󰃛", "󰃚"],
+    "format": "BRI {percent}%",
+    // "format": "{icon} {percent}%",
+    // "format-icons": ["󰃜", "󰃛", "󰃚"],
     //"on-scroll-up": "brightnessctl set +5%",
     //"on-scroll-down": "brightnessctl set 5%-"
   },
   "pulseaudio": {
-    "format": "{icon} {volume}% {format_source}",
-    "format-bluetooth": "{icon}  {volume}%  {format_source}",
-    "format-bluetooth-muted": "  {icon}  {format_source}",
-    "format-muted": "  {format_source}",
+    "format": "SPK {volume}% {format_source}",
+    "format-bluetooth": "BLU {volume}% {format_source}",
+    "format-source": "MIC {volume}%",
+    // "format-muted": "  {format_source}",
+    // "format-bluetooth-muted": "  {icon}  {format_source}",
     // "format-source": " {volume}%",
-    "format-source": "󰍬 {volume}%",
     // "format-source-muted": "󰍭",
-    "format-source-muted": "󰍭",
-    "format-icons": {
-      "headphone": "󰋋",
-      "headset": "󰋎",
-      "phone": " ",
-      "portable": " ",
-      "default": ["󰕿", "󰖀", "󰕾"]
-    },
+    // "format-source-muted": "󰍭",
+    // "format-icons": {
+    //   "headphone": "󰋋",
+    //   "headset": "󰋎",
+    //   "phone": " ",
+    //   "portable": " ",
+    //   "default": ["󰕿", "󰖀", "󰕾"]
+    // },
     "on-click": "pavucontrol"
   },
   "network": {
-    "format-wifi": "󰖩 {signalStrength}%",
-    "format-ethernet": "  {ifname}",
-    "format-disconnected": "󱛅",
+    "format-wifi": "WIFI {signalStrength}%",
+    // "format-wifi": "󰖩 {signalStrength}%",
+    "format-ethernet": "ETH {ifname}",
+    // "format-ethernet": "  {ifname}",
+    "format-disconnected": "NONE",
     "tooltip-format": "{essid} - {ifname}",
     "tooltip-format-disconnected": "Disconnected",
     "interval": 30
@@ -163,10 +159,19 @@
       "warning": 35,
       "critical": 20
     },
-    "format": "{icon} {capacity}%",
-    "format-charging": "󱐋 {capacity}%",
-    "interval": 5,
-    "format-icons": [" ", " ", " ", " ", " "]
+
+    "format": "BAT {capacity}%",
+    // "format": "{icon} {capacity}%",
+    // "format-charging": "󱐋 {capacity}%",
+    "format-charging": "CHG {capacity}%",
+
+    "events": {
+       "on-discharging-warning": "notify-send -u low 'BATTERY LOW' 'Discharging' -t 60000",
+       "on-discharging-critical": "notify-send -u critical 'BATTERY CRITICAL' 'Discharging' -t 60000",
+       "on-charging-100": "notify-send -u normal -t 60000 'BATTERY FULL' 'Charging'"
+    },
+    "interval": 10,
+    // "format-icons": [" ", " ", " ", " ", " "]
   },
   "custom/separator": {
     "format": "  ",

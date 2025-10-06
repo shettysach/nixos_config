@@ -1,7 +1,9 @@
-{ pkgs, inputs, ... }:
-
 {
-  nixpkgs.overlays = [ inputs.niri.overlays.niri ];
+  pkgs,
+  inputs,
+  ...
+}: {
+  nixpkgs.overlays = [inputs.niri.overlays.niri];
 
   nix.settings.experimental-features = [
     "nix-command"
@@ -12,12 +14,16 @@
     substituters = [
       "https://nix-community.cachix.org"
       "https://niri.cachix.org"
+      "https://ghostty.cachix.org"
       "https://helix.cachix.org"
+      "https://zed-industries.cachix.org"
     ];
     trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
+      "ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns="
       "helix.cachix.org-1:ejp9KQpR1FBI2onstMQ34yogDm4OgU2ru6lIwPvuCVs="
+      "zed-industries.cachix.org-1:fgVpvtdF+ssrgP1lB6EusuR3uM6bNcncWduKxri3u6Y="
     ];
   };
 
@@ -31,7 +37,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  time.timeZone = "Asia/Kolkata";
+  time.timeZone = "America/Los_Angeles";
   i18n.defaultLocale = "en_GB.UTF-8";
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "en_IN";
@@ -44,6 +50,10 @@
     LC_TELEPHONE = "en_IN";
     LC_TIME = "en_IN";
   };
+
+  # SSH and SCP
+  services.sshd.enable = true;
+  networking.firewall.allowedTCPPorts = [22];
 
   security.polkit.enable = true;
   security.rtkit.enable = true;
@@ -84,6 +94,17 @@
   #     userServices = true;
   #   };
   # };
+
+  services.libinput.enable = true;
+
+  services.libinput.touchpad = {
+    tapping = false; # optional: off while testing buttons
+    clickMethod = "buttonareas";
+    scrollMethod = "twofinger";
+    naturalScrolling = true;
+    disableWhileTyping = true;
+    middleEmulation = true;
+  };
 
   services.pulseaudio.enable = false;
   services.pipewire = {
