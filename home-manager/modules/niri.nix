@@ -6,8 +6,17 @@
   scripts = "${config.xdg.configHome}/scripts";
 in {
   programs.niri.enable = true;
-
   services.wpaperd.enable = true;
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-wlr
+    ];
+
+    config.common.default = "*";
+  };
 
   services.mako = {
     enable = true;
@@ -21,9 +30,6 @@ in {
     };
 
     environment = {
-      # GTK_USE_PORTAL = "1";
-      # XDG_DESKTOP_PORTAL_FORCE = "1";
-
       CLUTTER_BACKEND = "wayland";
       # DISPLAY = null;
       GDK_BACKEND = "wayland,x11";
@@ -66,7 +72,6 @@ in {
 
     binds = {
       "Mod+Return".action.spawn = ["nvidia-offload" "ghostty"];
-      "Mod+Shift+Return".action.spawn = ["nvidia-offload" "ghostty --window-inherit-working-directory=true"];
 
       "Mod+Backspace".action.close-window = {};
       "Mod+D".action.spawn = ["${pkgs.rofi}/bin/rofi" "-show" "drun"];

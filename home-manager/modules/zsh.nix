@@ -35,7 +35,7 @@
 
     shellAliases = {
       vim = "nvim";
-      vimd = "neovide";
+      nvide = "nvidia-offload neovide";
 
       fzfh = "fd -H . | fzf";
       fzfp = "fzf --preview 'bat --color=always {}'";

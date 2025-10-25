@@ -26,6 +26,7 @@
       obsidian
       texliveSmall
       opencode
+      claude-code
       # -- TUI / CLI utils --
       fastfetch
       file

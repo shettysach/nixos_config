@@ -64,4 +64,8 @@ element selected.normal {
   background-color: @blue;
 }
 
+element alternate.normal {
+  background-color: @background;
+}
+
 /* vim: ft=sass */

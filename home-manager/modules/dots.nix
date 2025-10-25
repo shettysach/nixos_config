@@ -25,36 +25,12 @@
     qt.enable = true;
     gtk.enable = true;
     gtk.extraCss = ''
-      .window-frame, .window-frame:backdrop,
-      .titlebar, headerbar, headerbar:backdrop,
-      button, entry, progressbar, scale, scrollbar, switch, spinbutton,
-      treeview, notebook, scrollbar slider,
-      popover, .popover, menu, .menu, .background, tooltip {
+      * {
         border-radius: 0 !important;
         -gtk-outline-radius: 0;
       }
-
-      window, .window, .window-frame, headerbar, .titlebar, .view,
-      button, entry, switch, scale, scrollbar, progressbar, combobox, textview,
-      listview, tabbar, tab, popover, menu, tooltip, dialog, .dialog, .background, .sidebar {
-        border-radius: 0 !important;
-      }
     '';
   };
-
-  # dconf.enable = true;
-  # dconf.settings = {
-  #   "org/gnome/desktop/interface" = {
-  #     gtk-theme = "Redmond97 SE Ouroboros-HiDPI";
-  #     icon-theme = "Obsidian-Silver";
-  #
-  #     color-scheme = lib.mkForce "prefer-dark";
-  #     enable-animations = true;
-  #   };
-  # };
-
-  programs.zellij.enable = true;
-
   # -- Terminals
 
   programs.alacritty = {
@@ -79,6 +55,8 @@
       window-inherit-working-directory = false;
     };
   };
+
+  programs.zellij.enable = true;
 
   # --
 
@@ -159,8 +137,14 @@
     };
   };
 
+  stylix.targets.waybar.addCss = true;
+  programs.waybar = {
+    enable = true;
+    settings = lib.importJSON ../dots/waybar/config.json;
+    style = lib.mkAfter (builtins.readFile ../dots/waybar/style.css);
+  };
+
   home.file = {
-    "${config.xdg.configHome}/waybar".source = ../dots/waybar;
     "${config.xdg.configHome}/rofi".source = ../dots/rofi;
     "${config.xdg.configHome}/scripts" = {
       source = ../dots/scripts;

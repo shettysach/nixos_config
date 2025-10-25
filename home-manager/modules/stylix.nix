@@ -3,8 +3,9 @@
     enable = true;
     autoEnable = true;
 
-    image = ../../wallpapers/aurora_ice.jpg;
+    # image = ../../wallpapers/aurora_ice.jpg;
     base16Scheme = ../../tokyonight.yaml;
+    image = ../../wallpapers/matthew-stephenson.jpg;
 
     fonts = {
       serif = {
@@ -37,6 +38,7 @@
     };
 
     opacity = {
+      desktop = 0.85;
       terminal = 0.85;
     };
 
