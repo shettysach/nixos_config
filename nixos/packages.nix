@@ -25,6 +25,7 @@
       nushell
       obsidian
       texliveSmall
+      # --
       opencode
       claude-code
       # -- TUI / CLI utils --

@@ -4,8 +4,8 @@
     autoEnable = true;
 
     # image = ../../wallpapers/aurora_ice.jpg;
-    base16Scheme = ../../tokyonight.yaml;
-    image = ../../wallpapers/matthew-stephenson.jpg;
+    base16Scheme = (import ../../theme.nix).base16Scheme;
+    image = (import ../../theme.nix).image;
 
     fonts = {
       serif = {
@@ -38,15 +38,14 @@
     };
 
     opacity = {
-      desktop = 0.85;
       terminal = 0.85;
     };
 
     iconTheme = {
       enable = true;
-      package = pkgs.nordzy-icon-theme;
-      dark = "Nordzy";
-      light = "Nordzy";
+      package = pkgs.kdePackages.breeze-icons;
+      dark = "breeze-dark";
+      light = "breeze";
     };
   };
 }

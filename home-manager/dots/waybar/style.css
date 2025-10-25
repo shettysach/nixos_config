@@ -1,56 +1,13 @@
 * {
-  all: unset;
-  border: 0;
   border-radius: 0;
-  font-family: "JetBrainsMono Nerd Font";
-}
-
-window#waybar {
-  margin: 0;
-}
-
-#workspaces button {
-  padding: 5px 10px;
-}
-
-#workspaces button.focused {
-  color: @base0D;
 }
 
 #workspaces button.urgent {
   background: @base08;
 }
 
-#workspaces button:hover {
-  transition: none;
-}
-
-#workspaces,
-#mode,
-#window,
-#idle_inhibitor,
-#bluetooth,
-#pulseaudio,
-#cpu,
-#memory,
-#clock,
-#battery,
-#backlight,
-#disk,
-#custom-separator,
-#custom-powermenu,
-#custom-gpu,
-#network,
-#taskbar {
-  padding: 2px 10px 2px 10px;
-}
-
-#idle_inhibitor {
-  font-size: 15px;
-}
-
-#idle_inhibitor.deactivated,
-#custom-music {
+#pulseaudio.bluetooth {
+  color: @base0D;
 }
 
 #custom-separator {
@@ -75,14 +32,6 @@ window#waybar {
 #network.disconnected,
 #pulseaudio.muted {
   color: @base08;
-}
-
-#pulseaudio.bluetooth {
-  color: @base0D;
-}
-
-#tray {
-  padding: 5px 3px 5px 3px;
 }
 
 /* window#waybar.floating, */

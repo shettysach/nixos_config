@@ -10,10 +10,7 @@ in {
 
   xdg.portal = {
     enable = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-gtk
-      xdg-desktop-portal-wlr
-    ];
+    extraPortals = with pkgs; [xdg-desktop-portal-gtk xdg-desktop-portal-wlr];
 
     config.common.default = "*";
   };
@@ -59,6 +56,13 @@ in {
     input.focus-follows-mouse.enable = true;
 
     layout.border.width = 2;
+
+    # layout.border.active.gradient = lib.mkForce {
+    #   angle = 135;
+    #   from = config.lib.stylix.colors.base0D;
+    #   to = config.lib.stylix.colors.base0B;
+    # };
+
     layout.gaps = 4;
 
     animations.enable = true;
@@ -173,7 +177,6 @@ in {
         event = "before-sleep";
         command = "${pkgs.swaylock}/bin/swaylock";
       }
-
       {
         event = "lock";
         command = "${pkgs.swaylock}/bin/swaylock";
@@ -185,13 +188,11 @@ in {
         timeout = 5 * 60;
         command = "${pkgs.swaylock}/bin/swaylock";
       }
-
       {
         timeout = 10 * 60;
         command = "niri msg action power-off-monitors";
         resumeCommand = "niri msg action power-on-monitors";
       }
-
       {
         timeout = 15 * 60;
         command = "${pkgs.systemd}/bin/systemctl suspend";

@@ -2,8 +2,7 @@
   stylix = {
     enable = true;
     autoEnable = true;
-    base16Scheme = ../../tokyonight.yaml;
-
+    base16Scheme = (import ../../theme.nix).base16Scheme;
     targets = {
       qt.enable = true;
       gtk.enable = true;
