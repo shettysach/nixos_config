@@ -2,12 +2,10 @@ configuration {
   display-drun: "drun";
   display-window: "win";
   drun-display-format: "{name}";
-  font: "Aileron 14";
-  // font: "JetBrainsMono Nerd Font 13";
-  // font: "BerkeleyMono Nerd Font 14";
+  font: "JetBrainsMono Nerd Font 13";
   modi: "window,run,drun";
   show-icons: true;
-  terminal: "alacritty";
+  terminal: "ghostty";
   dpi: -1;
 }
 
@@ -62,10 +60,6 @@ prompt {
 element selected.active,
 element selected.normal {
   background-color: @blue;
-}
-
-element alternate.normal {
-  background-color: @background;
 }
 
 /* vim: ft=sass */

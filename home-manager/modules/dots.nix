@@ -8,38 +8,17 @@
 }: {
   programs.bat.enable = true;
   programs.rofi.enable = true;
-  programs.spotify-player.enable = true;
 
-  stylix.targets.swaylock.useWallpaper = false;
-  programs.swaylock = {
-    enable = true;
-    settings = {
-      daemonize = true;
-      indicator-radius = 125;
-      indicator-thickness = 5;
-      font-size = 45;
-    };
-  };
+  programs.spotify-player.enable = true;
 
   stylix.targets = {
     qt.enable = true;
     gtk.enable = true;
-    gtk.extraCss = ''
-      * {
-        border-radius: 0 !important;
-        -gtk-outline-radius: 0;
-      }
-    '';
+    gtk.extraCss = "* { border-radius: 0; }";
+    spotify-player.enable = false;
   };
-  # -- Terminals
 
-  programs.alacritty = {
-    enable = true;
-    settings = {
-      window.decorations = "None";
-      window.dynamic_padding = true;
-    };
-  };
+  # -- Terminals
 
   programs.ghostty = {
     package = ghosttyMain;
@@ -53,6 +32,14 @@
       window-decoration = false;
       confirm-close-surface = false;
       window-inherit-working-directory = false;
+    };
+  };
+
+  programs.alacritty = {
+    enable = true;
+    settings = {
+      window.decorations = "None";
+      window.dynamic_padding = true;
     };
   };
 
@@ -82,7 +69,6 @@
     # package = zedMain;
   };
 
-  stylix.targets.helix.enable = false;
   programs.helix = {
     enable = true;
     package = helixMain;
@@ -90,6 +76,7 @@
     languages = lib.importTOML ../dots/helix/languages.toml;
     themes.transparent = lib.importTOML ../dots/helix/transparent.toml;
   };
+  stylix.targets.helix.enable = false;
 
   # -- CLI / TUI --
 
@@ -115,7 +102,12 @@
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
-    defaultOptions = ["--color 16" "--layout reverse" "--preview-window right:50%:sharp" "--prompt '❯ '"];
+    defaultOptions = [
+      "--color 16"
+      "--layout reverse"
+      "--preview-window right:50%:sharp"
+      "--prompt '❯ '"
+    ];
 
     fileWidgetCommand = "fd --type f";
     fileWidgetOptions = ["--preview 'bat --color always {}'"];

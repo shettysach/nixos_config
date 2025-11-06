@@ -14,4 +14,13 @@
     indicator = true;
     package = pkgs.kdePackages.kdeconnect-kde;
   };
+
+  services.gammastep = {
+    enable = true;
+    tray = true;
+    provider = "manual";
+    duskTime = "16:00-21:00";
+    dawnTime = "06:00-09:00";
+    temperature.night = 2700;
+  };
 }

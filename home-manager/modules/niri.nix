@@ -10,7 +10,10 @@ in {
 
   xdg.portal = {
     enable = true;
-    extraPortals = with pkgs; [xdg-desktop-portal-gtk xdg-desktop-portal-wlr];
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-gtk
+      xdg-desktop-portal-wlr
+    ];
 
     config.common.default = "*";
   };
@@ -49,7 +52,12 @@ in {
 
     spawn-at-startup = [
       {command = ["${pkgs.waybar}/bin/waybar"];}
-      {command = ["${pkgs.clipse}/bin/clipse" "-listen"];}
+      {
+        command = [
+          "${pkgs.clipse}/bin/clipse"
+          "-listen"
+        ];
+      }
     ];
 
     hotkey-overlay.skip-at-startup = true;
@@ -72,17 +80,29 @@ in {
     input.mod-key = "Alt";
     input.mod-key-nested = "Super";
 
-    layout.preset-column-widths = [{proportion = 0.5;} {proportion = 1.0;}];
+    layout.preset-column-widths = [
+      {proportion = 0.5;}
+      {proportion = 1.0;}
+    ];
 
     binds = {
-      "Mod+Return".action.spawn = ["nvidia-offload" "ghostty"];
+      "Mod+Return".action.spawn = [
+        "nvidia-offload"
+        "ghostty"
+      ];
 
       "Mod+Backspace".action.close-window = {};
-      "Mod+D".action.spawn = ["${pkgs.rofi}/bin/rofi" "-show" "drun"];
+      "Mod+D".action.spawn = [
+        "${pkgs.rofi}/bin/rofi"
+        "-show"
+        "drun"
+      ];
 
-      "Mod+X".action.show-hotkey-overlay = {};
-
-      "Mod+Q".action.spawn = ["killall" "-SIGUSR1" ".waybar-wrapped"];
+      "Mod+Q".action.spawn = [
+        "killall"
+        "-SIGUSR1"
+        ".waybar-wrapped"
+      ];
 
       "Mod+K".action.focus-window-or-workspace-up = {};
       "Mod+J".action.focus-window-or-workspace-down = {};
@@ -103,8 +123,17 @@ in {
       "Mod+Equal".action.set-column-width = "+10%";
       "Mod+Minus".action.set-column-width = "-10%";
 
-      "Mod+M".action.spawn = ["${pkgs.rofi}/bin/rofi" "-show" "power-menu" "-modi" "power-menu:${scripts}/power_menu --no-symbols"];
-      "Mod+Shift+B".action.spawn = ["bash" "${scripts}/bluetooth_menu"];
+      "Mod+M".action.spawn = [
+        "${pkgs.rofi}/bin/rofi"
+        "-show"
+        "power-menu"
+        "-modi"
+        "power-menu:${scripts}/power_menu --no-symbols"
+      ];
+      "Mod+Shift+B".action.spawn = [
+        "bash"
+        "${scripts}/bluetooth_menu"
+      ];
 
       "Mod+S".action.screenshot = {};
       "Mod+Space".action.switch-focus-between-floating-and-tiling = {};
@@ -112,52 +141,92 @@ in {
 
       "XF86AudioRaiseVolume" = {
         allow-when-locked = true;
-        action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"];
+        action.spawn = [
+          "wpctl"
+          "set-volume"
+          "@DEFAULT_AUDIO_SINK@"
+          "0.1+"
+        ];
       };
 
       "XF86AudioLowerVolume" = {
         allow-when-locked = true;
-        action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"];
+        action.spawn = [
+          "wpctl"
+          "set-volume"
+          "@DEFAULT_AUDIO_SINK@"
+          "0.1-"
+        ];
       };
 
       "XF86AudioMute" = {
         allow-when-locked = true;
-        action.spawn = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"];
+        action.spawn = [
+          "wpctl"
+          "set-mute"
+          "@DEFAULT_AUDIO_SINK@"
+          "toggle"
+        ];
       };
 
       "XF86AudioMicMute" = {
         allow-when-locked = true;
-        action.spawn = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"];
+        action.spawn = [
+          "wpctl"
+          "set-mute"
+          "@DEFAULT_AUDIO_SOURCE@"
+          "toggle"
+        ];
       };
 
       "XF86MonBrightnessDown" = {
         allow-when-locked = true;
-        action.spawn = ["light" "-U" "5"];
+        action.spawn = [
+          "light"
+          "-U"
+          "5"
+        ];
       };
 
       "XF86MonBrightnessUp" = {
         allow-when-locked = true;
-        action.spawn = ["light" "-A" "5"];
+        action.spawn = [
+          "light"
+          "-A"
+          "5"
+        ];
       };
 
       "XF86AudioPlay" = {
         allow-when-locked = true;
-        action.spawn = ["playerctl" "play-pause"];
+        action.spawn = [
+          "playerctl"
+          "play-pause"
+        ];
       };
 
       "XF86AudioPause" = {
         allow-when-locked = true;
-        action.spawn = ["playerctl" "play-pause"];
+        action.spawn = [
+          "playerctl"
+          "play-pause"
+        ];
       };
 
       "XF86AudioNext" = {
         allow-when-locked = true;
-        action.spawn = ["playerctl" "next"];
+        action.spawn = [
+          "playerctl"
+          "next"
+        ];
       };
 
       "XF86AudioPrev" = {
         allow-when-locked = true;
-        action.spawn = ["playerctl" "prev"];
+        action.spawn = [
+          "playerctl"
+          "prev"
+        ];
       };
     };
 
@@ -168,6 +237,17 @@ in {
         # open-floating = false;
       }
     ];
+  };
+
+  stylix.targets.swaylock.useWallpaper = false;
+  programs.swaylock = {
+    enable = true;
+    settings = {
+      daemonize = true;
+      indicator-radius = 125;
+      indicator-thickness = 5;
+      font-size = 45;
+    };
   };
 
   services.swayidle = {

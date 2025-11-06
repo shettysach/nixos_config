@@ -47,7 +47,6 @@
       imv
       zip
       unzip
-      gammastep
       networkmanagerapplet
       playerctl
       pulseaudio
@@ -77,14 +76,11 @@
 
     inherit (pkgs.nvtopPackages) nvidia;
 
-    # ghostty = inputs.ghostty.packages.${pkgs.system}.default;
-    helix = inputs.helix.packages.${pkgs.system}.default;
     cohle = inputs.cohle.packages.${pkgs.system}.default;
   };
 
   fonts.packages = lib.attrValues {
-    inherit (pkgs) lora;
-    inherit (pkgs) aileron;
+    inherit (pkgs) lora work-sans;
     inherit (pkgs.nerd-fonts) jetbrains-mono;
   };
 }

@@ -14,19 +14,18 @@
       };
 
       sansSerif = {
-        name = "Aileron";
-        package = pkgs.aileron;
+        name = "Work Sans";
+        package = pkgs.work-sans;
       };
 
       monospace = {
-        # name = "BerkeleyMono Nerd Font";
         name = "JetBrainsMono Nerd Font";
         package = pkgs.nerd-fonts.jetbrains-mono;
       };
 
       sizes = {
         desktop = 12;
-        applications = 12;
+        applications = 13;
         terminal = 16;
       };
     };
