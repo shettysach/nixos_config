@@ -3,7 +3,6 @@
     enable = true;
     autoEnable = true;
 
-    # image = ../../wallpapers/aurora_ice.jpg;
     base16Scheme = (import ../../theme.nix).base16Scheme;
     image = (import ../../theme.nix).image;
 
@@ -26,7 +25,7 @@
       sizes = {
         desktop = 12;
         applications = 13;
-        terminal = 16;
+        terminal = 15;
       };
     };
 
@@ -38,6 +37,7 @@
 
     opacity = {
       terminal = 0.85;
+      desktop = 0.85;
     };
 
     iconTheme = {

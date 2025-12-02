@@ -3,13 +3,31 @@
   config,
   ghosttyMain,
   helixMain,
-  # zedMain,
+  pkgs,
+  # zedMain
   ...
 }: {
   programs.bat.enable = true;
   programs.rofi.enable = true;
 
-  programs.spotify-player.enable = true;
+  programs.spotify-player = {
+    enable = true;
+    settings = {
+      border_type = "Hidden";
+      progress_bar_position = "Right";
+      cover_img_width = 7;
+      cover_img_length = 16;
+      layout.playback_window_position = "Bottom";
+    };
+  };
+
+  programs.yazi = {
+    enable = true;
+    initLua = ../dots/yazi/init.lua;
+    settings = lib.importTOML ../dots/yazi/yazi.toml;
+    keymap = lib.importTOML ../dots/yazi/keymap.toml;
+    plugins = {inherit (pkgs.yaziPlugins) yatline git relative-motions;};
+  };
 
   stylix.targets = {
     qt.enable = true;
@@ -25,13 +43,20 @@
     enable = true;
     settings = {
       resize-overlay = "never";
-      window-padding-x = 0;
-      window-padding-y = 0;
       window-padding-balance = true;
       cursor-invert-fg-bg = true;
       window-decoration = false;
       confirm-close-surface = false;
       window-inherit-working-directory = false;
+    };
+  };
+
+  programs.kitty = {
+    enable = false;
+    settings = {
+      tab_bar_edge = "bottom";
+      hide_window_decorations = "yes";
+      confirm_os_window_close = 0;
     };
   };
 
@@ -70,7 +95,7 @@
   };
 
   programs.helix = {
-    enable = true;
+    enable = false;
     package = helixMain;
     settings = lib.importTOML ../dots/helix/config.toml;
     languages = lib.importTOML ../dots/helix/languages.toml;

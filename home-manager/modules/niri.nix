@@ -86,23 +86,13 @@ in {
     ];
 
     binds = {
-      "Mod+Return".action.spawn = [
-        "nvidia-offload"
-        "ghostty"
-      ];
+      "Mod+Return".action.spawn = ["nvidia-offload" "ghostty"];
 
       "Mod+Backspace".action.close-window = {};
-      "Mod+D".action.spawn = [
-        "${pkgs.rofi}/bin/rofi"
-        "-show"
-        "drun"
-      ];
 
-      "Mod+Q".action.spawn = [
-        "killall"
-        "-SIGUSR1"
-        ".waybar-wrapped"
-      ];
+      "Mod+D".action.spawn = ["${pkgs.rofi}/bin/rofi" "-show" "drun"];
+
+      "Mod+Q".action.spawn = ["killall" "-SIGUSR1" ".waybar-wrapped"];
 
       "Mod+K".action.focus-window-or-workspace-up = {};
       "Mod+J".action.focus-window-or-workspace-down = {};
@@ -141,92 +131,52 @@ in {
 
       "XF86AudioRaiseVolume" = {
         allow-when-locked = true;
-        action.spawn = [
-          "wpctl"
-          "set-volume"
-          "@DEFAULT_AUDIO_SINK@"
-          "0.1+"
-        ];
+        action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"];
       };
 
       "XF86AudioLowerVolume" = {
         allow-when-locked = true;
-        action.spawn = [
-          "wpctl"
-          "set-volume"
-          "@DEFAULT_AUDIO_SINK@"
-          "0.1-"
-        ];
+        action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"];
       };
 
       "XF86AudioMute" = {
         allow-when-locked = true;
-        action.spawn = [
-          "wpctl"
-          "set-mute"
-          "@DEFAULT_AUDIO_SINK@"
-          "toggle"
-        ];
+        action.spawn = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"];
       };
 
       "XF86AudioMicMute" = {
         allow-when-locked = true;
-        action.spawn = [
-          "wpctl"
-          "set-mute"
-          "@DEFAULT_AUDIO_SOURCE@"
-          "toggle"
-        ];
+        action.spawn = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"];
       };
 
       "XF86MonBrightnessDown" = {
         allow-when-locked = true;
-        action.spawn = [
-          "light"
-          "-U"
-          "5"
-        ];
+        action.spawn = ["light" "-U" "5"];
       };
 
       "XF86MonBrightnessUp" = {
         allow-when-locked = true;
-        action.spawn = [
-          "light"
-          "-A"
-          "5"
-        ];
+        action.spawn = ["light" "-A" "5"];
       };
 
       "XF86AudioPlay" = {
         allow-when-locked = true;
-        action.spawn = [
-          "playerctl"
-          "play-pause"
-        ];
+        action.spawn = ["playerctl" "-a" "play-pause"];
       };
 
       "XF86AudioPause" = {
         allow-when-locked = true;
-        action.spawn = [
-          "playerctl"
-          "play-pause"
-        ];
+        action.spawn = ["playerctl" "-a" "play-pause"];
       };
 
       "XF86AudioNext" = {
         allow-when-locked = true;
-        action.spawn = [
-          "playerctl"
-          "next"
-        ];
+        action.spawn = ["playerctl" "-a" "next"];
       };
 
       "XF86AudioPrev" = {
         allow-when-locked = true;
-        action.spawn = [
-          "playerctl"
-          "prev"
-        ];
+        action.spawn = ["playerctl" "-a" "prev"];
       };
     };
 

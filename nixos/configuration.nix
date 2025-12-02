@@ -34,8 +34,11 @@
     ./modules/mod.nix
   ];
 
+  programs.nix-ld.enable = true;
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  # boot.tmp.useTmpfs = true
 
   time.timeZone = "America/Los_Angeles";
   i18n.defaultLocale = "en_GB.UTF-8";
@@ -67,34 +70,6 @@
     "files mdns_minimal [NOTFOUND=return] dns mdns"
   ];
 
-  # services.printing = {
-  #   enable = true;
-  #   drivers = with pkgs; [
-  #     gutenprint
-  #     epson-201401w
-  #   ];
-  #   browsing = true;
-  #   defaultShared = true;
-  #   openFirewall = true;
-  #   browsedConf = ''
-  #     BrowseDNSSDSubTypes _cups,_print
-  #     BrowseLocalProtocols all
-  #     BrowseRemoteProtocols all
-  #     CreateIPPPrinterQueues All
-  #     BrowseProtocols all
-  #   '';
-  # };
-  #
-  # services.avahi = {
-  #   enable = true;
-  #   nssmdns = true;
-  #   openFirewall = true;
-  #   publish = {
-  #     enable = true;
-  #     userServices = true;
-  #   };
-  # };
-
   services.libinput.enable = true;
 
   services.libinput.touchpad = {
@@ -117,10 +92,7 @@
   };
 
   services.gvfs.enable = true;
-  services.udev.packages = [
-    pkgs.android-udev-rules
-    pkgs.libmtp.out
-  ];
+  # services.udev.packages = [ pkgs.android-udev-rules pkgs.libmtp.out ];
 
   programs = {
     light.enable = true;

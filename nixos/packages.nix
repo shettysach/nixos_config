@@ -62,10 +62,11 @@
       swaylock
       # -- GUI apps --
       brave
-      librewolf
+      # librewolf
       newsflash
       zathura
       # fractal
+      gparted
       ;
 
     inherit (pkgs.kdePackages) okular;
