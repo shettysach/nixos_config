@@ -1,10 +1,8 @@
-{ pkgs, ... }:
-let
-  fileManager = [ "org.xfce.Thunar.desktop" ];
-  browser = [ "brave-browser.desktop" ];
-  # fileManager = ["org.kde.dolphin.desktop"];
-in
-{
+{pkgs, ...}: let
+  browser = ["brave-browser.desktop"];
+  # fileManager = [ "org.xfce.Thunar.desktop" ];
+  fileManager = ["org.kde.dolphin.desktop"];
+in {
   programs.niri = {
     enable = true;
     package = pkgs.niri-stable;

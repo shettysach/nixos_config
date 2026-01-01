@@ -34,7 +34,7 @@
   color: @base08;
 }
 
-/* window#waybar.floating, */
-/* window#waybar.empty { */
-/*   background: none; */
-/* } */
+window#waybar.floating,
+window#waybar.empty {
+  background: none;
+}

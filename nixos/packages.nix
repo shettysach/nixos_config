@@ -25,9 +25,6 @@
       nushell
       obsidian
       texliveSmall
-      # --
-      opencode
-      claude-code
       # -- TUI / CLI utils --
       fastfetch
       file
@@ -38,7 +35,6 @@
       ripgrep
       lsr
       bat
-      delta
       fzf
       fd
       killall
@@ -52,17 +48,19 @@
       pulseaudio
       pulseaudio-ctl
       pavucontrol
+      # --
+      opencode
+      amp-cli
+      claude-code
       # -- wayland  --
       wl-clipboard
       wlr-randr
       clipse
       waybar
       libnotify
-      swayidle
-      swaylock
       # -- GUI apps --
       brave
-      # librewolf
+      librewolf
       newsflash
       zathura
       # fractal
@@ -71,9 +69,9 @@
 
     inherit (pkgs.kdePackages) okular;
 
-    # inherit (pkgs.kdePackages) dolphin dolphin-plugins;
+    inherit (pkgs.kdePackages) dolphin dolphin-plugins;
 
-    inherit (pkgs.xfce) thunar thunar-volman thunar-archive-plugin thunar-media-tags-plugin tumbler;
+    # inherit (pkgs.xfce) thunar thunar-volman thunar-archive-plugin thunar-media-tags-plugin tumbler;
 
     inherit (pkgs.nvtopPackages) nvidia;
 

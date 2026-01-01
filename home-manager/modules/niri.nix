@@ -75,7 +75,6 @@ in {
 
     animations.enable = true;
     animations.slowdown = 0.5;
-    animations.window-resize.enable = false;
 
     input.mod-key = "Alt";
     input.mod-key-nested = "Super";
@@ -86,7 +85,7 @@ in {
     ];
 
     binds = {
-      "Mod+Return".action.spawn = ["nvidia-offload" "ghostty"];
+      "Mod+Return".action.spawn = ["nvidia-offload" "kitty"];
 
       "Mod+Backspace".action.close-window = {};
 
@@ -176,7 +175,7 @@ in {
 
       "XF86AudioPrev" = {
         allow-when-locked = true;
-        action.spawn = ["playerctl" "-a" "prev"];
+        action.spawn = ["playerctl" "-a" "previous"];
       };
     };
 

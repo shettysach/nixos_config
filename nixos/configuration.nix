@@ -40,7 +40,8 @@
   boot.loader.efi.canTouchEfiVariables = true;
   # boot.tmp.useTmpfs = true
 
-  time.timeZone = "America/Los_Angeles";
+  # time.timeZone = "America/Los_Angeles";
+  time.timeZone = "Asia/Kolkata";
   i18n.defaultLocale = "en_GB.UTF-8";
   # i18n.extraLocaleSettings = {
   #   LC_ADDRESS = "en_IN";

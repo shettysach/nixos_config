@@ -4,21 +4,17 @@
   ghosttyMain,
   helixMain,
   pkgs,
-  # zedMain
+  # zedMain,
   ...
 }: {
   programs.bat.enable = true;
   programs.rofi.enable = true;
 
-  programs.spotify-player = {
+  programs.jujutsu.enable = true;
+  programs.delta = {
     enable = true;
-    settings = {
-      border_type = "Hidden";
-      progress_bar_position = "Right";
-      cover_img_width = 7;
-      cover_img_length = 16;
-      layout.playback_window_position = "Bottom";
-    };
+    # enableJujutsuIntegration = true;
+    # enableGitIntegration = true;
   };
 
   programs.yazi = {
@@ -33,26 +29,72 @@
     qt.enable = true;
     gtk.enable = true;
     gtk.extraCss = "* { border-radius: 0; }";
-    spotify-player.enable = false;
   };
 
   # -- Terminals
 
   programs.ghostty = {
     package = ghosttyMain;
-    enable = true;
+    enable = false;
     settings = {
       resize-overlay = "never";
       window-padding-balance = true;
       cursor-invert-fg-bg = true;
+      cursor-style-blink = true;
       window-decoration = false;
       confirm-close-surface = false;
       window-inherit-working-directory = false;
+      keybind = [
+        # Entry point
+        "super+v=activate_key_table:vim"
+
+        # Key table definition
+        "vim/"
+
+        # Line movement
+        "vim/j=scroll_page_lines:1"
+        "vim/k=scroll_page_lines:-1"
+
+        # Page movement
+        "vim/ctrl+d=scroll_page_down"
+        "vim/ctrl+u=scroll_page_up"
+        "vim/ctrl+f=scroll_page_down"
+        "vim/ctrl+b=scroll_page_up"
+        "vim/shift+j=scroll_page_down"
+        "vim/shift+k=scroll_page_up"
+
+        # Jump to top/bottom
+        "vim/g>g=scroll_to_top"
+        "vim/shift+g=scroll_to_bottom"
+
+        # Search (vim-style search entry)
+        "vim/slash=start_search"
+        "vim/n=navigate_search:next"
+
+        # Copy mode / selection
+        "vim/v=copy_to_clipboard"
+        "vim/y=copy_to_clipboard"
+
+        # Command Palette
+        "vim/shift+semicolon=toggle_command_palette"
+
+        # Exit
+        "vim/escape=deactivate_key_table"
+        "vim/q=deactivate_key_table"
+        "vim/i=deactivate_key_table"
+
+        # Catch unbound keys
+        "vim/catch_all=ignore"
+
+        # Your existing binds (kept)
+        "ctrl+h=goto_split:left"
+        "ctrl+l=goto_split:right"
+      ];
     };
   };
 
   programs.kitty = {
-    enable = false;
+    enable = true;
     settings = {
       tab_bar_edge = "bottom";
       hide_window_decorations = "yes";
@@ -61,7 +103,7 @@
   };
 
   programs.alacritty = {
-    enable = true;
+    enable = false;
     settings = {
       window.decorations = "None";
       window.dynamic_padding = true;
@@ -95,8 +137,8 @@
   };
 
   programs.helix = {
-    enable = false;
-    package = helixMain;
+    enable = true;
+    # package = helixMain;
     settings = lib.importTOML ../dots/helix/config.toml;
     languages = lib.importTOML ../dots/helix/languages.toml;
     themes.transparent = lib.importTOML ../dots/helix/transparent.toml;
@@ -159,6 +201,27 @@
     enable = true;
     settings = lib.importJSON ../dots/waybar/config.json;
     style = lib.mkAfter (builtins.readFile ../dots/waybar/style.css);
+  };
+
+  stylix.targets.spotify-player.enable = false;
+  programs.spotify-player = {
+    enable = true;
+    settings = {
+      progress_bar_position = "Right";
+      cover_img_width = 7;
+      cover_img_length = 16;
+      layout = {
+        library.playlist_percent = 30;
+        playback_window_position = "Bottom";
+      };
+      theme = "custom";
+    };
+    themes = [
+      {
+        name = "custom";
+        component_style.border.fg = "BrightBlack";
+      }
+    ];
   };
 
   home.file = {
