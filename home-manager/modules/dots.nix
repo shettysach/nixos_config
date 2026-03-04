@@ -1,14 +1,56 @@
 {
   lib,
+  pkgs,
   config,
   ghosttyMain,
-  helixMain,
-  pkgs,
   # zedMain,
+  spotMain,
   ...
 }: {
-  programs.bat.enable = true;
-  programs.rofi.enable = true;
+  # -- TERMINALS
+
+  programs.ghostty = {
+    # package = ghosttyMain;
+    enable = true;
+    systemd.enable = true;
+    settings = {
+      resize-overlay = "never";
+      window-padding-balance = true;
+      cursor-invert-fg-bg = true;
+      cursor-style-blink = true;
+      window-decoration = false;
+      confirm-close-surface = false;
+      window-inherit-working-directory = false;
+      keybind = [
+        "super+enter=new_split:auto"
+        "super+backspace=close_surface"
+        "super+h=goto_split:left"
+        "super+j=goto_split:down"
+        "super+k=goto_split:up"
+        "super+l=goto_split:right"
+      ];
+    };
+  };
+
+  programs.kitty = {
+    enable = true;
+    settings = {
+      tab_bar_edge = "bottom";
+      hide_window_decorations = "yes";
+      confirm_os_window_close = 0;
+      enable_audio_bell = "no";
+      enabled_layouts = "splits:split_axis=auto";
+      inactive_text_alpha = 0.5;
+    };
+    keybindings = {
+      "super+enter" = "launch --cwd=current --location=split";
+      "super+backspace" = "close_window";
+      "super+h" = "neighboring_window left";
+      "super+j" = "neighboring_window down";
+      "super+k" = "neighboring_window up";
+      "super+l" = "neighboring_window right";
+    };
+  };
 
   programs.jujutsu.enable = true;
   programs.delta = {
@@ -22,97 +64,20 @@
     initLua = ../dots/yazi/init.lua;
     settings = lib.importTOML ../dots/yazi/yazi.toml;
     keymap = lib.importTOML ../dots/yazi/keymap.toml;
-    plugins = {inherit (pkgs.yaziPlugins) yatline git relative-motions;};
+    plugins = {inherit (pkgs.yaziPlugins) git relative-motions;};
   };
 
   stylix.targets = {
     qt.enable = true;
     gtk.enable = true;
     gtk.extraCss = "* { border-radius: 0; }";
+
+    yazi.enable = false;
   };
-
-  # -- Terminals
-
-  programs.ghostty = {
-    package = ghosttyMain;
-    enable = false;
-    settings = {
-      resize-overlay = "never";
-      window-padding-balance = true;
-      cursor-invert-fg-bg = true;
-      cursor-style-blink = true;
-      window-decoration = false;
-      confirm-close-surface = false;
-      window-inherit-working-directory = false;
-      keybind = [
-        # Entry point
-        "super+v=activate_key_table:vim"
-
-        # Key table definition
-        "vim/"
-
-        # Line movement
-        "vim/j=scroll_page_lines:1"
-        "vim/k=scroll_page_lines:-1"
-
-        # Page movement
-        "vim/ctrl+d=scroll_page_down"
-        "vim/ctrl+u=scroll_page_up"
-        "vim/ctrl+f=scroll_page_down"
-        "vim/ctrl+b=scroll_page_up"
-        "vim/shift+j=scroll_page_down"
-        "vim/shift+k=scroll_page_up"
-
-        # Jump to top/bottom
-        "vim/g>g=scroll_to_top"
-        "vim/shift+g=scroll_to_bottom"
-
-        # Search (vim-style search entry)
-        "vim/slash=start_search"
-        "vim/n=navigate_search:next"
-
-        # Copy mode / selection
-        "vim/v=copy_to_clipboard"
-        "vim/y=copy_to_clipboard"
-
-        # Command Palette
-        "vim/shift+semicolon=toggle_command_palette"
-
-        # Exit
-        "vim/escape=deactivate_key_table"
-        "vim/q=deactivate_key_table"
-        "vim/i=deactivate_key_table"
-
-        # Catch unbound keys
-        "vim/catch_all=ignore"
-
-        # Your existing binds (kept)
-        "ctrl+h=goto_split:left"
-        "ctrl+l=goto_split:right"
-      ];
-    };
-  };
-
-  programs.kitty = {
-    enable = true;
-    settings = {
-      tab_bar_edge = "bottom";
-      hide_window_decorations = "yes";
-      confirm_os_window_close = 0;
-    };
-  };
-
-  programs.alacritty = {
-    enable = false;
-    settings = {
-      window.decorations = "None";
-      window.dynamic_padding = true;
-    };
-  };
+  # -- shell stuff
 
   programs.zellij.enable = true;
-
-  # --
+  programs.bat.enable = true;
 
   # stylix.targets.nushell.enable = false;
   programs.nushell = {
@@ -122,14 +87,6 @@
 
   # -- EDITORS --
 
-  programs.neovide = {
-    enable = true;
-    settings = {
-      frame = "none";
-      title-hidden = true;
-    };
-  };
-
   stylix.targets.zed.enable = false;
   programs.zed-editor = {
     enable = true;
@@ -137,8 +94,7 @@
   };
 
   programs.helix = {
-    enable = true;
-    # package = helixMain;
+    enable = false;
     settings = lib.importTOML ../dots/helix/config.toml;
     languages = lib.importTOML ../dots/helix/languages.toml;
     themes.transparent = lib.importTOML ../dots/helix/transparent.toml;
@@ -206,24 +162,33 @@
   stylix.targets.spotify-player.enable = false;
   programs.spotify-player = {
     enable = true;
+    # package = spotMain;
     settings = {
       progress_bar_position = "Right";
       cover_img_width = 7;
       cover_img_length = 16;
-      layout = {
-        library.playlist_percent = 30;
-        playback_window_position = "Bottom";
-      };
+      layout.library.playlist_percent = 30;
+      layout.playback_window_position = "Bottom";
       theme = "custom";
+      pause_icon = "󰐊";
+      play_icon = "󰏤";
+      liked_icon = "󰐕";
     };
     themes = [
       {
         name = "custom";
-        component_style.border.fg = "BrightBlack";
+        component_style = {
+          border.fg = "BrightBlack";
+          playback_album.fg = "Blue";
+          playback_metadata.fg = "White";
+          playback_genres.fg = "White";
+          like.fg = "Red";
+        };
       }
     ];
   };
 
+  programs.rofi.enable = true;
   home.file = {
     "${config.xdg.configHome}/rofi".source = ../dots/rofi;
     "${config.xdg.configHome}/scripts" = {

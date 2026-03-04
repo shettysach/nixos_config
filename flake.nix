@@ -19,8 +19,9 @@
     niri.url = "github:sodiboo/niri-flake";
 
     ghostty.url = "github:ghostty-org/ghostty";
-    helix.url = "github:helix-editor/helix";
     zed.url = "github:zed-industries/zed";
+
+    spot.url = "github:aome510/spotify-player";
 
     cohle = {
       url = "github:shettysach/cohle";
@@ -53,9 +54,7 @@
         ./nixos/configuration.nix
         inputs.stylix.nixosModules.stylix
         inputs.niri.nixosModules.niri
-        # {
-        #   nixpkgs.overlays = [];
-        # }
+        # { nixpkgs.overlays = []; }
       ];
     };
 
@@ -65,7 +64,8 @@
       extraSpecialArgs = {
         ghosttyMain = inputs.ghostty.packages.${system}.default;
         helixMain = inputs.helix.packages.${system}.default;
-        zedMain = inputs.zed.packages.${system}.default;
+        # zedMain = inputs.zed.packages.${system}.default;
+        spotMain = inputs.spot.defaultPackage.${system}.override {withAudioBackend = "pulseaudio";};
       };
 
       modules = [

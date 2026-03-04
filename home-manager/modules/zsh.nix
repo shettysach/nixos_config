@@ -35,12 +35,12 @@
 
     shellAliases = {
       vim = "nvim";
-      nvide = "nvidia-offload neovide";
 
       fzfh = "fd -H . | fzf";
       fzfp = "fzf --preview 'bat --color=always {}'";
 
-      zed = "MESA_VK_DEVICE_SELECT=10de:174d zeditor";
+      # zed = "MESA_VK_DEVICE_SELECT=10de:174d zeditor";
+      zed = "zeditor";
     };
 
     localVariables = {

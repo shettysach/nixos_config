@@ -1,4 +1,4 @@
 {
   base16Scheme = ./palettes/tokyonight.yaml;
-  image = ./wallpapers/aurora_ice.jpg;
+  image = ./wallpapers/Blue_mist.jpg;
 }

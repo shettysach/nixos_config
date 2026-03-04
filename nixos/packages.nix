@@ -2,6 +2,7 @@
   lib,
   inputs,
   pkgs,
+  pkgs-stable,
   ...
 }: {
   nixpkgs.config.allowUnfree = true;
@@ -14,6 +15,7 @@
       alejandra
       nixd
       nil
+      cachix
       # -- Dev --
       git
       git-lfs
@@ -21,24 +23,20 @@
       nix-direnv
       direnv
       neovim
-      neovide
-      nushell
       obsidian
-      texliveSmall
       # -- TUI / CLI utils --
       fastfetch
       file
       jq
-      joshuto
       dua
-      zoxide
       ripgrep
-      lsr
+      lsd
       bat
       fzf
       fd
       killall
       btop
+      powertop
       mpv
       imv
       zip
@@ -48,10 +46,6 @@
       pulseaudio
       pulseaudio-ctl
       pavucontrol
-      # --
-      opencode
-      amp-cli
-      claude-code
       # -- wayland  --
       wl-clipboard
       wlr-randr
@@ -60,22 +54,30 @@
       libnotify
       # -- GUI apps --
       brave
-      librewolf
       newsflash
       zathura
-      # fractal
-      gparted
+      # --
+      opencode
+      amp-cli
+      # Dell
+      dell-command-configure
+      libsmbios
+      #
+      wl-screenrec
       ;
 
-    inherit (pkgs.kdePackages) okular;
+    inherit (pkgs.kdePackages) okular gwenview;
 
-    inherit (pkgs.kdePackages) dolphin dolphin-plugins;
+    # inherit (pkgs.kdePackages) dolphin dolphin-plugins kservice;
 
-    # inherit (pkgs.xfce) thunar thunar-volman thunar-archive-plugin thunar-media-tags-plugin tumbler;
+    inherit (pkgs-stable) librewolf;
 
-    inherit (pkgs.nvtopPackages) nvidia;
+    inherit (inputs.cohle.packages.${pkgs.system}) default;
+  };
 
-    cohle = inputs.cohle.packages.${pkgs.system}.default;
+  programs.obs-studio = {
+    enable = true;
+    plugins = [pkgs.obs-studio-plugins.wlrobs];
   };
 
   fonts.packages = lib.attrValues {

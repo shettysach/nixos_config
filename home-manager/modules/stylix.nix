@@ -40,7 +40,7 @@
       desktop = 0.85;
     };
 
-    iconTheme = {
+    icons = {
       enable = true;
       package = pkgs.kdePackages.breeze-icons;
       dark = "breeze-dark";

@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  lib,
   ...
 }: let
   scripts = "${config.xdg.configHome}/scripts";
@@ -10,10 +11,11 @@ in {
 
   xdg.portal = {
     enable = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-gtk
-      xdg-desktop-portal-wlr
-    ];
+    extraPortals = lib.attrValues {
+      inherit (pkgs) xdg-desktop-portal-gtk xdg-desktop-portal-wlr;
+      # inherit (pkgs.kdePackages) xdg-desktop-portal-kde;
+      # inherit (pkgs.kdePackages) xdg-desktop-portal-kde;
+    };
 
     config.common.default = "*";
   };
@@ -42,9 +44,9 @@ in {
 
       WLR_NO_HARDWARE_CURSORS = "1";
 
-      GBM_BACKEND = "nvidia-drm";
-      __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-      LIBVA_DRIVER_NAME = "nvidia";
+      # GBM_BACKEND = "nvidia-drm";
+      # __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+      # LIBVA_DRIVER_NAME = "nvidia";
 
       XDG_SESSION_TYPE = "wayland";
       XDG_CURRENT_DESKTOP = "niri";
@@ -63,15 +65,14 @@ in {
     hotkey-overlay.skip-at-startup = true;
     input.focus-follows-mouse.enable = true;
 
-    layout.border.width = 2;
-
     # layout.border.active.gradient = lib.mkForce {
     #   angle = 135;
     #   from = config.lib.stylix.colors.base0D;
     #   to = config.lib.stylix.colors.base0B;
     # };
 
-    layout.gaps = 4;
+    layout.border.width = 2;
+    layout.gaps = 0;
 
     animations.enable = true;
     animations.slowdown = 0.5;
@@ -85,7 +86,7 @@ in {
     ];
 
     binds = {
-      "Mod+Return".action.spawn = ["nvidia-offload" "kitty"];
+      "Mod+Return".action.spawn = "kitty";
 
       "Mod+Backspace".action.close-window = {};
 
@@ -109,8 +110,8 @@ in {
       "Mod+BracketLeft".action.consume-or-expel-window-left = {};
       "Mod+BracketRight".action.consume-or-expel-window-right = {};
 
-      "Mod+Equal".action.set-column-width = "+10%";
-      "Mod+Minus".action.set-column-width = "-10%";
+      "Mod+Equal".action.set-column-width = "+5%";
+      "Mod+Minus".action.set-column-width = "-5%";
 
       "Mod+M".action.spawn = [
         "${pkgs.rofi}/bin/rofi"
@@ -201,16 +202,10 @@ in {
 
   services.swayidle = {
     enable = true;
-    events = [
-      {
-        event = "before-sleep";
-        command = "${pkgs.swaylock}/bin/swaylock";
-      }
-      {
-        event = "lock";
-        command = "${pkgs.swaylock}/bin/swaylock";
-      }
-    ];
+    events = {
+      "before-sleep" = "${pkgs.swaylock}/bin/swaylock";
+      "lock" = "${pkgs.swaylock}/bin/swaylock";
+    };
 
     timeouts = [
       {

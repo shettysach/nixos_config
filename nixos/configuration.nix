@@ -3,57 +3,67 @@
   inputs,
   ...
 }: {
-  nixpkgs.overlays = [inputs.niri.overlays.niri];
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
+  services.fwupd.enable = true;
+
+  imports = [
+    ./hardware-configuration.nix
+    ./packages.nix
+    ./modules/mod.nix
+    ./intel.nix
+    # ./nvidia.nix
   ];
 
+  nixpkgs.overlays = [inputs.niri.overlays.niri];
+
+  nix.settings.experimental-features = ["nix-command" "flakes"];
+
+  users.users.sword = {
+    isNormalUser = true;
+    description = "Sword";
+    shell = pkgs.zsh;
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "video"
+    ];
+  };
+
+  environment.variables.EDITOR = "nvim";
+
+  programs = {
+    nix-ld.enable = true;
+    light.enable = true;
+    zsh.enable = true;
+  };
+
   nix.settings = {
+    trusted-users = ["root" "sword"];
     substituters = [
       "https://nix-community.cachix.org"
       "https://niri.cachix.org"
       "https://ghostty.cachix.org"
-      "https://helix.cachix.org"
       "https://zed-industries.cachix.org"
+      "https://helix.cachix.org"
     ];
     trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
       "ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns="
-      "helix.cachix.org-1:ejp9KQpR1FBI2onstMQ34yogDm4OgU2ru6lIwPvuCVs="
       "zed-industries.cachix.org-1:fgVpvtdF+ssrgP1lB6EusuR3uM6bNcncWduKxri3u6Y="
+      "helix.cachix.org-1:ejp9KQpR1FBI2onstMQ34yogDm4OgU2ru6lIwPvuCVs="
     ];
   };
 
-  imports = [
-    ./hardware-configuration.nix
-    ./packages.nix
-    ./nvidia.nix
-    ./modules/mod.nix
-  ];
-
-  programs.nix-ld.enable = true;
-
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 5;
   boot.loader.efi.canTouchEfiVariables = true;
   # boot.tmp.useTmpfs = true
 
-  # time.timeZone = "America/Los_Angeles";
-  time.timeZone = "Asia/Kolkata";
+  # time.timeZone = "Asia/Kolkata";
+  time.timeZone = "America/Los_Angeles";
   i18n.defaultLocale = "en_GB.UTF-8";
-  # i18n.extraLocaleSettings = {
-  #   LC_ADDRESS = "en_IN";
-  #   LC_IDENTIFICATION = "en_IN";
-  #   LC_MEASUREMENT = "en_IN";
-  #   LC_MONETARY = "en_IN";
-  #   LC_NAME = "en_IN";
-  #   LC_NUMERIC = "en_IN";
-  #   LC_PAPER = "en_IN";
-  #   LC_TELEPHONE = "en_IN";
-  #   LC_TIME = "en_IN";
-  # };
 
   # SSH and SCP
   services.sshd.enable = true;
@@ -82,6 +92,41 @@
     middleEmulation = true;
   };
 
+  systemd.services.unbind-touchscreen = {
+    description = "Unbind ELAN2097 touchscreen from hid-multitouch";
+    wantedBy = ["multi-user.target"];
+    after = ["sysinit.target"];
+
+    serviceConfig = {
+      Type = "oneshot";
+      SuccessExitStatus = [0 1];
+    };
+
+    script = ''
+      set -eu
+
+      dev="0018:04F3:2540.0001"
+      driver="/sys/bus/hid/drivers/hid-multitouch"
+
+      # If the device doesn't exist, nothing to do.
+      if [ ! -e "/sys/bus/hid/devices/$dev" ]; then
+        exit 0
+      fi
+
+      # If it's already unbound, there will be no driver symlink.
+      if [ ! -e "/sys/bus/hid/devices/$dev/driver" ]; then
+        exit 0
+      fi
+
+      # Only unbind if it's currently bound to hid-multitouch.
+      if readlink -f "/sys/bus/hid/devices/$dev/driver" | grep -q "/hid-multitouch\$"; then
+        echo "$dev" > "$driver/unbind" || true
+      fi
+
+      exit 0
+    '';
+  };
+
   services.pulseaudio.enable = false;
   services.pipewire = {
     enable = true;
@@ -94,24 +139,6 @@
 
   services.gvfs.enable = true;
   # services.udev.packages = [ pkgs.android-udev-rules pkgs.libmtp.out ];
-
-  programs = {
-    light.enable = true;
-    zsh.enable = true;
-  };
-
-  users.users.sword = {
-    isNormalUser = true;
-    description = "Sword";
-    shell = pkgs.zsh;
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "video"
-    ];
-  };
-
-  environment.variables.EDITOR = "nvim";
 
   system.stateVersion = "24.05";
 }
