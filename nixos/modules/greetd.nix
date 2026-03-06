@@ -7,7 +7,7 @@
           ${pkgs.tuigreet}/bin/tuigreet \
             --asterisks \
             --theme 'text=cyan;prompt=green;input=cyan' \
-            --remember
+            --remember \
             --cmd niri-session
         '';
       };

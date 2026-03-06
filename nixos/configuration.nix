@@ -12,7 +12,7 @@
     ./packages.nix
     ./modules/mod.nix
     ./intel.nix
-    # ./nvidia.nix
+    ./nvidia.nix
   ];
 
   nixpkgs.overlays = [inputs.niri.overlays.niri];

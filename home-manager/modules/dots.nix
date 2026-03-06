@@ -93,14 +93,6 @@
     # package = zedMain;
   };
 
-  programs.helix = {
-    enable = false;
-    settings = lib.importTOML ../dots/helix/config.toml;
-    languages = lib.importTOML ../dots/helix/languages.toml;
-    themes.transparent = lib.importTOML ../dots/helix/transparent.toml;
-  };
-  stylix.targets.helix.enable = false;
-
   # -- CLI / TUI --
 
   programs.starship = {

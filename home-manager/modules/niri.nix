@@ -6,14 +6,17 @@
 }: let
   scripts = "${config.xdg.configHome}/scripts";
 in {
-  programs.niri.enable = true;
+  programs.niri = {
+    enable = true;
+    package = pkgs.niri;
+  };
+
   services.wpaperd.enable = true;
 
   xdg.portal = {
     enable = true;
     extraPortals = lib.attrValues {
       inherit (pkgs) xdg-desktop-portal-gtk xdg-desktop-portal-wlr;
-      # inherit (pkgs.kdePackages) xdg-desktop-portal-kde;
       # inherit (pkgs.kdePackages) xdg-desktop-portal-kde;
     };
 
@@ -64,12 +67,6 @@ in {
 
     hotkey-overlay.skip-at-startup = true;
     input.focus-follows-mouse.enable = true;
-
-    # layout.border.active.gradient = lib.mkForce {
-    #   angle = 135;
-    #   from = config.lib.stylix.colors.base0D;
-    #   to = config.lib.stylix.colors.base0B;
-    # };
 
     layout.border.width = 2;
     layout.gaps = 0;
@@ -178,6 +175,11 @@ in {
         allow-when-locked = true;
         action.spawn = ["playerctl" "-a" "previous"];
       };
+    };
+
+    debug = {
+      render-drm-device = "/dev/dri/renderD128";
+      ignore-drm-device = "/dev/dri/renderD129";
     };
 
     window-rules = [

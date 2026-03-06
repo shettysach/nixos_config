@@ -20,22 +20,16 @@
       git
       git-lfs
       difftastic
-      nix-direnv
-      direnv
       neovim
       obsidian
       # -- TUI / CLI utils --
-      fastfetch
       file
       jq
       dua
       ripgrep
       lsd
-      bat
-      fzf
       fd
       killall
-      btop
       powertop
       mpv
       imv
@@ -46,16 +40,11 @@
       pulseaudio
       pulseaudio-ctl
       pavucontrol
-      # -- wayland  --
-      wl-clipboard
-      wlr-randr
-      clipse
-      waybar
       libnotify
       # -- GUI apps --
       brave
+      librewolf
       newsflash
-      zathura
       # --
       opencode
       amp-cli
@@ -70,7 +59,7 @@
 
     # inherit (pkgs.kdePackages) dolphin dolphin-plugins kservice;
 
-    inherit (pkgs-stable) librewolf;
+    # inherit (pkgs-stable) librewolf;
 
     inherit (inputs.cohle.packages.${pkgs.system}) default;
   };

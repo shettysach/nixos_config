@@ -1,14 +1,20 @@
-{pkgs, ...}: let
+{
+  lib,
+  pkgs,
+  ...
+}: let
   browser = ["brave-browser.desktop"];
-  fileManager = ["org.xfce.Thunar.desktop"];
-  # fileManager = ["org.kde.dolphin.desktop"];
+  fileManager = ["org.xfce.Thunar.desktop"]; # ["org.kde.dolphin.desktop"];
 in {
   programs.niri = {
     enable = true;
-    package = pkgs.niri-stable;
+    package = pkgs.niri;
   };
-
   niri-flake.cache.enable = true;
+
+  environment.systemPackages = lib.attrValues {
+    inherit (pkgs) wlr-randr wl-clipboard clipse;
+  };
 
   xdg.portal = {
     enable = true;

@@ -11,6 +11,8 @@
             "custom/separator",
             "cpu",
             "custom/separator",
+            "custom/gpu",
+            "custom/separator",
             "memory",
             "custom/separator",
             "disk#one"
@@ -45,6 +47,16 @@
             },
             "interval": 1,
             "format": "CPU {usage:2}%"
+        },
+        "custom/gpu": {
+          "exec": "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits",
+          "states": {
+            "good": 0,
+            "warning": 70,
+            "critical": 85
+          },
+          "interval": 10,
+          "format": "GPU {}%"
         },
         "temperature": {
             "thermal-zone": 3,

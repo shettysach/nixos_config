@@ -63,7 +63,6 @@
 
       extraSpecialArgs = {
         ghosttyMain = inputs.ghostty.packages.${system}.default;
-        helixMain = inputs.helix.packages.${system}.default;
         # zedMain = inputs.zed.packages.${system}.default;
         spotMain = inputs.spot.defaultPackage.${system}.override {withAudioBackend = "pulseaudio";};
       };

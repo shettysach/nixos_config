@@ -12,7 +12,7 @@
     sync.enable = false;
 
     offload.enable = true;
-    offload.enableOffloadCmd = false;
+    offload.enableOffloadCmd = true;
 
     # Make sure to use the correct Bus ID values for your system!
     # intelBusId = "0@0:2:0";

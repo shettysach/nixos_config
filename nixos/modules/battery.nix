@@ -20,9 +20,10 @@
     };
   };
 
+  services.thermald.enable = true;
+
   powerManagement.powertop.enable = false;
 
-  services.thermald.enable = false;
   services.auto-cpufreq.enable = false;
   services.auto-cpufreq.settings = {
     battery = {

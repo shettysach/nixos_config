@@ -5,7 +5,7 @@
     ./bluetooth.nix
     ./network.nix
 
-    ./niri.nix
+    ./desktop.nix
     # ./kde.nix
 
     ./greetd.nix

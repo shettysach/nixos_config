@@ -104,6 +104,8 @@
     "icon-size": 16,
     "spacing": 8
   },
+  // NOTE: idle_inhibitor does not work reliably on niri
+  // (see niri issues #2006, #2028)
   "idle_inhibitor": {
     "format": "{icon}",
     "format-icons": {
