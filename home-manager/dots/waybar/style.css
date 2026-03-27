@@ -2,39 +2,48 @@
   border-radius: 0;
 }
 
+#workspaces button.focused,
+#workspaces button.active {
+    border-bottom: 3px solid @base05;
+}
+
 #workspaces button.urgent {
-  background: @base08;
+    border-bottom: 3px solid @base08;
+    background-color: @base08;
+    color: @base00;
+}
+
+#workspaces button,
+#clock,
+#cpu,
+#memory,
+#disk,
+#tray,
+#idle_inhibitor,
+#backlight,
+#pulseaudio,
+#network,
+#battery {
+  padding: 0 12px;
 }
 
 #pulseaudio.bluetooth {
   color: @base0D;
 }
 
-#custom-separator {
-  opacity: 0;
-  padding: 0;
-}
 
 #battery.warning,
 #cpu.warning,
-#custom-gpu.critical,
 #disk.one.warning,
 #memory.warning {
   color: @base0A;
 }
 
-#temperature.critical,
 #battery.critical,
 #cpu.critical,
-#custom-gpu.critical,
 #disk.one.critical,
 #memory.critical,
 #network.disconnected,
 #pulseaudio.muted {
   color: @base08;
-}
-
-window#waybar.floating,
-window#waybar.empty {
-  background: none;
 }

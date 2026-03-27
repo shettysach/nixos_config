@@ -11,8 +11,9 @@
     ./hardware-configuration.nix
     ./packages.nix
     ./modules/mod.nix
+
     ./intel.nix
-    ./nvidia.nix
+    # ./nvidia.nix
   ];
 
   nixpkgs.overlays = [inputs.niri.overlays.niri];
@@ -34,7 +35,6 @@
 
   programs = {
     nix-ld.enable = true;
-    light.enable = true;
     zsh.enable = true;
   };
 
@@ -62,6 +62,7 @@
   # boot.tmp.useTmpfs = true
 
   # time.timeZone = "Asia/Kolkata";
+  # time.timeZone = "America/Chicago";
   time.timeZone = "America/Los_Angeles";
   i18n.defaultLocale = "en_GB.UTF-8";
 
@@ -93,7 +94,7 @@
   };
 
   systemd.services.unbind-touchscreen = {
-    description = "Unbind ELAN2097 touchscreen from hid-multitouch";
+    description = "Unbind ELAN2097 touchscreen/stylus from hid-multitouch";
     wantedBy = ["multi-user.target"];
     after = ["sysinit.target"];
 
@@ -105,23 +106,26 @@
     script = ''
       set -eu
 
-      dev="0018:04F3:2540.0001"
+      # Touchscreen + stylus share this HID device (04F3:2540). The instance
+      # suffix (.0001/.0002/...) can change across boots.
       driver="/sys/bus/hid/drivers/hid-multitouch"
 
-      # If the device doesn't exist, nothing to do.
-      if [ ! -e "/sys/bus/hid/devices/$dev" ]; then
-        exit 0
-      fi
+      for devpath in /sys/bus/hid/devices/0018:04F3:2540.*; do
+        # If the glob doesn't match, devpath will be the literal pattern.
+        if [ ! -e "$devpath" ]; then
+          continue
+        fi
 
-      # If it's already unbound, there will be no driver symlink.
-      if [ ! -e "/sys/bus/hid/devices/$dev/driver" ]; then
-        exit 0
-      fi
+        # If it's already unbound, there will be no driver symlink.
+        if [ ! -e "$devpath/driver" ]; then
+          continue
+        fi
 
-      # Only unbind if it's currently bound to hid-multitouch.
-      if readlink -f "/sys/bus/hid/devices/$dev/driver" | grep -q "/hid-multitouch\$"; then
-        echo "$dev" > "$driver/unbind" || true
-      fi
+        # Only unbind if it's currently bound to hid-multitouch.
+        if readlink -f "$devpath/driver" | grep -q "/hid-multitouch\$"; then
+          echo "$(basename "$devpath")" > "$driver/unbind" || true
+        fi
+      done
 
       exit 0
     '';

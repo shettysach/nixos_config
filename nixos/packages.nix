@@ -23,12 +23,13 @@
       neovim
       obsidian
       # -- TUI / CLI utils --
-      file
-      jq
-      dua
+      ast-grep
       ripgrep
       lsd
       fd
+      file
+      jq
+      dua
       killall
       powertop
       mpv
@@ -48,29 +49,20 @@
       # --
       opencode
       amp-cli
+      codex
       # Dell
       dell-command-configure
       libsmbios
-      #
-      wl-screenrec
       ;
 
     inherit (pkgs.kdePackages) okular gwenview;
-
-    # inherit (pkgs.kdePackages) dolphin dolphin-plugins kservice;
-
     # inherit (pkgs-stable) librewolf;
 
     inherit (inputs.cohle.packages.${pkgs.system}) default;
   };
 
-  programs.obs-studio = {
-    enable = true;
-    plugins = [pkgs.obs-studio-plugins.wlrobs];
-  };
-
   fonts.packages = lib.attrValues {
     inherit (pkgs) lora work-sans;
-    inherit (pkgs.nerd-fonts) jetbrains-mono;
+    inherit (pkgs.nerd-fonts) jetbrains-mono zed-mono iosevka;
   };
 }

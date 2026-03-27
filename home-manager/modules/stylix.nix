@@ -18,8 +18,10 @@
       };
 
       monospace = {
-        name = "JetBrainsMono Nerd Font";
-        package = pkgs.nerd-fonts.jetbrains-mono;
+        # name = "JetBrainsMono Nerd Font";
+        # package = pkgs.nerd-fonts.jetbrains-mono;
+        name = "ZedMono NF Extd";
+        package = pkgs.nerd-fonts.zed-mono;
       };
 
       sizes = {
@@ -37,7 +39,7 @@
 
     opacity = {
       terminal = 0.85;
-      desktop = 0.85;
+      # desktop = 0.85;
     };
 
     icons = {

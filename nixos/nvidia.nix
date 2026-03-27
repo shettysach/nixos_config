@@ -1,10 +1,16 @@
-{config, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   # Enable OpenGL
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
 
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = ["modesetting" "nvidia"];
+
+  environment.systemPackages = [pkgs.nvtopPackages.nvidia];
 
   # Optimus PRIME
   hardware.nvidia.prime = {

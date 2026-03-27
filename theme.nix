@@ -1,4 +1,4 @@
 {
-  base16Scheme = ./palettes/tokyonight.yaml;
-  image = ./wallpapers/Blue_mist.jpg;
+  base16Scheme = ./palettes/mercury.yaml;
+  image = ./wallpapers/Purple_Sky_Over_Ice.jpeg;
 }

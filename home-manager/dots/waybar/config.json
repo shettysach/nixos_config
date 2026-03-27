@@ -8,31 +8,19 @@
         "margin-left": 0,
         "modules-left": [
             "clock",
-            "custom/separator",
             "cpu",
-            "custom/separator",
-            "custom/gpu",
-            "custom/separator",
             "memory",
-            "custom/separator",
             "disk#one"
         ],
         "modules-center": [
-            "niri/workspaces",
-            "sway/workspaces",
-            "sway/mode"
+            "niri/workspaces"
         ],
         "modules-right": [
             "tray",
-            "custom/separator",
             "idle_inhibitor",
-            "custom/separator",
             "backlight",
-            "custom/separator",
             "pulseaudio",
-            "custom/separator",
             "network",
-            "custom/separator",
             "battery"
         ],
         "clock": {
@@ -45,44 +33,17 @@
                 "warning": 70,
                 "critical": 90
             },
-            "interval": 1,
+            "interval": 10,
             "format": "CPU {usage:2}%"
         },
-        "custom/gpu": {
-          "exec": "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits",
-          "states": {
-            "good": 0,
-            "warning": 70,
-            "critical": 85
-          },
-          "interval": 10,
-          "format": "GPU {}%"
-        },
-        "temperature": {
-            "thermal-zone": 3,
-            "interval": 1,
-            "hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
-            "critical-threshold": 80,
-            "format-critical": "{temperatureC}°C",
-            "format": "{temperatureC}°C"
-        },
-        "custom/gpu": {
-            "exec": "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits",
-            "states": {
-                "good": 0,
-                "warning": 70,
-                "critical": 85
-            },
-            "interval": 5,
-            "format": "GPU {}%"
-        },
+
         "memory": {
             "states": {
                 "good": 0,
                 "warning": 70,
                 "critical": 85
             },
-            "interval": 5,
+            "interval": 30,
             "format": "MEM {:2}%"
         },
         "disk#one": {
@@ -91,7 +52,7 @@
                 "warning": 70,
                 "critical": 95
             },
-            "interval": 10,
+            "interval": 30,
             "format": "DISK {percentage_used:2}%",
             "path": "/"
         },
@@ -133,15 +94,9 @@
             "format-charging": "CHG {capacity}%",
             "events": {
                 "on-discharging-warning": "notify-send -u low 'BATTERY LOW' 'Discharging' -t 60000",
-                "on-discharging-critical": "notify-send -u critical 'BATTERY CRITICAL' 'Discharging' -t 60000",
-                "on-charging-080": "notify-send -u critical 'BATTERY 80%' 'Charging' -t 60000",
-                "on-charging-100": "notify-send -u critical 'BATTERY FULL' 'Charging' -t 60000"
+                "on-discharging-critical": "notify-send -u critical 'BATTERY CRITICAL' 'Discharging' -t 60000"
             },
-            "interval": 10
-        },
-        "custom/separator": {
-            "format": "  ",
-            "tooltip": false
+            "interval": 30
         }
     }
 }

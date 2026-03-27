@@ -3,21 +3,16 @@
   config,
   lib,
   ...
-}: let
-  scripts = "${config.xdg.configHome}/scripts";
-in {
+}: {
   programs.niri = {
     enable = true;
     package = pkgs.niri;
   };
 
-  services.wpaperd.enable = true;
-
   xdg.portal = {
     enable = true;
     extraPortals = lib.attrValues {
       inherit (pkgs) xdg-desktop-portal-gtk xdg-desktop-portal-wlr;
-      # inherit (pkgs.kdePackages) xdg-desktop-portal-kde;
     };
 
     config.common.default = "*";
@@ -28,6 +23,8 @@ in {
     settings.default-timeout = 5000;
   };
 
+  services.wpaperd.enable = true;
+
   programs.niri.settings = {
     overview = {
       backdrop-color = config.lib.stylix.colors.base00;
@@ -36,32 +33,20 @@ in {
 
     environment = {
       CLUTTER_BACKEND = "wayland";
-      # DISPLAY = null;
       GDK_BACKEND = "wayland,x11";
       MOZ_ENABLE_WAYLAND = "1";
       NIXOS_OZONE_WL = "1";
-      # QT_QPA_PLATFORM = "wayland;xcb";
-      # QT_WAYLAND_DISABLE_WINDOWDECORATION = "1";
-      # QT_QPA_PLATFORMTHEME = "gtk3";
       SDL_VIDEODRIVER = "wayland";
 
       WLR_NO_HARDWARE_CURSORS = "1";
-
-      # GBM_BACKEND = "nvidia-drm";
-      # __GLX_VENDOR_LIBRARY_NAME = "nvidia";
-      # LIBVA_DRIVER_NAME = "nvidia";
 
       XDG_SESSION_TYPE = "wayland";
       XDG_CURRENT_DESKTOP = "niri";
     };
 
     spawn-at-startup = [
-      {command = ["${pkgs.waybar}/bin/waybar"];}
       {
-        command = [
-          "${pkgs.clipse}/bin/clipse"
-          "-listen"
-        ];
+        command = ["${pkgs.clipse}/bin/clipse" "-listen"];
       }
     ];
 
@@ -83,7 +68,7 @@ in {
     ];
 
     binds = {
-      "Mod+Return".action.spawn = "kitty";
+      "Mod+Return".action.spawn = "ghostty";
 
       "Mod+Backspace".action.close-window = {};
 
@@ -115,11 +100,11 @@ in {
         "-show"
         "power-menu"
         "-modi"
-        "power-menu:${scripts}/power_menu --no-symbols"
+        "power-menu:${config.xdg.configHome}/scripts/power_menu --no-symbols"
       ];
       "Mod+Shift+B".action.spawn = [
         "bash"
-        "${scripts}/bluetooth_menu"
+        "${config.xdg.configHome}/scripts/bluetooth_menu"
       ];
 
       "Mod+S".action.screenshot = {};
@@ -128,100 +113,59 @@ in {
 
       "XF86AudioRaiseVolume" = {
         allow-when-locked = true;
-        action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"];
+        action.spawn = ["${pkgs.wl-clipboard}/bin/wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"];
       };
 
       "XF86AudioLowerVolume" = {
         allow-when-locked = true;
-        action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"];
+        action.spawn = ["${pkgs.wl-clipboard}/bin/wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"];
       };
 
       "XF86AudioMute" = {
         allow-when-locked = true;
-        action.spawn = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"];
+        action.spawn = ["${pkgs.wl-clipboard}/bin/wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"];
       };
 
       "XF86AudioMicMute" = {
         allow-when-locked = true;
-        action.spawn = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"];
+        action.spawn = ["${pkgs.wl-clipboard}/bin/wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"];
       };
 
       "XF86MonBrightnessDown" = {
         allow-when-locked = true;
-        action.spawn = ["light" "-U" "5"];
+        action.spawn = ["${pkgs.brightnessctl}/bin/brightnessctl" "set" "5%-"];
       };
 
       "XF86MonBrightnessUp" = {
         allow-when-locked = true;
-        action.spawn = ["light" "-A" "5"];
+        action.spawn = ["${pkgs.brightnessctl}/bin/brightnessctl" "set" "5%+"];
       };
 
       "XF86AudioPlay" = {
         allow-when-locked = true;
-        action.spawn = ["playerctl" "-a" "play-pause"];
+        action.spawn = ["${pkgs.playerctl}/bin/playerctl" "-a" "play-pause"];
       };
 
       "XF86AudioPause" = {
         allow-when-locked = true;
-        action.spawn = ["playerctl" "-a" "play-pause"];
+        action.spawn = ["${pkgs.playerctl}/bin/playerctl" "-a" "play-pause"];
       };
 
       "XF86AudioNext" = {
         allow-when-locked = true;
-        action.spawn = ["playerctl" "-a" "next"];
+        action.spawn = ["${pkgs.playerctl}/bin/playerctl" "-a" "next"];
       };
 
       "XF86AudioPrev" = {
         allow-when-locked = true;
-        action.spawn = ["playerctl" "-a" "previous"];
+        action.spawn = ["${pkgs.playerctl}/bin/playerctl" "-a" "previous"];
       };
-    };
-
-    debug = {
-      render-drm-device = "/dev/dri/renderD128";
-      ignore-drm-device = "/dev/dri/renderD129";
     };
 
     window-rules = [
       {
         draw-border-with-background = false;
         default-column-width.proportion = 1.0;
-        # open-floating = false;
-      }
-    ];
-  };
-
-  stylix.targets.swaylock.useWallpaper = false;
-  programs.swaylock = {
-    enable = true;
-    settings = {
-      daemonize = true;
-      indicator-radius = 125;
-      indicator-thickness = 5;
-      font-size = 45;
-    };
-  };
-
-  services.swayidle = {
-    enable = true;
-    events = {
-      "before-sleep" = "${pkgs.swaylock}/bin/swaylock";
-      "lock" = "${pkgs.swaylock}/bin/swaylock";
-    };
-
-    timeouts = [
-      {
-        timeout = 5 * 60;
-        command = "${pkgs.swaylock}/bin/swaylock";
-      }
-      {
-        timeout = 10 * 60;
-        command = "niri msg action power-off-monitors";
-        resumeCommand = "niri msg action power-on-monitors";
-      }
-      {
-        timeout = 15 * 60;
-        command = "${pkgs.systemd}/bin/systemctl suspend";
       }
     ];
   };

@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{...}: {
   imports = [./modules/mod.nix];
 
   home = {
@@ -12,7 +12,6 @@
   services.kdeconnect = {
     enable = true;
     indicator = true;
-    package = pkgs.kdePackages.kdeconnect-kde;
   };
 
   services.gammastep = {

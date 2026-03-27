@@ -13,10 +13,10 @@
     # package = ghosttyMain;
     enable = true;
     systemd.enable = true;
+
     settings = {
       resize-overlay = "never";
       window-padding-balance = true;
-      cursor-invert-fg-bg = true;
       cursor-style-blink = true;
       window-decoration = false;
       confirm-close-surface = false;
@@ -51,6 +51,8 @@
       "super+l" = "neighboring_window right";
     };
   };
+
+  # --
 
   programs.jujutsu.enable = true;
   programs.delta = {
@@ -142,13 +144,6 @@
       recolor-keephue = true;
       selection-clipboard = "clipboard";
     };
-  };
-
-  stylix.targets.waybar.addCss = true;
-  programs.waybar = {
-    enable = true;
-    settings = lib.importJSON ../dots/waybar/config.json;
-    style = lib.mkAfter (builtins.readFile ../dots/waybar/style.css);
   };
 
   stylix.targets.spotify-player.enable = false;
