@@ -18,6 +18,8 @@
 
     niri.url = "github:sodiboo/niri-flake";
 
+    neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
+
     ghostty.url = "github:ghostty-org/ghostty";
     zed.url = "github:zed-industries/zed";
 

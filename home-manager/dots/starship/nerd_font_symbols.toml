@@ -9,6 +9,7 @@ symbol = " "
 
 [c]
 symbol = " "
+style = "bold green"
 
 [cpp]
 symbol = " "
@@ -152,6 +153,7 @@ Windows = "󰍲 "
 
 [package]
 symbol = "󰏗 "
+style = "bold yellow"
 
 [perl]
 symbol = " "

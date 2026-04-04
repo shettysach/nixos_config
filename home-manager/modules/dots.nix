@@ -3,7 +3,7 @@
   pkgs,
   config,
   ghosttyMain,
-  # zedMain,
+  zedMain,
   spotMain,
   ...
 }: {
@@ -15,9 +15,11 @@
     systemd.enable = true;
 
     settings = {
+      quit-after-last-window-closed = false;
+
       resize-overlay = "never";
       window-padding-balance = true;
-      cursor-style-blink = true;
+      cursor-style-blink = false;
       window-decoration = false;
       confirm-close-surface = false;
       window-inherit-working-directory = false;
@@ -132,24 +134,10 @@
 
   # --
 
-  programs.zathura = {
-    enable = true;
-    options = {
-      first-page-column = "1:1";
-      statusbar-home-tilde = true;
-      window-title-home-tilde = true;
-      statusbar-basename = true;
-      window-title-basename = true;
-      recolor = true;
-      recolor-keephue = true;
-      selection-clipboard = "clipboard";
-    };
-  };
-
   stylix.targets.spotify-player.enable = false;
   programs.spotify-player = {
     enable = true;
-    # package = spotMain;
+    package = spotMain;
     settings = {
       progress_bar_position = "Right";
       cover_img_width = 7;
@@ -174,6 +162,12 @@
       }
     ];
   };
+
+  home.packages = with pkgs; [
+    amp-cli
+    opencode
+    github-copilot-cli
+  ];
 
   programs.rofi.enable = true;
   home.file = {

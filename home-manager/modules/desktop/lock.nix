@@ -36,13 +36,13 @@
         {
           monitor = "";
           text = "$TIME";
-          color = config.lib.stylix.colors.base05 + "77";
-          font_family = config.stylix.fonts.sansSerif.name;
+          color = "rgba(" + config.lib.stylix.colors.base07 + "85)";
+          font_family = config.stylix.fonts.serif.name;
           font_size = 200;
           position = "0, 250";
           valign = "center";
           halign = "center";
-          shadow_passes = 2;
+          shadow_passes = 4;
         }
       ];
     };

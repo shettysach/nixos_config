@@ -7,6 +7,11 @@
 }: {
   nixpkgs.config.allowUnfree = true;
 
+  programs.neovim = {
+    enable = true;
+    package = inputs.neovim-nightly.packages.${pkgs.system}.default;
+  };
+
   environment.systemPackages = lib.attrValues {
     inherit
       (pkgs)
@@ -20,12 +25,11 @@
       git
       git-lfs
       difftastic
-      neovim
       obsidian
       # -- TUI / CLI utils --
       ast-grep
       ripgrep
-      lsd
+      lsr
       fd
       file
       jq
@@ -45,18 +49,18 @@
       # -- GUI apps --
       brave
       librewolf
-      newsflash
       # --
-      opencode
-      amp-cli
-      codex
       # Dell
       dell-command-configure
       libsmbios
       ;
 
     inherit (pkgs.kdePackages) okular gwenview;
-    # inherit (pkgs-stable) librewolf;
+
+    inherit
+      (pkgs-stable)
+      newsflash
+      ;
 
     inherit (inputs.cohle.packages.${pkgs.system}) default;
   };

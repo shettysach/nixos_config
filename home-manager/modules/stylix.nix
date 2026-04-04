@@ -13,8 +13,10 @@
       };
 
       sansSerif = {
-        name = "Work Sans";
-        package = pkgs.work-sans;
+        name = "Lora";
+        package = pkgs.lora;
+        # name = "Work Sans";
+        # package = pkgs.work-sans;
       };
 
       monospace = {
@@ -27,7 +29,7 @@
       sizes = {
         desktop = 12;
         applications = 13;
-        terminal = 15;
+        terminal = 14;
       };
     };
 
@@ -38,15 +40,16 @@
     };
 
     opacity = {
-      terminal = 0.85;
-      # desktop = 0.85;
+      terminal = 0.8;
+      desktop = 0.8;
+      applications = 0.8;
     };
 
     icons = {
       enable = true;
-      package = pkgs.kdePackages.breeze-icons;
-      dark = "breeze-dark";
-      light = "breeze";
+      package = pkgs.vimix-icon-theme;
+      dark = "Vimix-white";
+      light = "Vimix-white";
     };
   };
 }

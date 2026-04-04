@@ -2,7 +2,7 @@ configuration {
   display-drun: "drun";
   display-window: "win";
   drun-display-format: "{name}";
-  font: "JetBrainsMono Nerd Font 13";
+  font: "ZedMono NF Extd 13";
   modi: "window,run,drun";
   show-icons: true;
   terminal: "kitty";
@@ -57,9 +57,9 @@ prompt {
   padding: 0.5em 0 0 0.5em;
 }
 
-element selected.active,
-element selected.normal {
-  background-color: @blue;
-}
+// element selected.active,
+// element selected.normal {
+//   background-color: @blue;
+// }
 
 /* vim: ft=sass */

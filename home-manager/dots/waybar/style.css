@@ -2,15 +2,24 @@
   border-radius: 0;
 }
 
+window#waybar, tooltip {
+  background: alpha(@base00, 0.8);
+}
+
 #workspaces button.focused,
 #workspaces button.active {
     border-bottom: 3px solid @base05;
+    color: @base07;
 }
 
 #workspaces button.urgent {
     border-bottom: 3px solid @base08;
     background-color: @base08;
     color: @base00;
+}
+
+#workspaces button {
+    color: @base03;
 }
 
 #workspaces button,
@@ -22,9 +31,10 @@
 #idle_inhibitor,
 #backlight,
 #pulseaudio,
+#mpris,
 #network,
 #battery {
-  padding: 0 12px;
+  padding: 0 10px;
 }
 
 #pulseaudio.bluetooth {

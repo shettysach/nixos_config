@@ -22,6 +22,7 @@
           "cpu"
           "memory"
           "disk#one"
+          # "mpris"
         ];
 
         modules-center = [
@@ -58,7 +59,7 @@
             warning = 70;
             critical = 85;
           };
-          interval = 30;
+          interval = 10;
           format = "MEM {:2}%";
         };
 
@@ -97,6 +98,15 @@
           on-click = "pavucontrol";
         };
 
+        mpris = {
+          format = "▶";
+          format-paused = "⏸";
+          format-stopped = "";
+          players = ["*"];
+          on-click = "playerctl play-pause";
+          interval = 1;
+        };
+
         network = {
           format-wifi = "WIFI {signalStrength}%";
           format-ethernet = "ETH {ifname}";
@@ -115,8 +125,8 @@
           format = "BAT {capacity}%";
           format-charging = "CHG {capacity}%";
           events = {
-            on-discharging-warning = "notify-send -u low 'BATTERY LOW' 'Discharging' -t 60000";
-            on-discharging-critical = "notify-send -u critical 'BATTERY CRITICAL' 'Discharging' -t 60000";
+            on-discharging-warning = "notify-send -u low 'BATTERY LOW' -t 60000";
+            on-discharging-critical = "notify-send -u critical 'BATTERY CRITICAL' -t 60000";
           };
           interval = 30;
         };

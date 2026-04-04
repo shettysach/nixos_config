@@ -24,6 +24,14 @@
   };
 
   services.wpaperd.enable = true;
+  services.gammastep = {
+    enable = true;
+    tray = true;
+    provider = "manual";
+    duskTime = "16:00-21:00";
+    dawnTime = "06:00-09:00";
+    temperature.night = 3000;
+  };
 
   programs.niri.settings = {
     overview = {
@@ -45,9 +53,8 @@
     };
 
     spawn-at-startup = [
-      {
-        command = ["${pkgs.clipse}/bin/clipse" "-listen"];
-      }
+      {command = ["${pkgs.waybar}/bin/waybar"];}
+      {command = ["${pkgs.clipse}/bin/clipse" "-listen"];}
     ];
 
     hotkey-overlay.skip-at-startup = true;
@@ -68,7 +75,7 @@
     ];
 
     binds = {
-      "Mod+Return".action.spawn = "ghostty";
+      "Mod+Return".action.spawn = ["ghostty" "+new-window"];
 
       "Mod+Backspace".action.close-window = {};
 
@@ -81,6 +88,7 @@
       "Mod+H".action.focus-column-left = {};
       "Mod+L".action.focus-column-right = {};
       "Mod+F".action.fullscreen-window = {};
+
       "Mod+Backslash".action.switch-preset-column-width = {};
       "Mod+W".action.toggle-overview = {};
 
@@ -113,22 +121,22 @@
 
       "XF86AudioRaiseVolume" = {
         allow-when-locked = true;
-        action.spawn = ["${pkgs.wl-clipboard}/bin/wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"];
+        action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"];
       };
 
       "XF86AudioLowerVolume" = {
         allow-when-locked = true;
-        action.spawn = ["${pkgs.wl-clipboard}/bin/wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"];
+        action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"];
       };
 
       "XF86AudioMute" = {
         allow-when-locked = true;
-        action.spawn = ["${pkgs.wl-clipboard}/bin/wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"];
+        action.spawn = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle"];
       };
 
       "XF86AudioMicMute" = {
         allow-when-locked = true;
-        action.spawn = ["${pkgs.wl-clipboard}/bin/wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"];
+        action.spawn = ["wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"];
       };
 
       "XF86MonBrightnessDown" = {
