@@ -1,4 +1,4 @@
-inherits = "tokyonight"
+inherits = "kanagawa-dragon"
 
 "ui.background" = { fg = "fg" }
 "ui.text" = { fg = "fg" }

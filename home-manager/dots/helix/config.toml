@@ -4,13 +4,13 @@ theme = "transparent"
 line-number = "relative"
 bufferline = "multiple"
 popup-border = "all"
-color-modes = true
 soft-wrap.enable = true
 completion-trigger-len = 1
 completion-replace = true
 completion-timeout = 100
 end-of-line-diagnostics = "hint"
 auto-format = true
+# color-modes = true
 
 [editor.inline-diagnostics]
 cursor-line = "hint"

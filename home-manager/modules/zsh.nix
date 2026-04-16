@@ -34,8 +34,6 @@
     ];
 
     shellAliases = {
-      vim = "nvim";
-
       fzfh = "fd -H . | fzf";
       fzfp = "fzf --preview 'bat --color=always {}'";
 

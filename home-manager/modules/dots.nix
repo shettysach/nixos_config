@@ -1,9 +1,6 @@
 {
   lib,
   pkgs,
-  config,
-  ghosttyMain,
-  zedMain,
   spotMain,
   ...
 }: {
@@ -106,11 +103,6 @@
 
   programs.zoxide.enable = true;
 
-  programs.fastfetch = {
-    enable = true;
-    settings = lib.importJSON ../dots/fastfetch/config.jsonc;
-  };
-
   programs.btop = {
     enable = true;
     settings.vim_keys = true;
@@ -168,13 +160,4 @@
     opencode
     github-copilot-cli
   ];
-
-  programs.rofi.enable = true;
-  home.file = {
-    "${config.xdg.configHome}/rofi".source = ../dots/rofi;
-    "${config.xdg.configHome}/scripts" = {
-      source = ../dots/scripts;
-      executable = true;
-    };
-  };
 }

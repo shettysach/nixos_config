@@ -2,14 +2,10 @@
   border-radius: 0;
 }
 
-window#waybar, tooltip {
-  background: alpha(@base00, 0.8);
-}
-
 #workspaces button.focused,
 #workspaces button.active {
     border-bottom: 3px solid @base05;
-    color: @base07;
+    color: @base05;
 }
 
 #workspaces button.urgent {
@@ -30,14 +26,15 @@ window#waybar, tooltip {
 #tray,
 #idle_inhibitor,
 #backlight,
-#pulseaudio,
+#wireplumber,
 #mpris,
 #network,
 #battery {
   padding: 0 10px;
 }
 
-#pulseaudio.bluetooth {
+#mpris,
+#wireplumber#sink.bluetooth {
   color: @base0D;
 }
 
@@ -49,11 +46,11 @@ window#waybar, tooltip {
   color: @base0A;
 }
 
+#wireplumber.muted,
 #battery.critical,
 #cpu.critical,
 #disk.one.critical,
 #memory.critical,
-#network.disconnected,
-#pulseaudio.muted {
+#network.disconnected {
   color: @base08;
 }

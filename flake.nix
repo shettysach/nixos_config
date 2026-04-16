@@ -4,7 +4,8 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
-    nixgl.url = "github:nix-community/nixGL";
+
+    neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
 
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -17,13 +18,12 @@
     };
 
     niri.url = "github:sodiboo/niri-flake";
+    spot.url = "github:aome510/spotify-player/1ba220a5ee38e912075d05c25c25025ad74d6459";
 
-    neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
-
-    ghostty.url = "github:ghostty-org/ghostty";
-    zed.url = "github:zed-industries/zed";
-
-    spot.url = "github:aome510/spotify-player";
+    helium = {
+      url = "github:amaanq/helium-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     cohle = {
       url = "github:shettysach/cohle";
@@ -62,10 +62,7 @@
 
     homeConfigurations.${user} = home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.${system};
-
       extraSpecialArgs = {
-        ghosttyMain = inputs.ghostty.packages.${system}.default;
-        # zedMain = inputs.zed.packages.${system}.default;
         spotMain = inputs.spot.defaultPackage.${system}.override {withAudioBackend = "pulseaudio";};
       };
 

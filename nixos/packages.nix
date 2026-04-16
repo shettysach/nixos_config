@@ -9,6 +9,8 @@
 
   programs.neovim = {
     enable = true;
+    defaultEditor = true;
+    vimAlias = true;
     package = inputs.neovim-nightly.packages.${pkgs.system}.default;
   };
 
@@ -30,16 +32,18 @@
       ast-grep
       ripgrep
       lsr
+      trashy
       fd
       file
       jq
       dua
+      zip
+      unzip
       killall
       powertop
       mpv
       imv
-      zip
-      unzip
+      # --
       networkmanagerapplet
       playerctl
       pulseaudio
@@ -48,7 +52,6 @@
       libnotify
       # -- GUI apps --
       brave
-      librewolf
       # --
       # Dell
       dell-command-configure
@@ -62,11 +65,12 @@
       newsflash
       ;
 
-    inherit (inputs.cohle.packages.${pkgs.system}) default;
+    helium = inputs.helium.packages.x86_64-linux.default;
+    cohle = inputs.cohle.packages.${pkgs.system}.default;
   };
 
   fonts.packages = lib.attrValues {
     inherit (pkgs) lora work-sans;
-    inherit (pkgs.nerd-fonts) jetbrains-mono zed-mono iosevka;
+    inherit (pkgs.nerd-fonts) jetbrains-mono zed-mono;
   };
 }

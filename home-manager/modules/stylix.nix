@@ -13,10 +13,8 @@
       };
 
       sansSerif = {
-        name = "Lora";
-        package = pkgs.lora;
-        # name = "Work Sans";
-        # package = pkgs.work-sans;
+        name = "Work Sans";
+        package = pkgs.work-sans;
       };
 
       monospace = {
@@ -40,9 +38,9 @@
     };
 
     opacity = {
-      terminal = 0.8;
-      desktop = 0.8;
-      applications = 0.8;
+      terminal = 0.85;
+      desktop = 1.0;
+      applications = 1.0;
     };
 
     icons = {

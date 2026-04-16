@@ -1,4 +1,4 @@
 {
-  base16Scheme = ./palettes/dragon.yaml;
-  image = ./wallpapers/trident.jpg;
+  base16Scheme = ./palettes/tokyonight.yaml;
+  image = ./wallpapers/amethyst.png;
 }

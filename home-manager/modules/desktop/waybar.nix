@@ -1,12 +1,12 @@
-{
-  pkgs,
-  lib,
-  ...
-}: {
+{lib, ...}: {
   stylix.targets.waybar.addCss = false;
+
   programs.waybar = {
     enable = true;
-    package = pkgs.waybar;
+    systemd = {
+      enable = true;
+      targets = ["graphical-session.target"];
+    };
     style = lib.mkAfter (builtins.readFile ../../dots/waybar/style.css);
     settings = {
       mainBar = {
@@ -22,7 +22,7 @@
           "cpu"
           "memory"
           "disk#one"
-          # "mpris"
+          "mpris"
         ];
 
         modules-center = [
@@ -33,7 +33,8 @@
           "tray"
           "idle_inhibitor"
           "backlight"
-          "pulseaudio"
+          "wireplumber#sink"
+          "wireplumber#source"
           "network"
           "battery"
         ];
@@ -91,17 +92,26 @@
           format = "BRI {percent}%";
         };
 
-        pulseaudio = {
-          format = "SPK {volume}% {format_source}";
-          format-bluetooth = "BLU {volume}% {format_source}";
-          format-source = "MIC {volume}%";
-          on-click = "pavucontrol";
+        "wireplumber#sink" = {
+          format = "SPK {volume}%";
+          format-muted = "SPK MUTED";
+          on-click = "pavucontrol -t 3";
+          on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+        };
+
+        "wireplumber#source" = {
+          node-type = "Audio/Source";
+          format = "MIC {volume}%";
+          format-muted = "MIC MUTED";
+          on-click = "pavucontrol -t 4";
+          on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
         };
 
         mpris = {
-          format = "▶";
-          format-paused = "⏸";
+          format = "[󰐊] {player}";
+          format-paused = "[󰏤] {player}";
           format-stopped = "";
+          tooltip-format = "{dynamic}";
           players = ["*"];
           on-click = "playerctl play-pause";
           interval = 1;
@@ -132,9 +142,5 @@
         };
       };
     };
-
-    # systemd = {
-    #   enable = true;
-    # };
   };
 }

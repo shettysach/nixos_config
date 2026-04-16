@@ -32,6 +32,16 @@ discriminantHints.enable = "fieldless"
 lifetimeElisionHints.enable = "skip_trivial"
 typeHints.hideClosureInitialization = false
 
+# PYTHON
+
+[[language]]
+name = "python"
+language-servers = ["ruff"]
+
+[language-server.ruff]
+command = "ruff"
+args = ["server"]
+
 # HASKELL
 
 [[language]]
@@ -49,13 +59,3 @@ auto-format = true
 [language-server.haskell-language-server.config]
 haskell.formattingProvider = "stylish-haskell"
 haskell.plugin.rename.config.crossModule = true
-
-# PYTHON
-
-[[language]]
-name = "python"
-language-servers = ["ruff"]
-
-[language-server.ruff]
-command = "ruff"
-args = ["server"]
