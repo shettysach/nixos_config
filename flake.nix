@@ -20,6 +20,8 @@
     niri.url = "github:sodiboo/niri-flake";
     spot.url = "github:aome510/spotify-player/1ba220a5ee38e912075d05c25c25025ad74d6459";
 
+    llm-agents.url = "github:numtide/llm-agents.nix";
+
     helium = {
       url = "github:amaanq/helium-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -39,17 +41,21 @@
   } @ inputs: let
     system = "x86_64-linux";
     user = "sword";
+    pkgs = nixpkgs.legacyPackages.${system};
+    pkgs-stable = import nixpkgs-stable {
+      inherit system;
+      config.allowUnfree = true;
+    };
   in {
     # nixpkgs.overlays = [ inputs.niri.overlays.niri ];
 
+    devShells.${system}.default = pkgs.mkShell {
+      buildInputs = with pkgs; [nixd statix];
+    };
+
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs = {
-        inherit inputs system;
-
-        pkgs-stable = import nixpkgs-stable {
-          inherit system;
-          config.allowUnfree = true;
-        };
+        inherit inputs system pkgs-stable;
       };
 
       modules = [
@@ -63,7 +69,9 @@
     homeConfigurations.${user} = home-manager.lib.homeManagerConfiguration {
       pkgs = nixpkgs.legacyPackages.${system};
       extraSpecialArgs = {
-        spotMain = inputs.spot.defaultPackage.${system}.override {withAudioBackend = "pulseaudio";};
+        inherit pkgs-stable;
+        spotMain = inputs.spot.defaultPackage.${pkgs.stdenv.hostPlatform.system}.override {withAudioBackend = "pulseaudio";};
+        llmAgents = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
       };
 
       modules = [

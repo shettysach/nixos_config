@@ -2,7 +2,7 @@
   lib,
   inputs,
   pkgs,
-  pkgs-stable,
+  # pkgs-stable,
   ...
 }: {
   nixpkgs.config.allowUnfree = true;
@@ -20,8 +20,6 @@
       # -- Nix --
       home-manager
       alejandra
-      nixd
-      nil
       cachix
       # -- Dev --
       git
@@ -29,6 +27,7 @@
       difftastic
       obsidian
       # -- TUI / CLI utils --
+      microfetch
       ast-grep
       ripgrep
       lsr
@@ -50,8 +49,6 @@
       pulseaudio-ctl
       pavucontrol
       libnotify
-      # -- GUI apps --
-      brave
       # --
       # Dell
       dell-command-configure
@@ -60,17 +57,19 @@
 
     inherit (pkgs.kdePackages) okular gwenview;
 
-    inherit
-      (pkgs-stable)
-      newsflash
-      ;
+    # -- Browsers
 
     helium = inputs.helium.packages.x86_64-linux.default;
+    inherit (pkgs) firefox;
+
+    # --
+
     cohle = inputs.cohle.packages.${pkgs.system}.default;
   };
 
   fonts.packages = lib.attrValues {
     inherit (pkgs) lora work-sans;
     inherit (pkgs.nerd-fonts) jetbrains-mono zed-mono;
+    inherit (pkgs.ioskeley-mono) normal-NF;
   };
 }

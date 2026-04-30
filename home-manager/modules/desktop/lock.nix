@@ -2,18 +2,22 @@
   pkgs,
   config,
   ...
-}: {
+}: let
+  pidof = "${pkgs.procps}/bin/pidof";
+  hyprlock = "${config.programs.hyprlock.package}/bin/hyprlock";
+  lockCmd = "${pidof} hyprlock || ${hyprlock}";
+in {
   services.swayidle = {
     enable = true;
     events = {
-      "before-sleep" = "${config.programs.hyprlock.package}/bin/hyprlock";
-      "lock" = "${config.programs.hyprlock.package}/bin/hyprlock";
+      "before-sleep" = lockCmd;
+      "lock" = lockCmd;
     };
 
     timeouts = [
       {
         timeout = 5 * 60;
-        command = "${config.programs.hyprlock.package}/bin/hyprlock";
+        command = lockCmd;
       }
       {
         timeout = 10 * 60;
@@ -38,7 +42,7 @@
         {
           monitor = "";
           text = "$TIME";
-          color = "rgba(" + config.lib.stylix.colors.base07 + "85)";
+          color = "rgb(" + config.lib.stylix.colors.base05 + ")";
           font_family = config.stylix.fonts.serif.name;
           font_size = 200;
           position = "0, 250";
@@ -49,8 +53,8 @@
 
         {
           monitor = "";
-          text = ''cmd[update:43200000] echo $(date +"%A, %d %b %Y")'';
-          color = "rgba(" + config.lib.stylix.colors.base07 + "85)";
+          text = ''cmd[update:43200000] echo $(/run/current-system/sw/bin/date +"%A, %d %b %Y")'';
+          color = "rgb(" + config.lib.stylix.colors.base05 + ")";
           font_family = config.stylix.fonts.serif.name;
           font_size = 50;
           position = "0, -150";

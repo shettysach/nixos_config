@@ -83,8 +83,8 @@
         idle_inhibitor = {
           format = "{icon}";
           format-icons = {
-            activated = "󱨥";
-            deactivated = "󱨦";
+            activated = "󱙱 ";
+            deactivated = "󰌾 ";
           };
         };
 
@@ -94,7 +94,7 @@
 
         "wireplumber#sink" = {
           format = "SPK {volume}%";
-          format-muted = "SPK MUTED";
+          format-muted = "SPK MUTE";
           on-click = "pavucontrol -t 3";
           on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
         };
@@ -102,16 +102,17 @@
         "wireplumber#source" = {
           node-type = "Audio/Source";
           format = "MIC {volume}%";
-          format-muted = "MIC MUTED";
+          format-muted = "MIC MUTE";
           on-click = "pavucontrol -t 4";
           on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
         };
 
         mpris = {
-          format = "[󰐊] {player}";
-          format-paused = "[󰏤] {player}";
+          format = "MPRIS 󰐊";
+          format-paused = "MPRIS 󰏤";
           format-stopped = "";
-          tooltip-format = "{dynamic}";
+          tooltip-format = "{dynamic}\n{player}";
+          dynamic-separator = "\n";
           players = ["*"];
           on-click = "playerctl play-pause";
           interval = 1;

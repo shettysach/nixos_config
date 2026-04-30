@@ -20,19 +20,12 @@
         element.padding = mkLiteral "0.5em";
         prompt.padding = mkLiteral "0.5em";
         entry.padding = mkLiteral "0.5em";
-        element-icon.size = mkLiteral "1.2em";
-        element-icon.padding = mkLiteral "0 0.5em 0 0";
+        element.spacing = mkLiteral "0.5em";
+        element-icon.size = mkLiteral "1.1em";
+        element-text.vertical-align = mkLiteral "0.5";
         listview.columns = 1;
         listview.lines = 10;
-        "element-text selected".highlight = mkLiteral "bold";
       }
     );
-  };
-
-  home.file = {
-    "${config.xdg.configHome}/scripts" = {
-      source = ../../dots/scripts;
-      executable = true;
-    };
   };
 }

@@ -85,16 +85,13 @@
         "Mod+Minus".action.set-column-width = "-5%";
 
         "Mod+M".action.spawn = [
-          "${pkgs.rofi}/bin/rofi"
+          "${config.programs.rofi.package}/bin/rofi"
           "-show"
           "power-menu"
           "-modi"
-          "power-menu:${config.xdg.configHome}/scripts/power_menu --no-symbols"
+          "power-menu:${../../dots/scripts/power_menu} --no-symbols"
         ];
-        "Mod+Shift+B".action.spawn = [
-          "bash"
-          "${config.xdg.configHome}/scripts/bluetooth_menu"
-        ];
+        "Mod+Shift+B".action.spawn = ["${pkgs.rofi-bluetooth}/bin/rofi-bluetooth"];
 
         "Mod+S".action.screenshot = {};
         "Mod+Space".action.switch-focus-between-floating-and-tiling = {};

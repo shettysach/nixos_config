@@ -3,8 +3,8 @@
     enable = true;
     autoEnable = true;
 
-    base16Scheme = (import ../../theme.nix).base16Scheme;
-    image = (import ../../theme.nix).image;
+    inherit ((import ../../theme.nix)) base16Scheme;
+    inherit ((import ../../theme.nix)) image;
 
     fonts = {
       serif = {
@@ -18,10 +18,11 @@
       };
 
       monospace = {
-        # name = "JetBrainsMono Nerd Font";
-        # package = pkgs.nerd-fonts.jetbrains-mono;
         name = "ZedMono NF Extd";
         package = pkgs.nerd-fonts.zed-mono;
+
+        # name = "IoskeleyMono Nerd Font";
+        # package = pkgs.ioskeley-mono.normal-NF;
       };
 
       sizes = {
@@ -45,9 +46,19 @@
 
     icons = {
       enable = true;
-      package = pkgs.vimix-icon-theme;
-      dark = "Vimix-white";
-      light = "Vimix-white";
+      package = pkgs.tela-icon-theme;
+      light = "Tela-nord-light";
+      dark = "Tela-nord-dark";
+    };
+
+    targets = {
+      qt.enable = true;
+      gtk.enable = true;
+      gtk.extraCss = "* { border-radius: 0; }";
+      spotify-player.enable = false;
+      yazi.enable = false;
+      zed.enable = false;
+      fzf.enable = false;
     };
   };
 }

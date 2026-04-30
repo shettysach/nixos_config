@@ -3,40 +3,58 @@
   inputs,
   ...
 }: {
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
-  services.fwupd.enable = true;
-
   imports = [
     ./hardware-configuration.nix
     ./packages.nix
     ./modules/mod.nix
-
     ./intel.nix
     # ./nvidia.nix
   ];
 
-  nixpkgs.overlays = [inputs.niri.overlays.niri];
+  boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  # -- Swap
 
-  users.users.sword = {
-    isNormalUser = true;
-    description = "Sword";
-    shell = pkgs.zsh;
-    extraGroups = [
-      "networkmanager"
-      "wheel"
-      "video"
-    ];
+  swapDevices = [
+    {
+      device = "/var/lib/swapfile";
+      size = 16 * 1024;
+    }
+  ];
+
+  # https://chrisdown.name/2026/03/24/zswap-vs-zram-when-to-use-what.html
+
+  boot.kernelParams = [
+    "zswap.enabled=1" # enables zswap
+    "zswap.compressor=lz4" # compression algorithm
+    "zswap.max_pool_percent=20" # maximum percentage of RAM that zswap is allowed to use
+    "zswap.shrinker_enabled=1" # whether to shrink the pool proactively on high memory pressure
+  ];
+
+  # Needed for lz4
+  boot.initrd = {
+    systemd.enable = true;
+    kernelModules = ["lz4"];
   };
 
-  environment.variables.EDITOR = "nvim";
+  # --
+
+  nixpkgs.overlays = [inputs.niri.overlays.niri];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   programs = {
     nix-ld.enable = true;
     zsh.enable = true;
   };
+
+  users.users.sword = {
+    isNormalUser = true;
+    description = "Sword";
+    shell = pkgs.zsh;
+    extraGroups = ["networkmanager" "wheel" "video"];
+  };
+
+  environment.variables.EDITOR = "nvim";
 
   nix.settings = {
     trusted-users = ["root" "sword"];
@@ -44,39 +62,45 @@
       "https://nix-community.cachix.org"
       "https://niri.cachix.org"
       "https://ghostty.cachix.org"
+      "https://cache.numtide.com"
     ];
     trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964="
       "ghostty.cachix.org-1:QB389yTa6gTyneehvqG58y0WnHjQOqgnA+wBnpWWxns="
+      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
     ];
   };
+
+  # --
+
+  services.fwupd.enable = true;
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 5;
   boot.loader.efi.canTouchEfiVariables = true;
   # boot.tmp.useTmpfs = true
 
-  # time.timeZone = "Asia/Kolkata";
-  # time.timeZone = "America/Chicago";
   time.timeZone = "America/Los_Angeles";
   i18n.defaultLocale = "en_GB.UTF-8";
 
   # SSH and SCP
-  services.sshd.enable = true;
+  services.sshd.enable = false;
   networking.firewall.allowedTCPPorts = [22];
 
   security.polkit.enable = true;
   security.rtkit.enable = true;
 
+  system.nssDatabases.hosts = [
+    "files mdns_minimal [NOTFOUND=return] dns mdns"
+  ];
+
+  # -- Input / Output
+
   services.xserver.xkb = {
     layout = "us";
     variant = "";
   };
-
-  system.nssDatabases.hosts = [
-    "files mdns_minimal [NOTFOUND=return] dns mdns"
-  ];
 
   services.libinput.enable = true;
 
@@ -136,6 +160,8 @@
     #jack.enable = true;
     #media-session.enable = true;
   };
+
+  # --
 
   services.gvfs.enable = true;
   # services.udev.packages = [ pkgs.android-udev-rules pkgs.libmtp.out ];

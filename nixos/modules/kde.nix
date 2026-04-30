@@ -1,4 +1,4 @@
-{...}: {
+_: {
   services = {
     # Display Manager - Using SDDM for KDE
     displayManager.sddm = {
