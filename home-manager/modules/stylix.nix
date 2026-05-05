@@ -18,16 +18,19 @@
       };
 
       monospace = {
-        name = "ZedMono NF Extd";
-        package = pkgs.nerd-fonts.zed-mono;
+        # name = "JetBrainsMono Nerd Font";
+        # package = pkgs.nerd-fonts.jetbrains-mono;
 
-        # name = "IoskeleyMono Nerd Font";
-        # package = pkgs.ioskeley-mono.normal-NF;
+        # name = "ZedMono NF Extd";
+        # package = pkgs.nerd-fonts.zed-mono;
+
+        name = "IoskeleyMono Nerd Font";
+        package = pkgs.ioskeley-mono.normal-NF;
       };
 
       sizes = {
-        desktop = 12;
         applications = 13;
+        desktop = 13;
         terminal = 14;
       };
     };
@@ -40,15 +43,15 @@
 
     opacity = {
       terminal = 0.85;
-      desktop = 1.0;
+      desktop = 0.85;
       applications = 1.0;
     };
 
     icons = {
       enable = true;
       package = pkgs.tela-icon-theme;
-      light = "Tela-nord-light";
-      dark = "Tela-nord-dark";
+      light = "Tela-purple-light";
+      dark = "Tela-purple-dark";
     };
 
     targets = {
@@ -59,6 +62,10 @@
       yazi.enable = false;
       zed.enable = false;
       fzf.enable = false;
+      waybar = {
+        addCss = true;
+        opacity.enable = true;
+      };
     };
   };
 }

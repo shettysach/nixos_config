@@ -1,6 +1,6 @@
 {
   lib,
-  # pkgs,
+  pkgs,
   pkgs-stable,
   llmAgents,
   ...
@@ -17,6 +17,7 @@
 
   home.packages = lib.attrValues {
     inherit (llmAgents) opencode amp;
+    inherit (pkgs) obsidian nufmt;
     inherit (pkgs-stable) newsflash;
   };
 

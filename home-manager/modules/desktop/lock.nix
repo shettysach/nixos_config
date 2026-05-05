@@ -6,9 +6,13 @@
   pidof = "${pkgs.procps}/bin/pidof";
   hyprlock = "${config.programs.hyprlock.package}/bin/hyprlock";
   lockCmd = "${pidof} hyprlock || ${hyprlock}";
+
+  niri = "${config.programs.niri.package}/bin/niri";
+  systemctl = "${pkgs.systemd}/bin/systemctl";
 in {
   services.swayidle = {
     enable = true;
+    extraArgs = []; # override the default [ "-w" ]
     events = {
       "before-sleep" = lockCmd;
       "lock" = lockCmd;
@@ -21,12 +25,12 @@ in {
       }
       {
         timeout = 10 * 60;
-        command = "niri msg action power-off-monitors";
-        resumeCommand = "niri msg action power-on-monitors";
+        command = "${niri} msg action power-off-monitors";
+        resumeCommand = "${niri} msg action power-on-monitors";
       }
       {
         timeout = 15 * 60;
-        command = "systemctl suspend";
+        command = "${systemctl} suspend";
       }
     ];
   };

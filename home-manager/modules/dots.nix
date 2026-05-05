@@ -4,9 +4,35 @@
   config,
   spotMain,
   ...
-}: {
+}: let
+  hmSessionVarsNu =
+    pkgs.runCommand "hm-session-vars.nu" {}
+    ''
+      echo "if (\$env.__HM_SESS_VARS_SOURCED? | is-empty) {''$(${lib.getExe config.programs.nushell.package} -c "
+        use ${pkgs.nu_scripts}/share/nu_scripts/modules/capture-foreign-env
+        open ${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh | capture-foreign-env | to nuon
+      ") | load-env}" >> "$out"
+    '';
+in {
   programs = {
     # -- Shells
+    nushell = {
+      enable = true;
+      configFile.source = ../dots/nu/config.nu;
+      envFile.text =
+        # nu
+        ''
+          source ${hmSessionVarsNu}
+          hide-env -i SSH_AUTH_SOCK
+        '';
+    };
+    carapace = {
+      enable = true;
+      enableNushellIntegration = true;
+    };
+
+    # --
+
     zsh = {
       enable = true;
       enableCompletion = true;
@@ -40,8 +66,6 @@
       shellAliases = {
         fzfh = "fd -H . | fzf";
         fzfp = "fzf --preview 'bat --color=always {}'";
-
-        zed = "zeditor"; # zed = "MESA_VK_DEVICE_SELECT=10de:174d zeditor";
       };
 
       localVariables = {
@@ -53,19 +77,6 @@
         ZVM_INIT_MODE = "sourcing";
 
         NIXOS_CONFIG = "${config.xdg.configHome}/nix";
-      };
-
-      syntaxHighlighting.styles = {
-        "arg0" = "fg=cyan";
-        "path" = "fg=blue";
-        "unknown-token" = "fg=white";
-        "suffix-alias" = "fg=green";
-        "precommand" = "fg=green";
-        "autodirectory" = "fg=green";
-        "comment" = "fg=black";
-        "single-quoted-argument" = "fg=green";
-        "double-quoted-argument" = "fg=green";
-        "dollar-quoted-argument" = "fg=magenta";
       };
 
       initContent = ''
@@ -107,6 +118,29 @@
           "super+j=goto_split:down"
           "super+k=goto_split:up"
           "super+l=goto_split:right"
+
+          # Vim-mode keybindings
+          "alt+v=activate_key_table:vim"
+          "vim/"
+          "vim/j=scroll_page_lines:1"
+          "vim/k=scroll_page_lines:-1"
+          "vim/ctrl+d=scroll_page_down"
+          "vim/ctrl+u=scroll_page_up"
+          "vim/ctrl+f=scroll_page_down"
+          "vim/ctrl+b=scroll_page_up"
+          "vim/shift+j=scroll_page_down"
+          "vim/shift+k=scroll_page_up"
+          "vim/g>g=scroll_to_top"
+          "vim/shift+g=scroll_to_bottom"
+          "vim/slash=start_search"
+          "vim/n=navigate_search:next"
+          "vim/v=copy_to_clipboard"
+          "vim/y=copy_to_clipboard"
+          "vim/shift+semicolon=toggle_command_palette"
+          "vim/escape=deactivate_key_table"
+          "vim/q=deactivate_key_table"
+          "vim/i=deactivate_key_table"
+          "vim/catch_all=ignore"
         ];
       };
     };
@@ -134,17 +168,16 @@
 
     zellij.enable = true;
     bat.enable = true;
-    nushell = {
-      enable = false;
-      configFile.source = ../dots/nu/config.nu;
-    };
+
     starship = {
       enable = true;
       settings = lib.importTOML ../dots/starship/nerd_font_symbols.toml;
     };
+
     zoxide.enable = true;
     jujutsu.enable = true;
     delta.enable = true;
+
     fzf = {
       enable = true;
       enableZshIntegration = true;
@@ -164,8 +197,10 @@
     zed-editor.enable = true;
     btop = {
       enable = true;
-      settings.vim_keys = true;
-      settings.rounded_corners = false;
+      settings = {
+        rounded_corners = false;
+        vim_keys = true;
+      };
     };
     spotify-player = {
       enable = true;

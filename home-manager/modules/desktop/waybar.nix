@@ -1,6 +1,4 @@
 {lib, ...}: {
-  stylix.targets.waybar.addCss = false;
-
   programs.waybar = {
     enable = true;
     systemd = {

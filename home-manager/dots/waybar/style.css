@@ -2,22 +2,6 @@
   border-radius: 0;
 }
 
-#workspaces button.focused,
-#workspaces button.active {
-    border-bottom: 3px solid @base05;
-    color: @base05;
-}
-
-#workspaces button.urgent {
-    border-bottom: 3px solid @base08;
-    background-color: @base08;
-    color: @base00;
-}
-
-#workspaces button {
-    color: @base03;
-}
-
 #workspaces button,
 #clock,
 #cpu,
@@ -33,8 +17,11 @@
   padding: 0 10px;
 }
 
-#mpris,
-#wireplumber#sink.bluetooth {
+#battery.charging {
+  color: @base0B;
+}
+
+#mpris {
   color: @base0D;
 }
 

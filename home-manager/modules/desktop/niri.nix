@@ -34,9 +34,7 @@
         XDG_CURRENT_DESKTOP = "niri";
       };
 
-      spawn-at-startup = [
-        {command = ["${pkgs.clipse}/bin/clipse" "-listen"];}
-      ];
+      spawn-at-startup = [{command = ["${pkgs.clipse}/bin/clipse" "-listen"];}];
 
       hotkey-overlay.skip-at-startup = true;
       input.focus-follows-mouse.enable = true;

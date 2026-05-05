@@ -7,6 +7,8 @@
 }: {
   nixpkgs.config.allowUnfree = true;
 
+  programs.nix-ld.enable = true;
+
   programs.neovim = {
     enable = true;
     defaultEditor = true;
@@ -25,7 +27,6 @@
       git
       git-lfs
       difftastic
-      obsidian
       # -- TUI / CLI utils --
       microfetch
       ast-grep
@@ -40,15 +41,13 @@
       unzip
       killall
       powertop
+      libnotify
+      # --
       mpv
       imv
-      # --
       networkmanagerapplet
       playerctl
-      pulseaudio
-      pulseaudio-ctl
       pavucontrol
-      libnotify
       # --
       # Dell
       dell-command-configure

@@ -3,6 +3,14 @@
   inputs,
   ...
 }: {
+  boot.kernelPackages = pkgs.linuxPackages_latest;
+
+  nixpkgs.overlays = [inputs.niri.overlays.niri];
+  nix.settings = {
+    trusted-users = ["root" "sword"];
+    experimental-features = ["nix-command" "flakes"];
+  };
+
   imports = [
     ./hardware-configuration.nix
     ./packages.nix
@@ -11,7 +19,21 @@
     # ./nvidia.nix
   ];
 
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # --
+
+  users.users.sword = {
+    isNormalUser = true;
+    description = "Sword";
+    shell = pkgs.nushell;
+    extraGroups = ["networkmanager" "wheel" "video"];
+  };
+
+  environment.shells = [pkgs.nushell];
+  programs.bash.interactiveShellInit = ''
+    if ! [ "$TERM" = "dumb" ] && [ -z "$BASH_EXECUTION_STRING" ]; then
+      exec nu
+    fi
+  '';
 
   # -- Swap
 
@@ -39,25 +61,9 @@
 
   # --
 
-  nixpkgs.overlays = [inputs.niri.overlays.niri];
-  nix.settings.experimental-features = ["nix-command" "flakes"];
-
-  programs = {
-    nix-ld.enable = true;
-    zsh.enable = true;
-  };
-
-  users.users.sword = {
-    isNormalUser = true;
-    description = "Sword";
-    shell = pkgs.zsh;
-    extraGroups = ["networkmanager" "wheel" "video"];
-  };
-
   environment.variables.EDITOR = "nvim";
 
   nix.settings = {
-    trusted-users = ["root" "sword"];
     substituters = [
       "https://nix-community.cachix.org"
       "https://niri.cachix.org"
@@ -73,8 +79,6 @@
   };
 
   # --
-
-  services.fwupd.enable = true;
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.systemd-boot.configurationLimit = 5;
@@ -117,7 +121,6 @@
     description = "Unbind ELAN2097 touchscreen/stylus from hid-multitouch";
     wantedBy = ["multi-user.target"];
     after = ["sysinit.target"];
-
     serviceConfig = {
       Type = "oneshot";
       SuccessExitStatus = [0 1];
