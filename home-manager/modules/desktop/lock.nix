@@ -6,13 +6,11 @@
   pidof = "${pkgs.procps}/bin/pidof";
   hyprlock = "${config.programs.hyprlock.package}/bin/hyprlock";
   lockCmd = "${pidof} hyprlock || ${hyprlock}";
-
-  niri = "${config.programs.niri.package}/bin/niri";
-  systemctl = "${pkgs.systemd}/bin/systemctl";
+  # niri = "${config.programs.niri.package}/bin/niri";
 in {
   services.swayidle = {
     enable = true;
-    extraArgs = []; # override the default [ "-w" ]
+    systemdTargets = ["graphical-session.target"];
     events = {
       "before-sleep" = lockCmd;
       "lock" = lockCmd;
@@ -20,17 +18,17 @@ in {
 
     timeouts = [
       {
-        timeout = 5 * 60;
+        timeout = 300;
         command = lockCmd;
       }
       {
-        timeout = 10 * 60;
-        command = "${niri} msg action power-off-monitors";
-        resumeCommand = "${niri} msg action power-on-monitors";
+        timeout = 450;
+        command = "niri msg action power-off-monitors";
+        resumeCommand = "niri msg action power-on-monitors";
       }
       {
-        timeout = 15 * 60;
-        command = "${systemctl} suspend";
+        timeout = 600;
+        command = "systemctl suspend";
       }
     ];
   };
@@ -46,25 +44,27 @@ in {
         {
           monitor = "";
           text = "$TIME";
-          color = "rgb(" + config.lib.stylix.colors.base05 + ")";
+          color = "rgba(" + config.lib.stylix.colors.base05 + "D9)";
           font_family = config.stylix.fonts.serif.name;
           font_size = 200;
           position = "0, 250";
           valign = "center";
           halign = "center";
-          shadow_passes = 4;
+          shadow_passes = 3;
+          shadow_size = 6;
         }
 
         {
           monitor = "";
           text = ''cmd[update:43200000] echo $(/run/current-system/sw/bin/date +"%A, %d %b %Y")'';
-          color = "rgb(" + config.lib.stylix.colors.base05 + ")";
+          color = "rgba(" + config.lib.stylix.colors.base05 + "D9)";
           font_family = config.stylix.fonts.serif.name;
           font_size = 50;
           position = "0, -150";
           valign = "center";
           halign = "center";
-          shadow_passes = 4;
+          shadow_passes = 3;
+          shadow_size = 6;
         }
       ];
     };

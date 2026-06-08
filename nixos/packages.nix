@@ -27,12 +27,12 @@
       git
       git-lfs
       difftastic
+      nufmt
       # -- TUI / CLI utils --
       microfetch
-      ast-grep
       ripgrep
-      lsr
       trashy
+      lsr
       fd
       file
       jq
@@ -43,8 +43,7 @@
       powertop
       libnotify
       # --
-      mpv
-      imv
+      networkmanager
       networkmanagerapplet
       playerctl
       pavucontrol
@@ -53,17 +52,6 @@
       dell-command-configure
       libsmbios
       ;
-
-    inherit (pkgs.kdePackages) okular gwenview;
-
-    # -- Browsers
-
-    helium = inputs.helium.packages.x86_64-linux.default;
-    inherit (pkgs) firefox;
-
-    # --
-
-    cohle = inputs.cohle.packages.${pkgs.system}.default;
   };
 
   fonts.packages = lib.attrValues {

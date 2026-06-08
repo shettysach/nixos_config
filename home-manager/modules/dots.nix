@@ -2,37 +2,11 @@
   lib,
   pkgs,
   config,
-  spotMain,
+  # spotMain,
   ...
-}: let
-  hmSessionVarsNu =
-    pkgs.runCommand "hm-session-vars.nu" {}
-    ''
-      echo "if (\$env.__HM_SESS_VARS_SOURCED? | is-empty) {''$(${lib.getExe config.programs.nushell.package} -c "
-        use ${pkgs.nu_scripts}/share/nu_scripts/modules/capture-foreign-env
-        open ${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh | capture-foreign-env | to nuon
-      ") | load-env}" >> "$out"
-    '';
-in {
+}: {
   programs = {
     # -- Shells
-    nushell = {
-      enable = true;
-      configFile.source = ../dots/nu/config.nu;
-      envFile.text =
-        # nu
-        ''
-          source ${hmSessionVarsNu}
-          hide-env -i SSH_AUTH_SOCK
-        '';
-    };
-    carapace = {
-      enable = true;
-      enableNushellIntegration = true;
-    };
-
-    # --
-
     zsh = {
       enable = true;
       enableCompletion = true;
@@ -63,28 +37,21 @@ in {
         }
       ];
 
-      shellAliases = {
-        fzfh = "fd -H . | fzf";
-        fzfp = "fzf --preview 'bat --color=always {}'";
-      };
-
       localVariables = {
         HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND = "";
         HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND = "";
 
-        ZVM_VI_HIGHLIGHT_BACKGROUND = "magenta";
+        ZVM_VI_HIGHLIGHT_BACKGROUND = "blue";
         ZVM_VI_EDITOR = "nvim";
         ZVM_INIT_MODE = "sourcing";
-
-        NIXOS_CONFIG = "${config.xdg.configHome}/nix";
       };
+
+      syntaxHighlighting.styles.unknown-token = "fg=red";
 
       initContent = ''
         function zvm_after_init() {
             bindkey '^r' fzf-history-widget
         }
-
-        bindkey '^o' autosuggest-accept
 
         zstyle ':completion:*' menu no
         zstyle ':fzf-tab:*' switch-group '<' '>'
@@ -95,6 +62,39 @@ in {
       history.size = 1000;
       history.saveNoDups = true;
     };
+
+    nushell = let
+      hmSessionVarsNu =
+        pkgs.runCommand "hm-session-vars.nu" {}
+        ''
+           echo "if (\$env.__HM_SESS_VARS_SOURCED? | is-empty) {''$(${lib.getExe config.programs.nushell.package} -c "
+          use ${pkgs.nu_scripts}/share/nu_scripts/modules/capture-foreign-env
+          open ${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh | capture-foreign-env | to nuon
+           ") | load-env}" >> "$out"
+        '';
+      dircolorsIntegration = pkgs.runCommand "dircolors.nu" {} ''
+        eval "$(${lib.getExe' pkgs.coreutils "dircolors"} -b)"
+        echo "export-env { \$env.LS_COLORS = \"$LS_COLORS\" }" >> $out
+      '';
+    in {
+      enable = true;
+      configFile.source = ../dots/nu/config.nu;
+      envFile.text =
+        # nu
+        ''
+          source ${hmSessionVarsNu}
+          source ${dircolorsIntegration}
+          hide-env -i SSH_AUTH_SOCK
+        '';
+    };
+
+    carapace = {
+      enable = true;
+      enableNushellIntegration = true;
+      enableZshIntegration = false;
+    };
+
+    # --
 
     # -- Terminals
     ghostty = {
@@ -111,6 +111,8 @@ in {
         window-decoration = false;
         confirm-close-surface = false;
         window-inherit-working-directory = false;
+        font-feature = "-calt,zero";
+
         keybind = [
           "super+enter=new_split:auto"
           "super+backspace=close_surface"
@@ -204,7 +206,7 @@ in {
     };
     spotify-player = {
       enable = true;
-      package = spotMain;
+      # package = spotMain;
       settings = {
         progress_bar_position = "Right";
         cover_img_width = 7;

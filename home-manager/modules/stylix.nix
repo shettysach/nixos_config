@@ -3,8 +3,7 @@
     enable = true;
     autoEnable = true;
 
-    inherit ((import ../../theme.nix)) base16Scheme;
-    inherit ((import ../../theme.nix)) image;
+    inherit (import ../../theme.nix) base16Scheme image;
 
     fonts = {
       serif = {
@@ -49,9 +48,9 @@
 
     icons = {
       enable = true;
-      package = pkgs.tela-icon-theme;
-      light = "Tela-purple-light";
-      dark = "Tela-purple-dark";
+      package = pkgs.kdePackages.breeze-icons;
+      light = "breeze";
+      dark = "breeze-dark";
     };
 
     targets = {

@@ -6,9 +6,8 @@
     ./network.nix
 
     ./desktop.nix
-    # ./kde.nix
-
     ./greetd.nix
+    # ./kde.nix
 
     ./stylix.nix
   ];

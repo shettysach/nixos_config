@@ -34,8 +34,6 @@
         XDG_CURRENT_DESKTOP = "niri";
       };
 
-      spawn-at-startup = [{command = ["${pkgs.clipse}/bin/clipse" "-listen"];}];
-
       hotkey-overlay.skip-at-startup = true;
       input.focus-follows-mouse.enable = true;
 
@@ -59,6 +57,8 @@
         "Mod+Backspace".action.close-window = {};
 
         "Mod+D".action.spawn = ["${config.programs.rofi.package}/bin/rofi" "-show" "drun"];
+
+        "Mod+Escape".action.toggle-keyboard-shortcuts-inhibit = {};
 
         "Mod+Q".action.spawn = ["killall" "-SIGUSR1" ".waybar-wrapped"];
 

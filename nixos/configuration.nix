@@ -15,8 +15,8 @@
     ./hardware-configuration.nix
     ./packages.nix
     ./modules/mod.nix
-    ./intel.nix
     # ./nvidia.nix
+    ./intel.nix
   ];
 
   # --
@@ -24,16 +24,19 @@
   users.users.sword = {
     isNormalUser = true;
     description = "Sword";
-    shell = pkgs.nushell;
-    extraGroups = ["networkmanager" "wheel" "video"];
+    extraGroups = ["networkmanager" "wheel" "video" "bluetooth"];
   };
 
-  environment.shells = [pkgs.nushell];
-  programs.bash.interactiveShellInit = ''
-    if ! [ "$TERM" = "dumb" ] && [ -z "$BASH_EXECUTION_STRING" ]; then
-      exec nu
-    fi
-  '';
+  users.users.sword.shell = pkgs.zsh;
+  programs.zsh.enable = true;
+
+  # users.users.sword.shell = pkgs.nushell;
+  # environment.shells = [pkgs.nushell];
+  # programs.bash.interactiveShellInit = ''
+  #   if ! [ "$TERM" = "dumb" ] && [ -z "$BASH_EXECUTION_STRING" ]; then
+  #     exec nu
+  #   fi
+  # '';
 
   # -- Swap
 

@@ -1,5 +1,6 @@
 * {
   border-radius: 0;
+  font-feature-settings: "zero";
 }
 
 #workspaces button,
@@ -17,10 +18,7 @@
   padding: 0 10px;
 }
 
-#battery.charging {
-  color: @base0B;
-}
-
+#battery.charging,
 #mpris {
   color: @base0D;
 }
