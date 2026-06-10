@@ -34,7 +34,7 @@
     inherit (pkgs) firefox obsidian;
     helium = inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default;
 
-    # cohle = inputs.cohle.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    cohle = inputs.cohle.packages.${pkgs.stdenv.hostPlatform.system}.default;
   };
 
   # services.blueman-applet.enable = true;

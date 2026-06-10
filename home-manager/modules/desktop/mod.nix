@@ -6,6 +6,7 @@
   #  fileManager = ["org.xfce.Thunar.desktop"];
   fileManager = ["org.kde.dolphin.desktop"];
   browser = ["helium.desktop"];
+  pdfViewer = ["org.kde.okular.desktop"];
 in {
   imports = [./niri.nix ./waybar.nix ./lock.nix ./rofi.nix];
 
@@ -33,7 +34,7 @@ in {
     config.common.default = "*";
   };
 
-  # -- Explorer
+  # -- Defaults
 
   xdg.mimeApps = {
     enable = true;
@@ -41,11 +42,13 @@ in {
       "inode/directory" = fileManager;
       "x-directory/normal" = fileManager;
       "x-scheme-handler/file" = fileManager;
+      "application/pdf" = pdfViewer;
     };
     defaultApplications = {
       "inode/directory" = fileManager;
       "x-directory/normal" = fileManager;
       "x-scheme-handler/file" = fileManager;
+      "application/pdf" = pdfViewer;
 
       "x-scheme-handler/http" = browser;
       "x-scheme-handler/https" = browser;

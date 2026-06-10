@@ -1,13 +1,4 @@
 {pkgs, ...}: {
-  services.kmscon = {
-    enable = false;
-    config = {
-      term = "kmscon";
-      hwaccel = true;
-      libseat = true;
-    };
-  };
-
   stylix = {
     enable = true;
     autoEnable = true;
@@ -17,6 +8,7 @@
         name = "IoskeleyMono Nerd Font";
         package = pkgs.ioskeley-mono.normal-NF;
       };
+      sizes.terminal = 14;
     };
     targets = {
       qt.enable = true;

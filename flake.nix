@@ -18,7 +18,8 @@
     };
 
     niri.url = "github:sodiboo/niri-flake";
-    spot.url = "github:aome510/spotify-player";
+
+    tuigreet.url = "github:NotAShelf/tuigreet";
 
     llm-agents.url = "github:numtide/llm-agents.nix";
 
@@ -67,10 +68,9 @@
     };
 
     homeConfigurations.${user} = home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = pkgs;
       extraSpecialArgs = {
         inherit inputs pkgs-stable;
-        spotMain = inputs.spot.defaultPackage.${pkgs.stdenv.hostPlatform.system}.override {withAudioBackend = "pulseaudio";};
         llmAgents = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
       };
 

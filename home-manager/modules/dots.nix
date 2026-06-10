@@ -2,7 +2,6 @@
   lib,
   pkgs,
   config,
-  # spotMain,
   ...
 }: {
   programs = {
@@ -206,7 +205,6 @@
     };
     spotify-player = {
       enable = true;
-      # package = spotMain;
       settings = {
         progress_bar_position = "Right";
         cover_img_width = 7;

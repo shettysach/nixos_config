@@ -104,6 +104,14 @@
 
   # -- Input / Output
 
+  services.kmscon = {
+    enable = true;
+    config = {
+      hwaccel = true;
+      libseat = true;
+    };
+  };
+
   services.xserver.xkb = {
     layout = "us";
     variant = "";
