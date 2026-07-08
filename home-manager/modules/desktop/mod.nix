@@ -3,7 +3,6 @@
   lib,
   ...
 }: let
-  #  fileManager = ["org.xfce.Thunar.desktop"];
   fileManager = ["org.kde.dolphin.desktop"];
   browser = ["helium.desktop"];
   pdfViewer = ["org.kde.okular.desktop"];
@@ -18,20 +17,20 @@ in {
   };
 
   home.packages = lib.attrValues {
-    inherit (pkgs) wlr-randr wl-clipboard clipse imv mpv;
+    inherit (pkgs) wlr-randr wl-clipboard clipse;
+    inherit (pkgs) imv mpv;
     inherit (pkgs.kdePackages) dolphin gwenview okular;
   };
 
   xdg.portal = {
     enable = true;
     extraPortals = lib.attrValues {
-      inherit
-        (pkgs)
-        xdg-desktop-portal-gtk
-        xdg-desktop-portal-wlr
-        ;
+      inherit (pkgs) xdg-desktop-portal-gtk;
     };
-    config.common.default = "*";
+    config.niri = {
+      default = ["gnome" "gtk"]; # Gnome portal for screensharing
+      "org.freedesktop.impl.portal.FileChooser" = "gtk"; # gtk portal for files
+    };
   };
 
   # -- Defaults
@@ -75,20 +74,6 @@ in {
     </Menu>
   '';
 
-  # -- Thunar
-
-  # programs.thunar = {
-  #   enable = false;
-  #   plugins = with pkgs; [
-  #     thunar-volman
-  #     thunar-archive-plugin
-  #     thunar-media-tags-plugin
-  #     tumbler
-  #   ];
-  # };
-
-  # --
-
   services.mako = {
     enable = true;
     settings.default-timeout = 5000;
@@ -100,6 +85,6 @@ in {
     provider = "manual";
     dawnTime = "05:00-07:00";
     duskTime = "18:00-21:00";
-    temperature.night = 2200;
+    temperature.night = 2800;
   };
 }

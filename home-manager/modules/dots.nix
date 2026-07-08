@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  inputs,
   ...
 }: {
   programs = {
@@ -16,6 +17,8 @@
         strategy = ["history" "completion"];
       };
 
+      history.size = 1000;
+      history.saveNoDups = true;
       historySubstringSearch = {
         enable = true;
         searchUpKey = "^P";
@@ -35,6 +38,8 @@
           file = "share/fzf-tab/fzf-tab.plugin.zsh";
         }
       ];
+
+      shellAliases.zed = "zeditor";
 
       localVariables = {
         HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND = "";
@@ -57,9 +62,6 @@
         zstyle ':fzf-tab:*' fzf-flags --color=16 --preview-window=sharp --prompt='❯ '
         zstyle ':fzf-tab:complete:cd:*' fzf-preview 'lsr -1 $realpath'
       '';
-
-      history.size = 1000;
-      history.saveNoDups = true;
     };
 
     nushell = let
@@ -110,7 +112,7 @@
         window-decoration = false;
         confirm-close-surface = false;
         window-inherit-working-directory = false;
-        font-feature = "-calt,zero";
+        font-feature = "-calt"; # ,zero
 
         keybind = [
           "super+enter=new_split:auto"
@@ -189,11 +191,18 @@
         "--prompt '❯ '"
       ];
 
-      fileWidgetCommand = "fd --type f";
-      fileWidgetOptions = ["--preview 'bat --color always {}'"];
+      fileWidget = {
+        command = "fd --type f";
+        options = ["--preview 'bat --color always {}'"];
+      };
     };
 
     # --
+
+    obsidian = {
+      enable = true;
+      cli.enable = true;
+    };
 
     zed-editor.enable = true;
     btop = {
@@ -203,14 +212,20 @@
         vim_keys = true;
       };
     };
+
+    zathura.enable = true;
+
     spotify-player = {
       enable = true;
+      package = inputs.spotify-player.defaultPackage.${pkgs.stdenv.hostPlatform.system};
       settings = {
         progress_bar_position = "Right";
         cover_img_width = 7;
         cover_img_length = 16;
         layout.library.playlist_percent = 30;
         layout.playback_window_position = "Bottom";
+        enable_relative_line_number = true;
+
         theme = "custom";
         pause_icon = "󰐊";
         play_icon = "󰏤";

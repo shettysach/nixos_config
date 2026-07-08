@@ -2,7 +2,7 @@
   lib,
   inputs,
   pkgs,
-  pkgs-stable,
+  # pkgs-stable,
   llmAgents,
   ...
 }: {
@@ -29,10 +29,18 @@
   };
 
   home.packages = lib.attrValues {
-    inherit (llmAgents) amp;
+    # GUI
 
     inherit (pkgs) firefox obsidian;
     helium = inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default;
+
+    #
+
+    inherit
+      (pkgs)
+      rustdesk-flutter
+      tokei
+      ;
 
     cohle = inputs.cohle.packages.${pkgs.stdenv.hostPlatform.system}.default;
   };

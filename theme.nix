@@ -1,4 +1,4 @@
 {
   base16Scheme = ./palettes/night.yaml;
-  image = ./wallpapers/boat.jpeg;
+  image = ./wallpapers/blue_mist.jpg;
 }

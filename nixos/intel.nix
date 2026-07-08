@@ -7,9 +7,9 @@
     LIBVA_DRIVER_NAME = "iHD";
   };
 
-  hardware.graphics.extraPackages = with pkgs; [
-    intel-media-driver
-    intel-vaapi-driver
+  hardware.graphics.extraPackages = [
+    pkgs.intel-media-driver
+    pkgs.intel-vaapi-driver
   ];
   boot.kernelParams = ["i915.enable_guc=2"];
 }

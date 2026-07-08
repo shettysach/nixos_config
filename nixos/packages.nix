@@ -13,7 +13,7 @@
     enable = true;
     defaultEditor = true;
     vimAlias = true;
-    package = inputs.neovim-nightly.packages.${pkgs.system}.default;
+    package = inputs.neovim-nightly.packages.${pkgs.stdenv.hostPlatform.system}.default;
   };
 
   environment.systemPackages = lib.attrValues {
@@ -57,6 +57,6 @@
   fonts.packages = lib.attrValues {
     inherit (pkgs) lora work-sans;
     inherit (pkgs.nerd-fonts) jetbrains-mono zed-mono;
-    inherit (pkgs.ioskeley-mono) normal-NF;
+    inherit (pkgs.ioskeley-mono) normal-term-NF;
   };
 }

@@ -23,6 +23,11 @@
 
     llm-agents.url = "github:numtide/llm-agents.nix";
 
+    spotify-player = {
+      url = "github:aome510/spotify-player";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     helium = {
       url = "github:amaanq/helium-flake";
       inputs.nixpkgs.follows = "nixpkgs";

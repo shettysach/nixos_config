@@ -24,7 +24,7 @@
         # package = pkgs.nerd-fonts.zed-mono;
 
         name = "IoskeleyMono Nerd Font";
-        package = pkgs.ioskeley-mono.normal-NF;
+        package = pkgs.ioskeley-mono.normal-term-NF;
       };
 
       sizes = {
@@ -58,12 +58,14 @@
       gtk.enable = true;
       gtk.extraCss = "* { border-radius: 0; }";
       spotify-player.enable = false;
+
       yazi.enable = false;
       zed.enable = false;
       fzf.enable = false;
+
       waybar = {
         addCss = true;
-        opacity.enable = true;
+        opacity.enable = false;
       };
     };
   };

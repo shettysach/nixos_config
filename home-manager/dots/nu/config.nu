@@ -1,7 +1,7 @@
 $env.config = {
-    table.mode: "single"
     show_banner: false
     edit_mode: "vi"
+    table: {mode: "single"}
     cursor_shape: {vi_insert: "line", vi_normal: "block"}
     completions: {
         algorithm: "prefix"
