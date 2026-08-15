@@ -12,13 +12,21 @@
 
   environment.systemPackages = [pkgs.nvtopPackages.nvidia];
 
+  # Make NVIDIA the default renderer for the Wayland session and applications.
+  environment.sessionVariables = {
+    __NV_PRIME_RENDER_OFFLOAD = "1";
+    __NV_PRIME_RENDER_OFFLOAD_PROVIDER = "NVIDIA-G0";
+    __GLX_VENDOR_LIBRARY_NAME = "nvidia";
+    __VK_LAYER_NV_optimus = "NVIDIA_only";
+  };
+
   # Optimus PRIME
   hardware.nvidia.prime = {
     # NOTE: Sync and Offload are mutually exclusive
-    sync.enable = false;
+    sync.enable = true;
 
-    offload.enable = true;
-    offload.enableOffloadCmd = true;
+    offload.enable = false;
+    offload.enableOffloadCmd = false;
 
     # Make sure to use the correct Bus ID values for your system!
     # intelBusId = "0@0:2:0";

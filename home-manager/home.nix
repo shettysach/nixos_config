@@ -1,9 +1,10 @@
 {
   lib,
-  inputs,
   pkgs,
   # pkgs-stable,
   llmAgents,
+  helium,
+  cohle,
   ...
 }: {
   nixpkgs.config.allowUnfree = true;
@@ -14,6 +15,7 @@
     username = "sword";
     homeDirectory = "/home/sword";
     stateVersion = "26.05";
+    pointerCursor.enable = true;
   };
 
   programs = {
@@ -22,9 +24,9 @@
       package = llmAgents.codex;
     };
 
-    opencode = {
+    pi-coding-agent = {
       enable = true;
-      package = llmAgents.opencode;
+      package = llmAgents.pi;
     };
   };
 
@@ -32,17 +34,14 @@
     # GUI
 
     inherit (pkgs) firefox obsidian;
-    helium = inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    inherit (pkgs) rustdesk-flutter;
+
+    helium = helium;
+    cohle = cohle;
 
     #
 
-    inherit
-      (pkgs)
-      rustdesk-flutter
-      tokei
-      ;
-
-    cohle = inputs.cohle.packages.${pkgs.stdenv.hostPlatform.system}.default;
+    inherit (pkgs) tokei;
   };
 
   # services.blueman-applet.enable = true;

@@ -1,6 +1,5 @@
 {
   lib,
-  inputs,
   pkgs,
   # pkgs-stable,
   ...
@@ -8,13 +7,6 @@
   nixpkgs.config.allowUnfree = true;
 
   programs.nix-ld.enable = true;
-
-  programs.neovim = {
-    enable = true;
-    defaultEditor = true;
-    vimAlias = true;
-    package = inputs.neovim-nightly.packages.${pkgs.stdenv.hostPlatform.system}.default;
-  };
 
   environment.systemPackages = lib.attrValues {
     inherit
@@ -27,7 +19,6 @@
       git
       git-lfs
       difftastic
-      nufmt
       # -- TUI / CLI utils --
       microfetch
       ripgrep
@@ -56,6 +47,7 @@
 
   fonts.packages = lib.attrValues {
     inherit (pkgs) lora work-sans;
+    iosevka-aile = pkgs.iosevka-bin.override {variant = "Aile";};
     inherit (pkgs.nerd-fonts) jetbrains-mono zed-mono;
     inherit (pkgs.ioskeley-mono) normal-term-NF;
   };

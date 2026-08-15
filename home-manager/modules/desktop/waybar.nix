@@ -10,6 +10,7 @@
       mainBar = {
         layer = "top";
         position = "top";
+
         margin-top = 0;
         margin-bottom = 0;
         margin-right = 0;
@@ -23,19 +24,9 @@
           "mpris"
         ];
 
-        modules-center = [
-          "niri/workspaces"
-        ];
+        modules-center = ["niri/workspaces"];
 
-        modules-right = [
-          "tray"
-          "idle_inhibitor"
-          "backlight"
-          "wireplumber#sink"
-          "wireplumber#source"
-          "network"
-          "battery"
-        ];
+        modules-right = ["tray" "idle_inhibitor" "backlight" "wireplumber#sink" "wireplumber#source" "network" "battery"];
 
         clock = {
           format = "{:%a %d %b %H:%M}";
@@ -106,8 +97,8 @@
         };
 
         mpris = {
-          format = "MPRIS 󰐊";
-          format-paused = "MPRIS 󰏤";
+          format = "MPRIS 󰏤";
+          format-paused = "MPRIS 󰐊";
           format-stopped = "";
           tooltip-format = "{dynamic}\n{player}";
           dynamic-separator = "\n";

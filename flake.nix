@@ -17,14 +17,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    niri.url = "github:sodiboo/niri-flake";
+    # niri.url = "github:sodiboo/niri-flake";
+    niri.url = "github:epireyn/niri-flake";
 
     tuigreet.url = "github:NotAShelf/tuigreet";
 
     llm-agents.url = "github:numtide/llm-agents.nix";
 
     spotify-player = {
-      url = "github:aome510/spotify-player";
+      url = "github:aome510/spotify-player?ref=598777791a96fe35cf2c2cce4cbe8bfefb7cbbd9";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -47,17 +48,16 @@
   } @ inputs: let
     system = "x86_64-linux";
     user = "sword";
-    pkgs = nixpkgs.legacyPackages.${system};
+    pkgs = import nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+    };
     pkgs-stable = import nixpkgs-stable {
       inherit system;
       config.allowUnfree = true;
     };
   in {
     # nixpkgs.overlays = [ inputs.niri.overlays.niri ];
-
-    devShells.${system}.default = pkgs.mkShell {
-      buildInputs = with pkgs; [nixd statix];
-    };
 
     nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
       specialArgs = {
@@ -75,8 +75,12 @@
     homeConfigurations.${user} = home-manager.lib.homeManagerConfiguration {
       pkgs = pkgs;
       extraSpecialArgs = {
-        inherit inputs pkgs-stable;
+        inherit pkgs-stable;
         llmAgents = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
+        neovim-nightly = inputs.neovim-nightly.packages.${pkgs.stdenv.hostPlatform.system}.default;
+        spotify-player = inputs.spotify-player.defaultPackage.${pkgs.stdenv.hostPlatform.system};
+        helium = inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default;
+        cohle = inputs.cohle.packages.${pkgs.stdenv.hostPlatform.system}.default;
       };
 
       modules = [

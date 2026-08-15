@@ -12,17 +12,11 @@
       };
 
       sansSerif = {
-        name = "Work Sans";
-        package = pkgs.work-sans;
+        name = "Iosevka Aile";
+        package = pkgs.iosevka-bin.override {variant = "Aile";};
       };
 
       monospace = {
-        # name = "JetBrainsMono Nerd Font";
-        # package = pkgs.nerd-fonts.jetbrains-mono;
-
-        # name = "ZedMono NF Extd";
-        # package = pkgs.nerd-fonts.zed-mono;
-
         name = "IoskeleyMono Nerd Font";
         package = pkgs.ioskeley-mono.normal-term-NF;
       };
@@ -51,22 +45,6 @@
       package = pkgs.kdePackages.breeze-icons;
       light = "breeze";
       dark = "breeze-dark";
-    };
-
-    targets = {
-      qt.enable = true;
-      gtk.enable = true;
-      gtk.extraCss = "* { border-radius: 0; }";
-      spotify-player.enable = false;
-
-      yazi.enable = false;
-      zed.enable = false;
-      fzf.enable = false;
-
-      waybar = {
-        addCss = true;
-        opacity.enable = false;
-      };
     };
   };
 }

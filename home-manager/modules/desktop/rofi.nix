@@ -9,6 +9,7 @@
     extraConfig = {
       display-drun = "drun";
       display-window = "win";
+      font = "${config.programs.rofi.font} #calt=0,zero=1";
       modi = "window,run,drun";
       show-icons = true;
     };

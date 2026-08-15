@@ -1,6 +1,6 @@
 * {
   border-radius: 0;
-  /* font-feature-settings: "zero"; */
+  font-feature-settings: "zero";
 }
 
 #workspaces button,

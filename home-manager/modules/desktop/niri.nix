@@ -18,15 +18,16 @@
         {
           draw-border-with-background = false;
           default-column-width.proportion = 1.0;
+          excludes = [{is-floating = true;}];
         }
       ];
 
       environment = {
         CLUTTER_BACKEND = "wayland";
         GDK_BACKEND = "wayland,x11";
+        SDL_VIDEODRIVER = "wayland";
         MOZ_ENABLE_WAYLAND = "1";
         NIXOS_OZONE_WL = "1";
-        SDL_VIDEODRIVER = "wayland";
 
         WLR_NO_HARDWARE_CURSORS = "1";
 
@@ -37,7 +38,7 @@
       hotkey-overlay.skip-at-startup = true;
       input.focus-follows-mouse.enable = true;
 
-      layout.border.width = 2;
+      layout.border.width = 1;
       layout.gaps = 0;
 
       animations.enable = true;
@@ -56,8 +57,6 @@
 
         "Mod+Backspace".action.close-window = {};
 
-        "Mod+D".action.spawn = ["${config.programs.rofi.package}/bin/rofi" "-show" "drun"];
-
         "Mod+Escape".action.toggle-keyboard-shortcuts-inhibit = {};
 
         "Mod+Q".action.spawn = ["killall" "-SIGUSR1" ".waybar-wrapped"];
@@ -69,7 +68,7 @@
         "Mod+F".action.fullscreen-window = {};
 
         "Mod+Backslash".action.switch-preset-column-width = {};
-        "Mod+W".action.toggle-overview = {};
+        "Mod+O".action.toggle-overview = {};
 
         "Mod+Shift+H".action.move-column-left = {};
         "Mod+Shift+J".action.move-window-down-or-to-workspace-down = {};
@@ -82,6 +81,9 @@
         "Mod+Equal".action.set-column-width = "+5%";
         "Mod+Minus".action.set-column-width = "-5%";
 
+        "Mod+D".action.spawn = ["${config.programs.rofi.package}/bin/rofi" "-show" "drun"];
+        "Mod+W".action.spawn = ["${config.programs.rofi.package}/bin/rofi" "-show" "window"];
+
         "Mod+M".action.spawn = [
           "${config.programs.rofi.package}/bin/rofi"
           "-show"
@@ -89,20 +91,22 @@
           "-modi"
           "power-menu:${../../dots/scripts/power_menu} --no-symbols"
         ];
-        "Mod+Shift+B".action.spawn = ["${pkgs.rofi-bluetooth}/bin/rofi-bluetooth"];
+
+        "Mod+B".action.spawn = ["${pkgs.rofi-bluetooth}/bin/rofi-bluetooth"];
+
+        "Mod+C".action.spawn = ["${config.services.clipcat.package}/bin/clipcat-menu"];
 
         "Mod+S".action.screenshot = {};
         "Mod+Space".action.switch-focus-between-floating-and-tiling = {};
         "Mod+Shift+Space".action.toggle-window-floating = {};
 
         "XF86AudioRaiseVolume" = {
-          allow-when-locked = true;
-          action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1+"];
+          action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05+"];
         };
 
         "XF86AudioLowerVolume" = {
           allow-when-locked = true;
-          action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.1-"];
+          action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05-"];
         };
 
         "XF86AudioMute" = {
@@ -127,22 +131,22 @@
 
         "XF86AudioPlay" = {
           allow-when-locked = true;
-          action.spawn = ["${pkgs.playerctl}/bin/playerctl" "-a" "play-pause"];
+          action.spawn = ["${pkgs.playerctl}/bin/playerctl" "play-pause"];
         };
 
         "XF86AudioPause" = {
           allow-when-locked = true;
-          action.spawn = ["${pkgs.playerctl}/bin/playerctl" "-a" "play-pause"];
+          action.spawn = ["${pkgs.playerctl}/bin/playerctl" "play-pause"];
         };
 
         "XF86AudioNext" = {
           allow-when-locked = true;
-          action.spawn = ["${pkgs.playerctl}/bin/playerctl" "-a" "next"];
+          action.spawn = ["${pkgs.playerctl}/bin/playerctl" "next"];
         };
 
         "XF86AudioPrev" = {
           allow-when-locked = true;
-          action.spawn = ["${pkgs.playerctl}/bin/playerctl" "-a" "previous"];
+          action.spawn = ["${pkgs.playerctl}/bin/playerctl" "previous"];
         };
       };
     };

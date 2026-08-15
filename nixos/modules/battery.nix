@@ -2,7 +2,7 @@
   # tlp, powertop and auto-cpufreq clash
 
   services.tlp = {
-    enable = false;
+    enable = true;
     pd.enable = false;
     settings = {
       CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
