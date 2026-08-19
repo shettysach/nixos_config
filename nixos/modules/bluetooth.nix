@@ -6,12 +6,10 @@
     settings = {
       General = {
         Enable = "Source,Sink,Media,Socket";
-        Experimental = false;
+        Experimental = true;
       };
     };
   };
 
-  services.blueman = {
-    enable = true;
-  };
+  services.blueman.enable = false;
 }

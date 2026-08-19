@@ -1,4 +1,8 @@
-{lib, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   programs.waybar = {
     enable = true;
     systemd = {
@@ -26,7 +30,7 @@
 
         modules-center = ["niri/workspaces"];
 
-        modules-right = ["tray" "idle_inhibitor" "backlight" "wireplumber#sink" "wireplumber#source" "network" "battery"];
+        modules-right = ["tray" "idle_inhibitor" "bluetooth" "backlight" "wireplumber#sink" "wireplumber#source" "network" "battery"];
 
         clock = {
           format = "{:%a %d %b %H:%M}";
@@ -69,6 +73,14 @@
           spacing = 8;
         };
 
+        bluetooth = {
+          format = "BLU {status}";
+          format-connected-battery = "BLU {device_battery_percentage}%";
+          tooltip-format-connected = "{device_enumerate}";
+          tooltip-format-enumerate-connected = "{device_alias}\t{device_battery_percentage}%\t{device_address}";
+          on-click = "${pkgs.bzmenu}/bin/bzmenu -l fuzzel -s 2";
+        };
+
         idle_inhibitor = {
           format = "{icon}";
           format-icons = {
@@ -97,8 +109,8 @@
         };
 
         mpris = {
-          format = "MPRIS 󰏤";
-          format-paused = "MPRIS 󰐊";
+          format = "MEDIA 󰏤";
+          format-paused = "MEDIA 󰐊";
           format-stopped = "";
           tooltip-format = "{dynamic}\n{player}";
           dynamic-separator = "\n";
@@ -114,6 +126,7 @@
           tooltip-format = "{essid} - {ifname}";
           tooltip-format-disconnected = "Disconnected";
           interval = 30;
+          on-click = "${pkgs.iwmenu}/bin/iwmenu -l fuzzel -s 2";
         };
 
         battery = {

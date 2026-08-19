@@ -34,8 +34,6 @@
       powertop
       libnotify
       # --
-      networkmanager
-      networkmanagerapplet
       playerctl
       pavucontrol
       # --

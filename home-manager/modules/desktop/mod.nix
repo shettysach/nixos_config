@@ -7,22 +7,9 @@
   browser = ["helium.desktop"];
   pdfViewer = ["org.pwmt.zathura-pdf-mupdf.desktop" "okularApplication_pdf.desktop"];
 in {
-  imports = [./niri.nix ./waybar.nix ./lock.nix ./rofi.nix];
+  imports = [./niri.nix ./waybar.nix ./lock.nix ./fuzzel.nix];
 
   services.wpaperd.enable = true;
-
-  services.clipcat = {
-    enable = true;
-    enableSystemdUnit = true;
-    menuSettings = {
-      server_endpoint = "/run/user/1000/clipcat/grpc.sock";
-      finder = "rofi";
-      rofi = {
-        menu_length = 10;
-        menu_prompt = "Clipcat";
-      };
-    };
-  };
 
   # Ensure WAYLAND_DISPLAY is available before clipcatd initializes its watcher.
   systemd.user.services.clipcat.Unit.After = ["graphical-session.target"];
@@ -37,12 +24,7 @@ in {
   };
 
   home.packages = lib.attrValues {
-    inherit
-      (pkgs)
-      wlr-randr
-      wl-mirror
-      wl-clipboard
-      ;
+    inherit (pkgs) wlr-randr wl-mirror wl-clipboard;
     inherit (pkgs) imv mpv;
     inherit (pkgs.kdePackages) dolphin gwenview okular;
   };
@@ -73,6 +55,7 @@ in {
       "x-directory/normal" = fileManager;
       "x-scheme-handler/file" = fileManager;
       "application/pdf" = pdfViewer;
+      "text/plain" = ["nvim.desktop"];
 
       "x-scheme-handler/http" = browser;
       "x-scheme-handler/https" = browser;
@@ -105,6 +88,6 @@ in {
     provider = "manual";
     dawnTime = "05:00-07:00";
     duskTime = "18:00-21:00";
-    temperature.night = 2800;
+    temperature.night = 3000;
   };
 }

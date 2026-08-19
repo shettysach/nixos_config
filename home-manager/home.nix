@@ -44,8 +44,6 @@
     inherit (pkgs) tokei;
   };
 
-  # services.blueman-applet.enable = true;
-
   services.kdeconnect = {
     enable = true;
     indicator = true;

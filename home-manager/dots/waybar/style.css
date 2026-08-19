@@ -9,6 +9,7 @@
 #memory,
 #disk,
 #tray,
+#bluetooth,
 #idle_inhibitor,
 #backlight,
 #wireplumber,
@@ -19,7 +20,8 @@
 }
 
 #battery.charging,
-#mpris {
+#mpris,
+#bluetooth.connected {
   color: @base0D;
 }
 
@@ -38,4 +40,10 @@
 #memory.critical,
 #network.disconnected {
   color: @base08;
+}
+
+#bluetooth.disabled,
+#bluetooth.off,
+#bluetooth.no-controller {
+  color: @base04;
 }

@@ -1,11 +1,16 @@
-_: {
+{
   networking = {
     hostName = "nixos";
-    networkmanager.enable = true;
     firewall.enable = true;
+    networkmanager.enable = false;
+    wireless = {
+      enable = false;
+      iwd = {
+        enable = true;
+        settings.Scan.DisableRoamingScan = true;
+      };
+    };
   };
-
-  programs.nm-applet.enable = true;
 
   # ports 1714 to 1764
   programs.kdeconnect.enable = true;

@@ -20,8 +20,6 @@
     # niri.url = "github:sodiboo/niri-flake";
     niri.url = "github:epireyn/niri-flake";
 
-    tuigreet.url = "github:NotAShelf/tuigreet";
-
     llm-agents.url = "github:numtide/llm-agents.nix";
 
     spotify-player = {

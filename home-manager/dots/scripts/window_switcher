@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+windows=$(niri msg -j windows)
+index=$(jq -r 'map("\(.title // .app_id)\u0000icon\u001f\(.app_id)") | .[]' <<<"$windows" | fuzzel --dmenu --index") || exit 0
+
+[[ -n "$index" ]] && niri msg action focus-window --id "$(jq -r ".[$index].id" <<<"$windows")"

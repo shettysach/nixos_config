@@ -1,16 +1,10 @@
-{
-  inputs,
-  pkgs,
-  ...
-}: let
-  tuigreet = inputs.tuigreet.packages.${pkgs.stdenv.hostPlatform.system}.tuigreet;
-in {
+{pkgs, ...}: {
   services.greetd = {
     enable = true;
     useTextGreeter = true;
     settings = {
       default_session = {
-        command = "${tuigreet}/bin/tuigreet --asterisks --theme 'text=cyan;input=cyan' --remember --cmd niri-session";
+        command = "${pkgs.tuigreet}/bin/tuigreet --asterisks --theme 'text=cyan;input=cyan' --remember --cmd niri-session";
       };
     };
   };

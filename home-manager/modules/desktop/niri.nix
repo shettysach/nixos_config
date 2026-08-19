@@ -81,18 +81,13 @@
         "Mod+Equal".action.set-column-width = "+5%";
         "Mod+Minus".action.set-column-width = "-5%";
 
-        "Mod+D".action.spawn = ["${config.programs.rofi.package}/bin/rofi" "-show" "drun"];
-        "Mod+W".action.spawn = ["${config.programs.rofi.package}/bin/rofi" "-show" "window"];
+        "Mod+W".action.spawn = ["${../../dots/scripts/window_switcher}"];
 
-        "Mod+M".action.spawn = [
-          "${config.programs.rofi.package}/bin/rofi"
-          "-show"
-          "power-menu"
-          "-modi"
-          "power-menu:${../../dots/scripts/power_menu} --no-symbols"
-        ];
+        "Mod+M".action.spawn = ["${../../dots/scripts/power_menu}"];
 
-        "Mod+B".action.spawn = ["${pkgs.rofi-bluetooth}/bin/rofi-bluetooth"];
+        "Mod+D".action.spawn = ["${config.programs.fuzzel.package}/bin/fuzzel"];
+        "Mod+I".action.spawn = ["${pkgs.iwmenu}/bin/iwmenu" "-l" "fuzzel" "-s" "2"];
+        "Mod+B".action.spawn = ["${pkgs.bzmenu}/bin/bzmenu" "-l" "fuzzel" "-s" "2"];
 
         "Mod+C".action.spawn = ["${config.services.clipcat.package}/bin/clipcat-menu"];
 
@@ -101,6 +96,7 @@
         "Mod+Shift+Space".action.toggle-window-floating = {};
 
         "XF86AudioRaiseVolume" = {
+          allow-when-locked = true;
           action.spawn = ["wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "0.05+"];
         };
 

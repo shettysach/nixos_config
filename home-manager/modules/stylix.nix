@@ -12,8 +12,8 @@
       };
 
       sansSerif = {
-        name = "Iosevka Aile";
-        package = pkgs.iosevka-bin.override {variant = "Aile";};
+        name = "IoskeleyMono Nerd Font";
+        package = pkgs.ioskeley-mono.normal-term-NF;
       };
 
       monospace = {
@@ -22,9 +22,10 @@
       };
 
       sizes = {
-        applications = 13;
-        desktop = 13;
         terminal = 14;
+        popups = 14;
+        desktop = 13;
+        applications = 13;
       };
     };
 
@@ -37,7 +38,8 @@
     opacity = {
       terminal = 0.85;
       desktop = 0.85;
-      applications = 1.0;
+      applications = 0.85;
+      popups = 0.85;
     };
 
     icons = {
