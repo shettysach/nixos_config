@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   stylix = {
     enable = true;
     autoEnable = true;
@@ -12,8 +16,8 @@
       };
 
       sansSerif = {
-        name = "IoskeleyMono Nerd Font";
-        package = pkgs.ioskeley-mono.normal-term-NF;
+        name = "Work Sans";
+        package = pkgs.work-sans;
       };
 
       monospace = {
@@ -23,7 +27,7 @@
 
       sizes = {
         terminal = 14;
-        popups = 14;
+        popups = 13;
         desktop = 13;
         applications = 13;
       };
@@ -32,7 +36,7 @@
     cursor = {
       package = pkgs.bibata-cursors;
       name = "Bibata-Original-Classic";
-      size = 22;
+      size = 23;
     };
 
     opacity = {
@@ -47,6 +51,10 @@
       package = pkgs.kdePackages.breeze-icons;
       light = "breeze";
       dark = "breeze-dark";
+    };
+
+    targets = {
+      fuzzel.fonts.override.sansSerif = config.stylix.fonts.monospace;
     };
   };
 }

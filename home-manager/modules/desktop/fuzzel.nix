@@ -4,12 +4,12 @@
 
     settings = {
       main = {
-        width = 50;
+        width = 37;
         lines = 10;
-        horizontal-pad = 14;
+        horizontal-pad = 12;
         vertical-pad = 12;
         inner-pad = 6;
-        line-height = 25;
+        line-height = 27;
       };
 
       border = {
@@ -17,7 +17,7 @@
         radius = 0;
       };
 
-      "key-bindings" = {
+      key-bindings = {
         prev = "Up";
         next = "Down";
         prev-with-wrap = "Control+p";

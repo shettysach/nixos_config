@@ -17,7 +17,7 @@
         "[](fg:#2b3248 bg:#1d2230)"
         "$nix_shell"
         "[](fg:#1d2230)"
-        "\n$character"
+        "\n\$jobs$character"
       ];
 
       directory = {
