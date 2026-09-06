@@ -17,7 +17,7 @@
       };
 
       monospace = {
-        name = "IoskeleyMono Nerd Font";
+        name = ".ZedMono Extended";
         package = pkgs.ioskeley-mono.normal-term-NF;
       };
 

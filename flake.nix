@@ -90,7 +90,7 @@
         llmAgents = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
         neovim-nightly = inputs.neovim-nightly.packages.${pkgs.stdenv.hostPlatform.system}.default;
         spotify-player = inputs.spotify-player.defaultPackage.${pkgs.stdenv.hostPlatform.system};
-        fastpotify = inputs.cohle.packages.${pkgs.stdenv.hostPlatform.system}.default;
+        fastpotify = inputs.fastpotify.packages.${pkgs.stdenv.hostPlatform.system}.default;
         helium = inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default;
         cohle = inputs.cohle.packages.${pkgs.stdenv.hostPlatform.system}.default;
       };
