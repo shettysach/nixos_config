@@ -1,8 +1,14 @@
-{spotify-player, ...}: {
+{
   programs = {
-    zellij.enable = true;
-    jujutsu.enable = true;
     delta.enable = true;
+    jujutsu.enable = true;
+
+    imv.enable = true;
+    mpv.enable = true;
+
+    yazi = {
+      enable = true;
+    };
 
     btop = {
       enable = true;
@@ -16,7 +22,8 @@
       enable = true;
       options = {
         guioptions = "vh";
-        election-clipboard = "clipboard";
+        selection-clipboard = "clipboard";
+        recolor-keephue = true;
       };
     };
 
@@ -27,7 +34,6 @@
 
     spotify-player = {
       enable = true;
-      package = spotify-player;
       settings = {
         progress_bar_position = "Right";
         cover_img_width = 7;
@@ -36,7 +42,6 @@
         layout.library.album_percent = 40;
         layout.playback_window_position = "Bottom";
         enable_relative_line_number = true;
-        device.volume = 100;
         theme = "custom";
         pause_icon = "󰐊";
         play_icon = "󰏤";
@@ -48,20 +53,6 @@
           component_style.border.fg = "BrightBlack";
         }
       ];
-    };
-  };
-
-  stylix.targets = {
-    qt.enable = true;
-    gtk.enable = true;
-    fzf.enable = false;
-    neovim.enable = false;
-    helix.enable = false;
-    zed.enable = false;
-    spotify-player.enable = false;
-    waybar = {
-      addCss = true;
-      opacity.enable = true;
     };
   };
 }

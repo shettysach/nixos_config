@@ -5,8 +5,6 @@
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
     nixpkgs-stable.url = "github:nixos/nixpkgs/nixos-25.05";
 
-    neovim-nightly.url = "github:nix-community/neovim-nightly-overlay";
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -18,17 +16,32 @@
     };
 
     # niri.url = "github:sodiboo/niri-flake";
-    niri.url = "github:epireyn/niri-flake";
+    niri = {
+      url = "github:epireyn/niri-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     llm-agents.url = "github:numtide/llm-agents.nix";
+
+    neovim-nightly = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     spotify-player = {
       url = "github:aome510/spotify-player?ref=598777791a96fe35cf2c2cce4cbe8bfefb7cbbd9";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    fastpotify.url = "github:crmne/fastpotify";
+
     helium = {
       url = "github:amaanq/helium-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    dankcalendar = {
+      url = "github:AvengeMedia/dankcalendar";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -77,6 +90,7 @@
         llmAgents = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
         neovim-nightly = inputs.neovim-nightly.packages.${pkgs.stdenv.hostPlatform.system}.default;
         spotify-player = inputs.spotify-player.defaultPackage.${pkgs.stdenv.hostPlatform.system};
+        fastpotify = inputs.cohle.packages.${pkgs.stdenv.hostPlatform.system}.default;
         helium = inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default;
         cohle = inputs.cohle.packages.${pkgs.stdenv.hostPlatform.system}.default;
       };
@@ -86,6 +100,7 @@
         inputs.stylix.homeModules.stylix
         inputs.niri.homeModules.niri
         inputs.niri.homeModules.stylix
+        inputs.dankcalendar.homeModules.dank-calendar
       ];
     };
   };

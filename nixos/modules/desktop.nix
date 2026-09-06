@@ -5,6 +5,7 @@
   };
 
   niri-flake.cache.enable = true;
+  services.gnome.gnome-keyring.enable = true;
 
   programs.gtklock = {
     enable = true;

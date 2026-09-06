@@ -1,11 +1,10 @@
-{neovim-nightly, ...}: {
+{
   programs = {
     neovim = {
       enable = true;
       defaultEditor = true;
       vimAlias = true;
       sideloadInitLua = true;
-      package = neovim-nightly;
     };
 
     zed-editor.enable = true;
@@ -13,6 +12,7 @@
     helix = {
       enable = true;
       settings = {
+        theme = "transparent";
         editor = {
           line-number = "relative";
           bufferline = "multiple";
@@ -75,6 +75,7 @@
       };
 
       themes.transparent = {
+        inherits = "tokyonight";
         "ui.background" = {fg = "fg";};
         "ui.text" = {fg = "fg";};
       };

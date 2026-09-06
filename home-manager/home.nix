@@ -5,6 +5,7 @@
   llmAgents,
   helium,
   cohle,
+  fastpotify,
   ...
 }: {
   nixpkgs.config.allowUnfree = true;
@@ -33,15 +34,23 @@
   home.packages = lib.attrValues {
     # GUI
 
+    inherit helium;
     inherit (pkgs) firefox obsidian;
     inherit (pkgs) rustdesk-flutter;
-
-    helium = helium;
-    cohle = cohle;
+    inherit (pkgs) evtest;
 
     #
 
     inherit (pkgs) tokei;
+
+    inherit cohle;
+
+    inherit fastpotify;
+  };
+
+  programs.dank-calendar = {
+    enable = true;
+    systemd.enable = true;
   };
 
   services.kdeconnect = {

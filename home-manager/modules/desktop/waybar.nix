@@ -30,10 +30,10 @@
 
         modules-center = ["niri/workspaces"];
 
-        modules-right = ["tray" "idle_inhibitor" "bluetooth" "backlight" "wireplumber#sink" "wireplumber#source" "network" "battery"];
+        modules-right = ["tray" "idle_inhibitor" "backlight" "bluetooth" "wireplumber#sink" "wireplumber#source" "network" "battery"];
 
         clock = {
-          format = "{:%a %d %b %H:%M}";
+          format = "{:%b %d %a %H:%M}";
           tooltip-format = "<tt><small>{calendar}</small></tt>";
         };
 
@@ -77,7 +77,7 @@
           format = "BLU {status}";
           format-connected-battery = "BLU {device_battery_percentage}%";
           tooltip-format-connected = "{device_enumerate}";
-          tooltip-format-enumerate-connected = "{device_alias}\t{device_battery_percentage}%\t{device_address}";
+          tooltip-format-enumerate-connected = "{device_alias}\t{device_address}";
           on-click = "${pkgs.bzmenu}/bin/bzmenu -l fuzzel -s 2";
         };
 
@@ -95,7 +95,7 @@
 
         "wireplumber#sink" = {
           format = "SPK {volume}%";
-          format-muted = "SPK MUTE";
+          format-muted = "SPK mute";
           on-click = "pavucontrol -t 3";
           on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
         };
@@ -103,7 +103,7 @@
         "wireplumber#source" = {
           node-type = "Audio/Source";
           format = "MIC {volume}%";
-          format-muted = "MIC MUTE";
+          format-muted = "MIC mute";
           on-click = "pavucontrol -t 4";
           on-click-right = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
         };
@@ -113,6 +113,7 @@
           format-paused = "MEDIA 󰐊";
           format-stopped = "";
           tooltip-format = "{dynamic}\n{player}";
+          truncate-hours = true;
           dynamic-separator = "\n";
           players = ["*"];
           on-click = "playerctl play-pause";
@@ -132,7 +133,7 @@
         battery = {
           states = {
             good = 80;
-            warning = 35;
+            warning = 50;
             critical = 20;
           };
           format = "BAT {capacity}%";

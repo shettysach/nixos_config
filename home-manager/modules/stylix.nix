@@ -1,8 +1,4 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   stylix = {
     enable = true;
     autoEnable = true;
@@ -27,7 +23,7 @@
 
       sizes = {
         terminal = 14;
-        popups = 13;
+        popups = 14;
         desktop = 13;
         applications = 13;
       };
@@ -54,7 +50,19 @@
     };
 
     targets = {
-      fuzzel.fonts.override.sansSerif = config.stylix.fonts.monospace;
+      waybar = {
+        addCss = true;
+        opacity.enable = true;
+      };
+
+      qt.enable = true;
+      gtk.enable = true;
+
+      fzf.enable = false;
+      neovim.enable = false;
+      helix.enable = false;
+      zed.enable = false;
+      spotify-player.enable = false;
     };
   };
 }

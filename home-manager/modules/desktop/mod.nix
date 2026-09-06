@@ -2,17 +2,10 @@
   pkgs,
   lib,
   ...
-}: let
-  fileManager = ["org.kde.dolphin.desktop"];
-  browser = ["helium.desktop"];
-  pdfViewer = ["org.pwmt.zathura-pdf-mupdf.desktop" "okularApplication_pdf.desktop"];
-in {
+}: {
   imports = [./niri.nix ./waybar.nix ./lock.nix ./fuzzel.nix];
 
   services.wpaperd.enable = true;
-
-  # Ensure WAYLAND_DISPLAY is available before clipcatd initializes its watcher.
-  systemd.user.services.clipcat.Unit.After = ["graphical-session.target"];
 
   services.mako = {
     enable = true;
@@ -20,12 +13,23 @@ in {
       layer = "overlay";
       default-timeout = 5000;
       border-size = 1;
+      ignore-timeout = false;
+      height = 300;
+      width = 300;
     };
+  };
+
+  services.gammastep = {
+    enable = true;
+    tray = true;
+    provider = "manual";
+    dawnTime = "05:00-07:00";
+    duskTime = "18:00-21:00";
+    temperature.night = 2700;
   };
 
   home.packages = lib.attrValues {
     inherit (pkgs) wlr-randr wl-mirror wl-clipboard;
-    inherit (pkgs) imv mpv;
     inherit (pkgs.kdePackages) dolphin gwenview okular;
   };
 
@@ -42,19 +46,22 @@ in {
 
   # -- Defaults
 
-  xdg.mimeApps = {
-    enable = true;
-    associations.added = {
+  xdg.mimeApps = let
+    fileManager = ["org.kde.dolphin.desktop"];
+    browser = ["helium.desktop"];
+    pdfViewer = ["org.pwmt.zathura-pdf-mupdf.desktop" "okularApplication_pdf.desktop"];
+    imageViewer = ["imv.desktop"];
+    commonDefaults = {
       "inode/directory" = fileManager;
       "x-directory/normal" = fileManager;
       "x-scheme-handler/file" = fileManager;
       "application/pdf" = pdfViewer;
+      "image/*" = imageViewer;
     };
-    defaultApplications = {
-      "inode/directory" = fileManager;
-      "x-directory/normal" = fileManager;
-      "x-scheme-handler/file" = fileManager;
-      "application/pdf" = pdfViewer;
+  in {
+    enable = true;
+    associations.added = commonDefaults;
+    defaultApplications = commonDefaults // {
       "text/plain" = ["nvim.desktop"];
 
       "x-scheme-handler/http" = browser;
@@ -81,13 +88,4 @@ in {
       <DefaultMergeDirs/>
     </Menu>
   '';
-
-  services.gammastep = {
-    enable = true;
-    tray = true;
-    provider = "manual";
-    dawnTime = "05:00-07:00";
-    duskTime = "18:00-21:00";
-    temperature.night = 3000;
-  };
 }
