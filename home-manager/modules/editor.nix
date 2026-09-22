@@ -1,6 +1,7 @@
-{
+{neovim-nightly, ...}: {
   programs = {
     neovim = {
+      package = neovim-nightly;
       enable = true;
       defaultEditor = true;
       vimAlias = true;
@@ -81,15 +82,4 @@
       };
     };
   };
-
-  xdg.dataFile."applications/nvim.desktop".text = ''
-    [Desktop Entry]
-    Type=Application
-    Name=Neovim
-    Comment=Edit text files in Neovim
-    Exec=ghostty -e nvim %F
-    Terminal=false
-    MimeType=text/plain;
-    NoDisplay=true
-  '';
 }

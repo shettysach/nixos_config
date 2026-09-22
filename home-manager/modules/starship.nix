@@ -2,6 +2,7 @@
   programs.starship = {
     enable = true;
     settings = {
+      add_newline = false;
       format = builtins.concatStringsSep "" [
         "$directory"
         "[](fg:blue bg:#394260)"

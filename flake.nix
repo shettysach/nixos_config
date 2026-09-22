@@ -29,11 +29,9 @@
     };
 
     spotify-player = {
-      url = "github:aome510/spotify-player?ref=598777791a96fe35cf2c2cce4cbe8bfefb7cbbd9";
+      url = "github:aome510/spotify-player";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    fastpotify.url = "github:crmne/fastpotify";
 
     helium = {
       url = "github:amaanq/helium-flake";

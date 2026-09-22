@@ -33,6 +33,7 @@
       killall
       powertop
       libnotify
+      evtest
       # --
       playerctl
       pavucontrol
@@ -46,7 +47,7 @@
   fonts.packages = lib.attrValues {
     inherit (pkgs) lora work-sans;
     iosevka-aile = pkgs.iosevka-bin.override {variant = "Aile";};
-    inherit (pkgs.nerd-fonts) jetbrains-mono zed-mono;
-    inherit (pkgs.ioskeley-mono) normal-term-NF;
+    inherit (pkgs.nerd-fonts) jetbrains-mono;
+    inherit (pkgs.ioskeley-mono) term-nf;
   };
 }

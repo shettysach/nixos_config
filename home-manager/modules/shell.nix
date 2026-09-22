@@ -41,15 +41,21 @@
         ZVM_INIT_MODE = "sourcing";
       };
       syntaxHighlighting.styles.unknown-token = "fg=red";
-      initContent = ''
-        function zvm_after_init() {
-            bindkey '^r' fzf-history-widget
-        }
-        zstyle ':completion:*' menu no
-        zstyle ':fzf-tab:*' switch-group '<' '>'
-        zstyle ':fzf-tab:*' fzf-flags --color=16 --preview-window=sharp --prompt='❯ '
-        zstyle ':fzf-tab:complete:cd:*' fzf-preview 'lsr -1 $realpath'
-      '';
+      initContent =
+        #zsh
+        ''
+          function zvm_after_init() { bindkey '^r' fzf-history-widget }
+
+          bindkey '^ ' autosuggest-accept
+
+          zstyle ':completion:*' menu no
+          zstyle ':fzf-tab:*' switch-group '<' '>'
+          zstyle ':fzf-tab:*' fzf-flags --color=16 --preview-window=sharp --prompt='❯ '
+          zstyle ':fzf-tab:complete:cd:*' fzf-preview 'lsr -1 $realpath'
+
+          precmd() { precmd() { echo } }
+          alias clear="precmd() { precmd() { echo } } && clear"
+        '';
     };
 
     fzf = {

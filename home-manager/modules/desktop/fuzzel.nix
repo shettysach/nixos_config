@@ -10,6 +10,7 @@
         vertical-pad = 10;
         inner-pad = 5;
         line-height = 20;
+        image-size-ratio = 1;
         prompt = "❯ ";
       };
 

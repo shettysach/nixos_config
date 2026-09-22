@@ -5,8 +5,8 @@
     inherit ((import ../../theme.nix)) base16Scheme;
     fonts = {
       monospace = {
-        name = "IoskeleyMono Nerd Font";
-        package = pkgs.ioskeley-mono.normal-NF;
+        name = "IoskeleyMonoTerm Nerd Font Mono";
+        package = pkgs.ioskeley-mono.term-nf;
       };
       sizes.terminal = 14;
     };

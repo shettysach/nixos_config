@@ -17,7 +17,8 @@
       window-rules = [
         {
           draw-border-with-background = false;
-          default-column-width.proportion = 1.0;
+          default-column-width.proportion = 0.5;
+          open-maximized-to-edges = true;
           excludes = [{is-floating = true;}];
         }
       ];
@@ -47,11 +48,6 @@
       input.mod-key = "Alt";
       input.mod-key-nested = "Super";
 
-      layout.preset-column-widths = [
-        {proportion = 0.5;}
-        {proportion = 1.0;}
-      ];
-
       binds = {
         "Mod+Return".action.spawn = ["ghostty" "+new-window"];
 
@@ -67,7 +63,7 @@
         "Mod+L".action.focus-column-right = {};
         "Mod+F".action.fullscreen-window = {};
 
-        "Mod+Backslash".action.switch-preset-column-width = {};
+        "Mod+Backslash".action.maximize-window-to-edges = {};
         "Mod+O".action.toggle-overview = {};
 
         "Mod+Shift+H".action.move-column-left = {};
@@ -81,17 +77,14 @@
         "Mod+Equal".action.set-column-width = "+5%";
         "Mod+Minus".action.set-column-width = "-5%";
 
-        "Mod+W".action.spawn = ["${../../dots/scripts/window_switcher}"];
-
-        "Mod+M".action.spawn = ["${../../dots/scripts/power_menu}"];
-
         "Mod+D".action.spawn = ["${config.programs.fuzzel.package}/bin/fuzzel"];
+        "Mod+P".action.spawn = ["${../../dots/scripts/power_menu}"];
         "Mod+I".action.spawn = ["${pkgs.iwmenu}/bin/iwmenu" "-l" "fuzzel" "-s" "2"];
         "Mod+B".action.spawn = ["${pkgs.bzmenu}/bin/bzmenu" "-l" "fuzzel" "-s" "2"];
-
         "Mod+C".action.spawn = ["${config.services.clipcat.package}/bin/clipcat-menu"];
 
         "Mod+S".action.screenshot = {};
+
         "Mod+Space".action.switch-focus-between-floating-and-tiling = {};
         "Mod+Shift+Space".action.toggle-window-floating = {};
 

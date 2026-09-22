@@ -30,3 +30,13 @@ $env.VIRTUAL_ENV_DISABLE_PROMPT = true
 $env.PROMPT_INDICATOR_VI_NORMAL = ""
 $env.PROMPT_INDICATOR_VI_INSERT = ""
 $env.TRANSIENT_PROMPT_MULTILINE_INDICATOR = "  "
+
+# starship newline 
+$env.config.hooks = {
+  pre_prompt: [{||
+    if ($env.__prompt_seen? | default false) { print "" }
+    $env.__prompt_seen = true
+  }]
+}
+
+def --env clear [] { $env.__prompt_seen = false; ^clear }

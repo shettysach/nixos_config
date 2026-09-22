@@ -1,14 +1,10 @@
-{
+{spotify-player, ...}: {
   programs = {
     delta.enable = true;
     jujutsu.enable = true;
 
     imv.enable = true;
     mpv.enable = true;
-
-    yazi = {
-      enable = true;
-    };
 
     btop = {
       enable = true;
@@ -34,6 +30,7 @@
 
     spotify-player = {
       enable = true;
+      package = spotify-player;
       settings = {
         progress_bar_position = "Right";
         cover_img_width = 7;

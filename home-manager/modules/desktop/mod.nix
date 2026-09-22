@@ -14,8 +14,10 @@
       default-timeout = 5000;
       border-size = 1;
       ignore-timeout = false;
-      height = 300;
+
+      height = 200;
       width = 300;
+      max-icon-size = 96;
     };
   };
 
@@ -61,13 +63,15 @@
   in {
     enable = true;
     associations.added = commonDefaults;
-    defaultApplications = commonDefaults // {
-      "text/plain" = ["nvim.desktop"];
+    defaultApplications =
+      commonDefaults
+      // {
+        "text/plain" = ["nvim.desktop"];
 
-      "x-scheme-handler/http" = browser;
-      "x-scheme-handler/https" = browser;
-      "text/html" = browser;
-    };
+        "x-scheme-handler/http" = browser;
+        "x-scheme-handler/https" = browser;
+        "text/html" = browser;
+      };
   };
 
   # -- Dolphin
