@@ -9,7 +9,7 @@
 
     settings = {
       overview = {
-        backdrop-color = config.lib.stylix.colors.base00;
+        backdrop-color = config.lib.stylix.colors.base01;
         workspace-shadow.enable = false;
       };
 

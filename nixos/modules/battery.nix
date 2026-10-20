@@ -1,8 +1,10 @@
 {
-  # tlp, powertop and auto-cpufreq clash
+  services.thermald.enable = true;
+
+  # tlp, powertop and auto-cpufreq clash. Enable one at a time
 
   services.tlp = {
-    enable = false;
+    enable = true;
     pd.enable = false;
     settings = {
       CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
@@ -22,11 +24,9 @@
     };
   };
 
-  services.thermald.enable = true;
-
   powerManagement.powertop.enable = false;
 
-  services.auto-cpufreq.enable = true;
+  services.auto-cpufreq.enable = false;
   services.auto-cpufreq.settings = {
     battery = {
       governor = "powersave";

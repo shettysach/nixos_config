@@ -1,4 +1,6 @@
 {pkgs, ...}: {
+  fonts.fontconfig.enable = true;
+
   stylix = {
     enable = true;
     autoEnable = true;
@@ -58,6 +60,7 @@
       qt.enable = true;
       gtk.enable = true;
 
+      dank-calendar.enable = false;
       fzf.enable = false;
       neovim.enable = false;
       helix.enable = false;

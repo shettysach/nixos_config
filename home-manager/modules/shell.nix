@@ -32,7 +32,12 @@
           file = "share/fzf-tab/fzf-tab.plugin.zsh";
         }
       ];
-      shellAliases.zed = "zeditor";
+
+      shellAliases = {
+        x = "xdg-open";
+        zed = "zeditor";
+      };
+
       localVariables = {
         HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND = "";
         HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND = "";

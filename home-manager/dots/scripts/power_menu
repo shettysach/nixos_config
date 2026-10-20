@@ -3,12 +3,13 @@
 set -euo pipefail
 
 readonly menu=(
-  $'\U000F0425  Shut down'
+  $'\U000F0425  Shutdown'
   $'\U000F0709  Reboot'
   $'\U000F02CA  Hibernate'
   $'\U000F04B2  Suspend'
-  $'\U000F033E  Lock screen'
   $'\U000F0343  Log out'
+  $'\U000F033E  Screen lock'
+  $'\U000F0379  Screen off'
 )
 
 confirm() {
@@ -20,7 +21,7 @@ confirm() {
 selection=$(printf '%s\n' "${menu[@]}" | fuzzel --dmenu --lines="${#menu[@]}") || exit 0
 
 case "$selection" in
-  *"Shut down")
+  *"Shutdown")
     confirm && systemctl poweroff
     ;;
   *"Reboot")
@@ -32,14 +33,17 @@ case "$selection" in
   *"Suspend")
     systemctl suspend
     ;;
-  *"Lock screen")
+  *"Log out")
+    confirm && niri msg action quit
+    ;;
+  *"Screen lock")
     if [[ -n "${XDG_SESSION_ID:-}" ]]; then
       loginctl lock-session "$XDG_SESSION_ID"
     else
       loginctl lock-session
     fi
     ;;
-  *"Log out")
-    confirm && niri msg action quit
+  *"Screen off")
+    niri msg action power-off-monitors
     ;;
 esac

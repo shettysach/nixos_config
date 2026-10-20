@@ -33,6 +33,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    spotifast = {
+      url = "github:crmne/spotifast/77339ee47bf45f193e00b864a66a42401d63a93b";
+      inputs.nixpkgs.url = "github:NixOS/nixpkgs/f20cd90e28fe0403873f473b29e42662cd86e8c4";
+      inputs.rust-overlay.url = "github:oxalica/rust-overlay/dc2fd1acc537f3583744e1373597a5731ff7a6e3";
+    };
+
     helium = {
       url = "github:amaanq/helium-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -88,8 +94,8 @@
         llmAgents = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
         neovim-nightly = inputs.neovim-nightly.packages.${pkgs.stdenv.hostPlatform.system}.default;
         spotify-player = inputs.spotify-player.defaultPackage.${pkgs.stdenv.hostPlatform.system};
-        fastpotify = inputs.fastpotify.packages.${pkgs.stdenv.hostPlatform.system}.default;
-        helium = inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default;
+        spotifast = inputs.spotifast.packages.${pkgs.stdenv.hostPlatform.system}.default;
+        helium = inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.helium;
         cohle = inputs.cohle.packages.${pkgs.stdenv.hostPlatform.system}.default;
       };
 

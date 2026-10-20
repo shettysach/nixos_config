@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  inherit (config.stylix.fonts) monospace sizes;
+  inherit (config.stylix) fonts;
 
   fontFeatures = {
     calt = false;
@@ -33,8 +33,8 @@ in {
     lib.mkAfter ''* { font-feature-settings: "${features}"; }'';
 
   programs.fuzzel.settings.main.font =
-    lib.mkForce "${monospace.name}:${fontconfigFeatures}:size=${toString sizes.popups}";
+    lib.mkForce "${fonts.monospace.name}:${fontconfigFeatures}:size=${toString fonts.sizes.popups}";
 
   services.mako.settings.font =
-    lib.mkForce "${monospace.name} ${toString sizes.desktop} #${features}";
+    lib.mkForce "${fonts.sansSerif.name} ${toString fonts.sizes.desktop} #${features}";
 }

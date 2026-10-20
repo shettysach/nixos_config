@@ -26,7 +26,7 @@ in {
         resumeCommand = "${niri} msg action power-on-monitors";
       }
       {
-        timeout = 480;
+        timeout = 1200;
         command = "${pkgs.systemd}/bin/systemctl hibernate";
       }
     ];

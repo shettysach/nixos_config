@@ -1,4 +1,9 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  image = (import ../../theme.nix).image;
+  lockBackground = pkgs.runCommand "gtklock-background.jpg" {
+    nativeBuildInputs = [pkgs.imagemagick];
+  } ''magick ${image} -brightness-contrast -35x0 "$out" '';
+in {
   programs.niri = {
     enable = true;
     package = pkgs.niri;
@@ -9,17 +14,12 @@
 
   programs.gtklock = {
     enable = true;
-    style = ''
-      window #clock-label, window #date-label {
-        text-shadow: 4px 4px 6px #000000;
-      }
-    '';
     config = {
       main = {
-        background = "${(import ../../theme.nix).image}";
+        background = "${lockBackground}";
         time-format = "%H:%M";
         date-format = "%A, %d %B %Y";
-        idle-hide = false;
+        idle-hide = true;
       };
 
       playerctl = {

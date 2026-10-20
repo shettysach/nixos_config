@@ -15,9 +15,9 @@
       border-size = 1;
       ignore-timeout = false;
 
-      height = 200;
-      width = 300;
-      max-icon-size = 96;
+      width = 350;
+      height = 350;
+      max-icon-size = 80;
     };
   };
 

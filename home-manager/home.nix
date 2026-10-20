@@ -3,6 +3,7 @@
   pkgs,
   # pkgs-stable,
   llmAgents,
+  spotifast,
   helium,
   cohle,
   ...
@@ -30,29 +31,32 @@
     };
   };
 
-  home.packages = lib.attrValues {
-    # GUI
-
-    inherit helium;
-    inherit (pkgs) firefox obsidian;
-    inherit (pkgs) rustdesk-flutter;
-    inherit (pkgs) evtest fastpotify;
-
-    inherit (pkgs) nodejs;
-    #
-
-    inherit (pkgs) tokei;
-
-    inherit cohle;
+  services.kdeconnect = {
+    enable = true;
+    indicator = true;
   };
+
+  # services.trayscale.enable = true;
+  services.tailscale-systray.enable = true;
+
+  services.safeeyes.enable = true;
 
   programs.dank-calendar = {
     enable = true;
     systemd.enable = true;
   };
 
-  services.kdeconnect = {
-    enable = true;
-    indicator = true;
+  home.packages = lib.attrValues {
+    # GUI
+
+    inherit helium;
+    inherit (pkgs) firefox;
+
+    # inherit (pkgs) spotifast;
+    inherit spotifast;
+    inherit (pkgs) rustdesk-flutter evtest;
+    inherit (pkgs) tokei;
+
+    inherit cohle;
   };
 }

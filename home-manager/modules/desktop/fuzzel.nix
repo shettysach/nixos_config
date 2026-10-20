@@ -20,10 +20,10 @@
       };
 
       key-bindings = {
-        prev = "Up";
-        next = "Down";
-        prev-with-wrap = "Control+p";
-        next-with-wrap = "Control+n";
+        prev = "none";
+        next = "none";
+        prev-with-wrap = "Up Control+p";
+        next-with-wrap = "Down Control+n";
       };
     };
   };

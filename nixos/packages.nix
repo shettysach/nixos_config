@@ -22,7 +22,6 @@
       # -- TUI / CLI utils --
       microfetch
       ripgrep
-      trashy
       lsr
       fd
       file
@@ -41,13 +40,13 @@
       # Dell
       dell-command-configure
       libsmbios
+      openconnect
       ;
   };
 
   fonts.packages = lib.attrValues {
     inherit (pkgs) lora work-sans;
-    iosevka-aile = pkgs.iosevka-bin.override {variant = "Aile";};
     inherit (pkgs.nerd-fonts) jetbrains-mono;
-    inherit (pkgs.ioskeley-mono) term-nf;
+    inherit (pkgs.ioskeley-mono) term-nf nf;
   };
 }

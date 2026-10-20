@@ -18,8 +18,8 @@
   padding: 0 10px;
 }
 
-#battery.charging,
 #mpris,
+#battery.charging,
 #bluetooth.connected {
   color: @base0D;
 }
@@ -32,15 +32,15 @@
   color: @base0A;
 }
 
-#wireplumber.muted,
 #battery.critical,
 #cpu.critical,
 #disk.one.critical,
-#memory.critical,
-#network.disconnected {
+#memory.critical {
   color: @base08;
 }
 
+#wireplumber.muted,
+#network.disconnected,
 #bluetooth.disabled,
 #bluetooth.off,
 #bluetooth.no-controller {
