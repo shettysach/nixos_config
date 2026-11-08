@@ -34,6 +34,9 @@
 
       git_status = {
         deleted = "x";
+        ahead = "⇡\${count}";
+        behind = "⇣\${count}";
+        diverged = "⇡\${ahead_count}⇣\${behind_count}";
         style = "fg:bright-blue bg:#394260";
         format = "[$all_status$ahead_behind ]($style)";
       };

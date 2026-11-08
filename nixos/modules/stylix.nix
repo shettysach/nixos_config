@@ -2,6 +2,7 @@
   stylix = {
     enable = true;
     autoEnable = true;
+    polarity = "dark";
     inherit ((import ../../theme.nix)) base16Scheme;
     fonts = {
       monospace = {

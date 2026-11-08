@@ -31,4 +31,14 @@ in {
       }
     ];
   };
+
+  systemd.user.services.keep-awake = {
+    Unit = {
+      Description = "Prevent sleep while remote access is needed";
+      PartOf = ["graphical-session.target"];
+    };
+    Service = {
+      ExecStart = "${pkgs.systemd}/bin/systemd-inhibit --what=sleep --mode=block --why=\"Remote access\" ${pkgs.coreutils}/bin/sleep infinity";
+    };
+  };
 }

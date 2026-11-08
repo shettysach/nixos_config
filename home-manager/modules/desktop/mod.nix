@@ -5,8 +5,6 @@
 }: {
   imports = [./niri.nix ./waybar.nix ./lock.nix ./fuzzel.nix];
 
-  services.wpaperd.enable = true;
-
   services.mako = {
     enable = true;
     settings = {

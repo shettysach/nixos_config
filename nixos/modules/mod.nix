@@ -1,11 +1,15 @@
 {
   imports = [
-    ./battery.nix
-
+    ./nix.nix
+    ./boot.nix
+    ./input.nix
+    ./audio.nix
     ./bluetooth.nix
+    ./battery.nix
     ./network.nix
 
-    ./desktop.nix
+    ./niri.nix
+    ./lock.nix
     ./greetd.nix
     # ./kde.nix
 

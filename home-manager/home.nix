@@ -3,7 +3,6 @@
   pkgs,
   # pkgs-stable,
   llmAgents,
-  spotifast,
   helium,
   cohle,
   ...
@@ -15,19 +14,25 @@
   home = {
     username = "sword";
     homeDirectory = "/home/sword";
-    stateVersion = "26.05";
+    stateVersion = "26.11";
     pointerCursor.enable = true;
   };
 
   programs = {
+    git.enable = true;
+
+    gh = {
+      enable = true;
+      gitCredentialHelper.enable = true;
+      settings = {
+        git_protocol = "https";
+        editor = "nvim";
+      };
+    };
+
     codex = {
       enable = true;
       package = llmAgents.codex;
-    };
-
-    pi-coding-agent = {
-      enable = true;
-      package = llmAgents.pi;
     };
   };
 
@@ -36,10 +41,10 @@
     indicator = true;
   };
 
-  # services.trayscale.enable = true;
   services.tailscale-systray.enable = true;
+  # services.trayscale.enable = true;
 
-  services.safeeyes.enable = true;
+  # services.safeeyes.enable = true;
 
   programs.dank-calendar = {
     enable = true;
@@ -50,10 +55,11 @@
     # GUI
 
     inherit helium;
-    inherit (pkgs) firefox;
+    inherit (pkgs) firefox herdr-desktop;
 
-    # inherit (pkgs) spotifast;
-    inherit spotifast;
+    inherit (llmAgents) chatgpt;
+
+    inherit (pkgs) spotifast;
     inherit (pkgs) rustdesk-flutter evtest;
     inherit (pkgs) tokei;
 

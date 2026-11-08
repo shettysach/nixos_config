@@ -3,15 +3,23 @@
   config,
   ...
 }: {
+  services.wpaperd.enable = true;
+
   programs.niri = {
     enable = true;
     package = pkgs.niri;
 
     settings = {
       overview = {
-        backdrop-color = config.lib.stylix.colors.base01;
         workspace-shadow.enable = false;
       };
+
+      layer-rules = [
+        {
+          matches = [{namespace = "^wpaperd-";}];
+          place-within-backdrop = true;
+        }
+      ];
 
       prefer-no-csd = true;
       window-rules = [
@@ -38,9 +46,11 @@
 
       hotkey-overlay.skip-at-startup = true;
       input.focus-follows-mouse.enable = true;
+      input.touchpad.tap = true;
 
       layout.border.width = 1;
       layout.gaps = 0;
+      layout.background-color = "transparent";
 
       animations.enable = true;
       animations.slowdown = 0.5;
@@ -55,7 +65,7 @@
 
         "Mod+Escape".action.toggle-keyboard-shortcuts-inhibit = {};
 
-        "Mod+Q".action.spawn = ["killall" "-SIGUSR1" ".waybar-wrapped"];
+        "Mod+Q".action.spawn = ["systemctl" "--user" "kill" "--signal=SIGUSR1" "--kill-whom=main" "waybar.service"];
 
         "Mod+K".action.focus-window-or-workspace-up = {};
         "Mod+J".action.focus-window-or-workspace-down = {};

@@ -4,14 +4,6 @@
     nativeBuildInputs = [pkgs.imagemagick];
   } ''magick ${image} -brightness-contrast -35x0 "$out" '';
 in {
-  programs.niri = {
-    enable = true;
-    package = pkgs.niri;
-  };
-
-  niri-flake.cache.enable = true;
-  services.gnome.gnome-keyring.enable = true;
-
   programs.gtklock = {
     enable = true;
     config = {

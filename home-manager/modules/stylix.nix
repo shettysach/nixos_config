@@ -4,6 +4,7 @@
   stylix = {
     enable = true;
     autoEnable = true;
+    polarity = "dark";
 
     inherit (import ../../theme.nix) base16Scheme image;
 
@@ -59,6 +60,7 @@
 
       qt.enable = true;
       gtk.enable = true;
+      rofi.enable = false;
 
       dank-calendar.enable = false;
       fzf.enable = false;

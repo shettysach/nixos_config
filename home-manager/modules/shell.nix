@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   programs = {
     zsh = {
       enable = true;
@@ -83,25 +78,11 @@
 
     # ---
 
-    nushell = let
-      hmSessionVarsNu = pkgs.runCommand "hm-session-vars.nu" {} ''
-        echo "if (\$env.__HM_SESS_VARS_SOURCED? | is-empty) {''\$(${lib.getExe config.programs.nushell.package} -c "
-        use ${pkgs.nu_scripts}/share/nu_scripts/modules/capture-foreign-env
-        open ${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh | capture-foreign-env | to nuon
-        ") | load-env}" >> "$out"
-      '';
-      dircolorsIntegration = pkgs.runCommand "dircolors.nu" {} ''
-        eval "$(${lib.getExe' pkgs.coreutils "dircolors"} -b)"
-        echo "export-env { \$env.LS_COLORS = \"$LS_COLORS\" }" >> $out
-      '';
-    in {
+    dircolors.enable = true;
+
+    nushell = {
       enable = true;
       configFile.source = ../dots/nu/config.nu;
-      envFile.text = ''
-        source ${hmSessionVarsNu}
-        source ${dircolorsIntegration}
-        hide-env -i SSH_AUTH_SOCK
-      '';
     };
 
     carapace = {
